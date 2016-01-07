@@ -25,7 +25,8 @@ class UploadImageRequest extends Request
     {
         return [
             'image_title' => 'required|max:255',
-            'image' => 'required|image'
+            'image' => 'required|image',
+            'album_id' => 'exists:albums,id'
         ];
     }
 }

@@ -46,8 +46,8 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  {!! Form::label('album', 'Select album') !!}
-                  {!! Form::select('album', $albums, null, ['class' => 'form-control', 'id' => 'album']) !!}
+                  {!! Form::label('album_id', 'Select album') !!}
+                  {!! Form::select('album_id', $albums, null, ['class' => 'form-control', 'id' => 'album_id']) !!}
                 </div>
                 <div class="form-group">
                   {!! Form::button('<i class="fa fa-upload"></i> Upload', ['class' => 'btn btn-primary', 'type' => 'submit']) !!}

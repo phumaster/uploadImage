@@ -10,6 +10,8 @@ use App\Http\Requests\CreateAlbumRequest;
 
 class AlbumController extends Controller
 {
+
+    public $publicPath = 'public';
     /**
      * Display a listing of the resource.
      *
@@ -53,7 +55,12 @@ class AlbumController extends Controller
      */
     public function show($id)
     {
-        //
+        $album = \App\Album::find($id);
+        if(count($album) <= 0) {
+          return redirect()->route('album.index')->withErrors('No album available.');
+        }
+        $data['images'] = $album->images()->get();
+        return view('albums.show', $data);
     }
 
     /**
@@ -64,7 +71,12 @@ class AlbumController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data['album'] = \App\Album::find($id);
+
+        if(count($data['album']) <= 0) {
+          return redirect()->route('album.index')->withErrors('No album available.');
+        }
+        return view('albums.edit', $data);
     }
 
     /**
@@ -76,7 +88,11 @@ class AlbumController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user_id = \Auth::user()->id;
+        if(\App\Album::whereRaw("`id` = {$id} AND `user_id` = {$user_id}")->update($request->except(['_method', '_token']))) {
+          return redirect()->route('album.index')->with(['message' => 'Album has been update.']);
+        }
+        return redirect()->route('album.edit', $id)->withErrors('Unexpected error!');
     }
 
     /**
@@ -87,6 +103,24 @@ class AlbumController extends Controller
      */
     public function destroy($id)
     {
-        //
+      $album = \App\Album::find($id);
+      $is_del = true;
+      if(count($album) > 0) {
+        $images = \App\Album::find($id)->images()->get()->toArray();
+
+        if(count($images) > 0) {
+          foreach($images as $image) {
+            if(false == unlink(base_path().'/'.$this->publicPath.'/'.$image['image_url']) || false == \App\Image::destroy($image['id'])) {
+              $is_del = false;
+              break;
+            }
+          }
+        }
+
+        if($album->delete() && true == $is_del) {
+          return redirect()->route('album.index')->with(['message' => 'Album has been delete.']);
+        }
+      }
+      return redirect()->route('album.index')->withErrors('Can not delete album.');
     }
 }

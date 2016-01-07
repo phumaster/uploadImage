@@ -1,3 +1,9 @@
+## Upload image
+@Author: Phạm Ngọc Phú
+@Alias: Phú Master
+@Project: UploadImage
+@Email: phumaster.dev@gmail.com
+
 ## Laravel PHP Framework
 
 [![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)

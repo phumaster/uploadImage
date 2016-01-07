@@ -14,6 +14,18 @@
               {!! Session::get('message') !!}
             </div>
           @endif
+
+          @if(count($errors) > 0)
+            <div class="alert alert-danger">
+              <b><i class="fa fa-frown-o"></i> Opps!</b>
+              <ul>
+                @foreach($errors->all() as $error)
+                  <li>{!! $error !!}</li>
+                @endforeach
+              </ul>
+            </div>
+          @endif
+
           @if(count($albums) > 0)
             <div class="panel panel-default">
               <div class="panel-heading">All album from {!! $user !!}</div><!-- End panel-heading -->
@@ -30,6 +42,9 @@
                       </div>
                       <div class="panel-footer">
                         Created: {!! $album['created_at'] !!}
+                        {!! Form::open(['route' => ['album.destroy', $album['id']], 'method' => 'DELETE']) !!}
+                          {!! Form::button('Xóa', ['class' => 'btn btn-link', 'type' => 'submit']) !!}
+                        {!! Form::close() !!}
                       </div>
                     </div>
                   </div>

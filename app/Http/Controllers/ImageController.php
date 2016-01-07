@@ -10,6 +10,13 @@ use App\Http\Requests\UploadImageRequest;
 
 class ImageController extends Controller
 {
+    public $path = 'upload/images';
+    public $publicPath = 'public';
+
+    public function __construct() {
+      $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -42,16 +49,34 @@ class ImageController extends Controller
      */
     public function store(UploadImageRequest $request)
     {
-        $file = $request->file('image');
+        $id = \Auth::user()->id;
+        $auth = \Auth::user()->email;
         $resource = $request->except(['_token', 'image']);
-        $data = [
-          'name' => $file->getClientOriginalName(),
-          'path' => $file->getRealPath(),
-          'size' => $file->getSize(),
-          'extension' => $file->getClientOriginalExtension(),
-          'mime' => $file->getMimeType()
-        ];
-        return array_merge($data, $resource);
+
+        if($request->hasFile('image')) {
+          $file = $request->file('image');
+          $imageName = date('d-m-Y_h-i-s').'_'.$id.'_'.$file->getClientOriginalName();
+          $path = $this->path.'/'.$id.'_'.$auth;
+          $destination = $path;
+          $folder = base_path().'/'.$this->publicPath.'/'.$path;
+
+          if(!file_exists($folder)) {
+            mkdir($folder);
+          }
+
+          $image = [
+            'image_name' => $imageName,
+            'image_size' => $file->getSize(),
+            'user_id' => $id,
+            'image_url' => $path.'/'.$imageName
+          ];
+
+          if($file->move($destination, $imageName) && \App\Image::create(array_merge($resource, $image))) {
+            return redirect()->route('image.index')->with(['message' => 'Your image has been upload!']);
+          }
+
+        }
+        return redirect()->route('image.create')->withErrors('Unexpected error!');
     }
 
     /**

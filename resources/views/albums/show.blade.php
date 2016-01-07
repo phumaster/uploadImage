@@ -14,6 +14,13 @@ This is title
             {!! Session::get('message') !!}
           </div>
         @endif
+        @if(count($images) > 0)
+          @foreach($images as $image)
+            <img src="{{ asset($image->image_url) }}" class="thumbnail" width="25%" style="display: inline-block"/>
+          @endforeach
+        @else
+          <div class="text-danger">No image to show on this album.</div>
+        @endif
       </div><!-- End col-md-12 -->
     </div><!-- End row -->
   </div><!-- End container -->
