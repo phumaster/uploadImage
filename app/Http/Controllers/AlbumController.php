@@ -12,6 +12,10 @@ class AlbumController extends Controller
 {
 
     public $publicPath = 'public';
+
+    public function __construct() {
+      $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -106,9 +110,10 @@ class AlbumController extends Controller
       $album = \App\Album::find($id);
       $is_del = true;
       if(count($album) > 0) {
-        $images = \App\Album::find($id)->images()->get()->toArray();
+        $images = \App\Album::find($id);
 
         if(count($images) > 0) {
+          $images = $images->images()->get()->toArray();
           foreach($images as $image) {
             if(false == unlink(base_path().'/'.$this->publicPath.'/'.$image['image_url']) || false == \App\Image::destroy($image['id'])) {
               $is_del = false;
