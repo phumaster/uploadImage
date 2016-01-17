@@ -1,27 +1,73 @@
 @extends('layouts.master')
 
 @section('header.title')
-This is title
+{!! $album->album_name !!} : Album
 @endsection
 
 @section('body.content')
 <div id="content">
-  <div class="container">
+  <div class="container album-show-bg">
     <div class="row">
-      <div class="col-md-12">
-        @if(Session::has('message'))
-          <div class="alert alert-success">
-            {!! Session::get('message') !!}
-          </div>
-        @endif
-        @if(count($images) > 0)
-          @foreach($images as $image)
-            <img src="{{ asset($image->image_url) }}" class="thumbnail" width="25%" style="display: inline-block"/>
+      <div class="col-md-8">
+        <div class="album-show">
+          @if(count($images) > 0)
+            <h4>{!! $album->album_name !!}</h4>
+            <hr/>
+            <div class="list-image">
+              @foreach($images as $image)
+                <a href="{!! route('image.show', [$image->user_id, $image->id]) !!}">
+                  <div class="image-grid" style="position: relative">
+                    <div class="pull-right"  style="position: absolute; top: 0; right: 0">
+                      {!! Form::open(['route' => ['image.destroy', $image->id], 'method' => 'DELETE']) !!}
+                        {!! Form::button('xóa', ['class' => 'btn btn-danger btn-sm', 'type' => 'submit']) !!}
+                      {!! Form::close() !!}
+                    </div>
+                    <img src="{!! asset($image->image_url) !!}">
+                  </div>
+                </a>
+              @endforeach
+            </div><!-- End list-image -->
+          @else
+            <div class="text-danger text-center"><h4>No image to show on this album</h4></div>
+          @endif
+          <div class="text-center">{!! $images->render() !!}</div>
+        </div>
+      </div><!-- End col-md-8 -->
+      <div class="col-md-4 album-comment-bg fix-margin-col">
+        <h4>Comment</h4>
+        <hr/>
+        @if(count($errors) > 0)
+          @foreach($errors->all() as $error)
+            <div class="text-danger"><h5>{!! $error !!}</h5></div>
           @endforeach
-        @else
-          <div class="text-danger">No image to show on this album.</div>
         @endif
-      </div><!-- End col-md-12 -->
+        @if(Session::has('message'))
+          <div class="text-success"><h5>{!! Session::get('message') !!}</h5></div>
+        @endif
+
+        <div class="form-comment">
+          {!! Form::open(['route' => ['album.comment', $album->user_id, $album->id], 'method' => 'POST']) !!}
+            <div class="form-group">
+              {!! Form::text('comment_content', '', ['class' => 'form-control', 'placeholder' => 'Write something...', 'autofocus', 'autocomplete' => 'off']) !!}
+            </div>
+          {!! Form::close() !!}
+          <hr/>
+          <div class="image-comment">
+            @if(count($comments) > 0)
+              @foreach($comments as $comment)
+                <div class="comment">
+                  <p>
+                    <span class="comment-author"><a href="{!! url('/') !!}">{!! $comment->user->firstName.' '.$comment->user->lastName !!}</a></span>
+                    <span class="comment-content">{{ $comment->comment_content }}</span>
+                  </p>
+                </div>
+              @endforeach
+            @else
+              <div class="text-danger"><h5>No comment in this album</h5></div>
+            @endif
+          </div><!-- End image-comment -->
+        </div>
+      </div><!-- End col-md-4 -->
     </div><!-- End row -->
   </div><!-- End container -->
 </div><!-- End #content -->

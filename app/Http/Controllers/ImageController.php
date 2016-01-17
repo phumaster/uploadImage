@@ -11,7 +11,6 @@ use App\Http\Requests\UploadImageRequest;
 class ImageController extends Controller
 {
     public $path = 'upload/images';
-    public $publicPath = 'public';
 
     public function __construct() {
       $this->middleware('auth');
@@ -39,6 +38,8 @@ class ImageController extends Controller
         foreach ($albums as $key => $value) {
           $data['albums'][$value['id']] = $value['album_name'];
         }
+
+        $data['albums'] = count($albums) > 0 ? $data['albums'] : null;
         return view('images.create', $data);
     }
 
@@ -54,12 +55,29 @@ class ImageController extends Controller
         $auth = \Auth::user()->email;
         $resource = $request->except(['_token', 'image']);
 
+        //dd($request->file('image'));
+
+        if(!$request->get('album_id')) {
+          $data_album = [
+            'album_name' => 'Untitled',
+            'album_title' => 'Untitled album',
+            'album_description' => '',
+            'user_id' => $id
+          ];
+
+          if(!$album = \App\Album::create($data_album)) {
+            return redirect()->route('image.create')->withErrors('Unexpected error!');
+          }
+
+          $resource['album_id'] = $album->id;
+        }
+
         if($request->hasFile('image')) {
           $file = $request->file('image');
           $imageName = date('d-m-Y_h-i-s').'_'.$id.'_'.$file->getClientOriginalName();
           $path = $this->path.'/'.$id.'_'.$auth;
           $destination = $path;
-          $folder = base_path().'/'.$this->publicPath.'/'.$path;
+          $folder = public_path().'/'.$path;
 
           if(!file_exists($folder)) {
             mkdir($folder);
@@ -86,13 +104,22 @@ class ImageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($user, $id)
     {
-        $data['image'] = \App\Image::find($id);
+        $image = \App\Image::where(['id' => $id, 'user_id' => $user])->get()->first();
 
-        if(count($data['image']) <= 0) {
+        if(count($image) <= 0) {
           return redirect()->route('image.index')->withErrors('No image to show.');
         }
+
+        $user_data = \App\Image::find($id)->user()->get()->first();
+        $album = \App\Image::find($id)->album()->get()->first();
+        $comments = \App\Image::find($id)->comments()->get();
+
+        $data['image'] = $image;
+        $data['user'] = $user_data;
+        $data['album'] = $album;
+        $data['comments'] = $comments;
 
         return view('images.show', $data);
     }
@@ -136,7 +163,7 @@ class ImageController extends Controller
         $imageName = date('d-m-Y_h-i-s').'_'.$user_id.'_'.$file->getClientOriginalName();
         $path = $this->path.'/'.$user_id.'_'.$auth;
         $destination = $path;
-        $folder = base_path().'/'.$this->publicPath.'/'.$path;
+        $folder = public_path().'/'.$path;
 
         if(!file_exists($folder)) {
           mkdir($folder);
@@ -149,7 +176,7 @@ class ImageController extends Controller
         ];
 
 
-        if(unlink(base_path().'/'.$this->publicPath.'/'.$data->image_url) && $file->move($destination, $imageName) && \App\Image::whereRaw("`id` = {$id} AND `user_id` = {$user_id}")->update(array_merge($resource, $image))) {
+        if(unlink(public_path().'/'.$data->image_url) && $file->move($destination, $imageName) && \App\Image::whereRaw("`id` = {$id} AND `user_id` = {$user_id}")->update(array_merge($resource, $image))) {
           return redirect()->route('image.index')->with(['message' => 'Your image has been update!']);
         }
 
@@ -171,7 +198,7 @@ class ImageController extends Controller
     {
         $image = \App\Image::find($id);
         if(count($image) > 0) {
-          if($image->delete() && unlink(base_path().'/'.$this->publicPath.'/'.$image->image_url)) {
+          if($image->delete() && unlink(public_path().'/'.$image->image_url)) {
             return redirect()->route('image.index')->with(['message' => 'The image has been delete.']);
           }
         }

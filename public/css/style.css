@@ -1,0 +1,208 @@
+body {
+  background: #F1F1F1;
+  color: #333;
+}
+
+#content {
+    margin-top: 100px;
+}
+
+.width-4 {
+  width: 24.677%;
+  display: inline-block;
+}
+
+.album {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  margin: 4px;
+  box-shadow: 2px 2px 7px rgba(0, 0, 0, 0.15);
+  transition: box-shadow 400ms ease;
+  position: relative;
+  height: 250px;
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+.album:hover {
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.album a {
+  text-decoration: none;
+  color: #03a9f4;
+}
+
+.album .album-body {
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  background: rgba(34, 34, 34, 0.3);
+  width: 100%;
+  color: #fff;
+  text-shadow: 1px 1px 2px rgba(34, 34, 34, 0.5);
+  padding: 5px;
+}
+
+.album .image-preview {
+  position: relative;
+  display: block;
+}
+
+.album .image-preview img {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  bottom: 0px;
+  max-width: 100%;
+}
+
+.album .album-option {
+  color: #fff;
+  font-size: 18px;
+  padding: 2px 7px;
+  cursor: pointer;
+  text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.8), -2px -2px 3px rgba(0, 0, 0, 0.8);
+}
+
+.album .album-option .dropdown-menu-option {
+  position: relative;
+}
+
+.album .album-option .album-menu-option {
+  background: #fff;
+  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
+  position: absolute;
+  top: 25px;
+  right: 0px;
+  display: none;
+}
+.album .album-option .album-menu-option form {
+  padding: 0px;
+  margin: 0px;
+}
+.album .album-option .album-menu-option .option-list {
+  font-size: 14px;
+  color: #222;
+  display: block;
+  text-shadow: none;
+  border: none;
+  background: transparent;
+  text-align: left;
+  padding: 5px 10px;
+}
+
+.album .album-option .album-menu-option .option-list:hover {
+  color: white;
+  background: #337ab7;
+}
+
+.show {
+  display: block;
+}
+
+.list-image {
+  position: relative;
+}
+
+.list-image .image-grid {
+  width: 24.7%;
+  display: inline-block;
+  overflow: hidden;
+  height: 160px;
+  margin: -2px;
+}
+
+.list-image .image-grid img {
+  width: 100%;
+  height: inherit;
+}
+
+.image-show-bg, .album-show-bg {
+  background: #fff;
+  box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+.fix-margin-col {
+  margin-left: -15px;
+}
+
+#header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 99;
+  background: #fff;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+.header-prefix {
+  padding: 10px 0px;
+}
+
+.menu-user {
+  display: inline-block;
+  position: relative;
+}
+
+.menu-user .sub-menu {
+  position: absolute;
+  background: #fff;
+  width: 100%;
+  top: 30px;
+  right: 0px;
+  min-width: 150px;
+  z-index: 2;
+  display: none;
+  box-shadow: 2px 3px 4px rgba(0, 0, 0, 0.15);
+  border-top: 2px solid #337ab7;
+}
+
+.menu-user .sub-menu a {
+  display: block;
+  width: 100%;
+  padding: 5px;
+  color: #333;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+.menu-user .sub-menu a:hover {
+  background: #337ab7;
+  color: #fff;
+}
+
+.menu-user .sub-menu:after {
+  content: "";
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-bottom: 6px solid #337ab7;
+  display: inline-block;
+  position: absolute;
+  top: -7px;
+  right: 2px;
+  height: 0;
+  width: 0;
+}
+
+.user-profile {
+  padding: 10px 0px;
+}
+
+
+.list-image-all .image-grid {
+  width: 20.03%;
+  display: inline-block;
+  overflow: hidden;
+  height: 160px;
+  margin: -2px;
+}
+
+.list-image-all .image-grid img {
+  width: 100%;
+  height: inherit;
+}

@@ -8,5 +8,17 @@ class Image extends Model
 {
     protected $table = 'images';
 
-    protected $fillable = ['image_name', 'image_title', 'image_url', 'image_size', 'image_caption', 'likes', 'views', 'user_id', 'album_id'];
+    protected $fillable = ['id', 'image_name', 'image_url', 'image_size', 'image_caption', 'likes', 'views', 'user_id', 'album_id'];
+
+    public function user() {
+      return $this->belongsTo('App\User', 'user_id');
+    }
+
+    public function album() {
+      return $this->belongsTo('App\Album', 'album_id');
+    }
+
+    public function comments() {
+      return $this->hasMany('App\Comment_image', 'image_id');
+    }
 }

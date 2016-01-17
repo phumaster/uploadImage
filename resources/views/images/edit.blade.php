@@ -26,11 +26,7 @@
               @endif
               {!! Form::open(['route' => ['image.update', $image->id],'files' => true, 'method' => 'PUT']) !!}
                 <div class="form-group">
-                  {!! Form::label('image_title', 'Image title') !!}
-                  {!! Form::text('image_title', $image->image_title, ['class' => 'form-control', 'id' => 'image_title']) !!}
-                </div>
-                <div class="form-group">
-                  {!! Form::label('image_caption', 'Image caption') !!}
+                  {!! Form::label('image_caption', 'Write something...') !!}
                   {!! Form::textarea('image_caption', $image->image_caption, ['class' => 'form-control', 'id' => 'image_caption']) !!}
                 </div>
                 <div class="form-group">
@@ -45,10 +41,12 @@
                     </div>
                   </div>
                 </div>
-                <div class="form-group">
-                  {!! Form::label('album_id', 'Select album') !!}
-                  {!! Form::select('album_id', $albums, $albums[$image->album_id], ['class' => 'form-control', 'id' => 'album_id']) !!}
-                </div>
+                @if(count($albums) > 0)
+                  <div class="form-group">
+                    {!! Form::label('album_id', 'Select album') !!}
+                    {!! Form::select('album_id', $albums, null, ['class' => 'form-control', 'id' => 'album_id']) !!}
+                  </div>
+                @endif
                 <div class="form-group">
                   {!! Form::button('<i class="fa fa-upload"></i> Upload', ['class' => 'btn btn-primary', 'type' => 'submit']) !!}
                   {!! Form::button('<i class="fa fa-refresh"></i> Reset', ['class' => 'btn btn-default', 'type' => 'reset']) !!}

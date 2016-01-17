@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
 
-class UploadImageRequest extends Request
+class PostCommentImageRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,7 @@ class UploadImageRequest extends Request
     public function rules()
     {
         return [
-            'image' => 'required|image',
-            'album_id' => 'exists:albums,id'
+            'comment_content' => 'required'
         ];
     }
 }

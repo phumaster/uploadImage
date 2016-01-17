@@ -11,8 +11,6 @@ use App\Http\Requests\CreateAlbumRequest;
 class AlbumController extends Controller
 {
 
-    public $publicPath = 'public';
-
     public function __construct() {
       $this->middleware('auth');
     }
@@ -23,9 +21,18 @@ class AlbumController extends Controller
      */
     public function index()
     {
-        $user_id = \Auth::user()->id;
-        $data['user'] = \Auth::user()->firstName.' '.\Auth::user()->lastName;
-        $data['albums'] = \App\User::find($user_id)->album()->get()->toArray();
+        $user = \Auth::user();
+        $alb = \App\User::find($user->id)->album()->get()->toArray();
+
+        foreach ($alb as $album) {
+          $images['images'] = \App\Album::find($album['id'])->images()->get()->toArray();
+          $albums[] = array_merge($album, $images);
+        }
+
+        $albums = count($alb) > 0 ? $albums : null;
+        $data['user'] = $user;
+        $data['albums'] = $albums;
+
         return view('albums.index', $data);
     }
 
@@ -63,7 +70,9 @@ class AlbumController extends Controller
         if(count($album) <= 0) {
           return redirect()->route('album.index')->withErrors('No album available.');
         }
-        $data['images'] = $album->images()->get();
+        $data['comments'] = $album->comments()->get();
+        $data['images'] = $album->images()->paginate(50);
+        $data['album'] = $album;
         return view('albums.show', $data);
     }
 
@@ -115,7 +124,7 @@ class AlbumController extends Controller
         if(count($images) > 0) {
           $images = $images->images()->get()->toArray();
           foreach($images as $image) {
-            if(false == unlink(base_path().'/'.$this->publicPath.'/'.$image['image_url']) || false == \App\Image::destroy($image['id'])) {
+            if(false == unlink(public_path().'/'.$image['image_url']) || false == \App\Image::destroy($image['id'])) {
               $is_del = false;
               break;
             }

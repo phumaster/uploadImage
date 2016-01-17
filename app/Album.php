@@ -17,4 +17,8 @@ class Album extends Model
     public function images() {
       return $this->hasMany('App\Image', 'album_id');
     }
+
+    public function comments() {
+      return $this->hasMany('App\Comment_album', 'album_id');
+    }
 }
