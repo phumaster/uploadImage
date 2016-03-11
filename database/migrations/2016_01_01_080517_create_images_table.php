@@ -22,6 +22,8 @@ class CreateImagesTable extends Migration
             $table->integer('views')->nullable()->default(0);
             $table->integer('user_id');
             $table->integer('album_id');
+            $table->integer('make_as_profile_picture')->default(0);
+            $table->integer('make_as_cover_photo')->default(0);
             $table->timestamps();
         });
     }

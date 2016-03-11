@@ -32,7 +32,7 @@ This is title
               <a href="{!! route('image.show', [$image->user_id, $image->id]) !!}">
                 <div class="image-grid" style="position: relative">
                   <div class="pull-right"  style="position: absolute; top: 0; right: 0">
-                    {!! Form::open(['route' => ['image.destroy', $image->id], 'method' => 'DELETE']) !!}
+                    {!! Form::open(['route' => ['image.destroy',$image->user_id, $image->id], 'method' => 'DELETE']) !!}
                       {!! Form::button('xóa', ['class' => 'btn btn-danger btn-sm', 'type' => 'submit']) !!}
                     {!! Form::close() !!}
                   </div>

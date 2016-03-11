@@ -19,19 +19,22 @@ class AlbumController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($user, Request $request)
     {
-        $user = \Auth::user();
-        $alb = \App\User::find($user->id)->album()->get()->toArray();
-
+        $user_data = \App\User::find($user);
+        $alb = $user_data->album()->get()->toArray();
         foreach ($alb as $album) {
           $images['images'] = \App\Album::find($album['id'])->images()->get()->toArray();
           $albums[] = array_merge($album, $images);
         }
 
         $albums = count($alb) > 0 ? $albums : null;
-        $data['user'] = $user;
+        $data['user'] = $user_data;
         $data['albums'] = $albums;
+
+        if($request->ajax()) {
+          return json_encode($data);
+        }
 
         return view('albums.index', $data);
     }
@@ -41,7 +44,7 @@ class AlbumController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($user)
     {
         return view('albums.create');
     }
@@ -52,10 +55,10 @@ class AlbumController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CreateAlbumRequest $request)
+    public function store(CreateAlbumRequest $request, $user)
     {
-        $resource['user_id'] = $request->user()->id;
-        return \App\Album::create(array_merge($request->except(['_token']), $resource)) ? redirect()->route('album.index')->with(['message' => 'Album created!']) : redirect()->route('album.index')->withErrors('Unexpected error!');
+        $resource['user_id'] = $user;
+        return \App\Album::create(array_merge($request->except(['_token']), $resource)) ? redirect()->route('album.index', $user)->with(['message' => 'Album created!']) : redirect()->route('album.index', $user)->withErrors('Unexpected error!');
     }
 
     /**
@@ -64,11 +67,11 @@ class AlbumController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($user ,$id)
     {
-        $album = \App\Album::find($id);
+        $album = \App\Album::where(['id' => $id, 'user_id' => $user])->get()->first();
         if(count($album) <= 0) {
-          return redirect()->route('album.index')->withErrors('No album available.');
+          return redirect()->route('album.index', $user)->withErrors('No album available.');
         }
         $data['comments'] = $album->comments()->get();
         $data['images'] = $album->images()->paginate(50);
@@ -82,12 +85,12 @@ class AlbumController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($user, $id)
     {
-        $data['album'] = \App\Album::find($id);
+        $data['album'] = \App\Album::where(['id' => $id, 'user_id' => $user])->get()->first();
 
         if(count($data['album']) <= 0) {
-          return redirect()->route('album.index')->withErrors('No album available.');
+          return redirect()->route('album.index', $user)->withErrors('No album available.');
         }
         return view('albums.edit', $data);
     }
@@ -99,13 +102,13 @@ class AlbumController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $user, $id)
     {
         $user_id = \Auth::user()->id;
         if(\App\Album::whereRaw("`id` = {$id} AND `user_id` = {$user_id}")->update($request->except(['_method', '_token']))) {
-          return redirect()->route('album.index')->with(['message' => 'Album has been update.']);
+          return redirect()->route('album.index', $user)->with(['message' => 'Album has been update.']);
         }
-        return redirect()->route('album.edit', $id)->withErrors('Unexpected error!');
+        return redirect()->route('album.edit', [$user, $id])->withErrors('Unexpected error!');
     }
 
     /**
@@ -114,27 +117,39 @@ class AlbumController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($user, $id)
     {
-      $album = \App\Album::find($id);
+      $album = \App\Album::where(['id' => $id, 'user_id' => $user]);
       $is_del = true;
-      if(count($album) > 0) {
+      if(count($album->get()->toArray())) {
         $images = \App\Album::find($id);
-
         if(count($images) > 0) {
           $images = $images->images()->get()->toArray();
           foreach($images as $image) {
+            $comment_img = \App\Comment_image::where('image_id', $image['id']);
+            if(count($comment_img->get()->toArray())) {
+              if(false == $comment_img->delete()) {
+                $is_del = false;
+              }
+            }
             if(false == unlink(public_path().'/'.$image['image_url']) || false == \App\Image::destroy($image['id'])) {
               $is_del = false;
               break;
             }
           }
         }
+        $album_id = $album->get()->first()->id;
+        $comment = \App\Comment_album::where('album_id', $album_id);
 
+        if(count($comment->get()->toArray())) {
+          if(false == $comment->delete()) {
+            $is_del = false;
+          }
+        }
         if($album->delete() && true == $is_del) {
-          return redirect()->route('album.index')->with(['message' => 'Album has been delete.']);
+          return redirect()->route('album.index', $user)->with(['message' => 'Album has been delete.']);
         }
       }
-      return redirect()->route('album.index')->withErrors('Can not delete album.');
+      return redirect()->route('album.index', $user)->withErrors('Can not delete album.');
     }
 }

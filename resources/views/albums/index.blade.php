@@ -35,14 +35,14 @@
                           <div class="width-4">
                             <div class="album">
                               <div class="pull-right">
-                                <div class="album-option" style="position: absolute; top: 0; right: 0; z-index: 999">
+                                <div class="album-option" style="position: absolute; top: 0; right: 0; z-index: 98">
                                   <div class="dropdown-menu-option">
                                     <i class="fa fa-angle-down"></i>
                                     <div class="album-menu-option" tabindex="-1">
                                       <div class="">
-                                        <a href="{!! route('album.edit', $album['id']) !!}" class="option-list">Edit</a>
+                                        <a href="{!! route('album.edit', [$album['user_id'], $album['id']]) !!}" class="option-list">Edit</a>
                                       </div>
-                                      {!! Form::open(['route' => ['album.destroy', $album['id']], 'method' => 'DELETE']) !!}
+                                      {!! Form::open(['route' => ['album.destroy', $album['user_id'], $album['id']], 'method' => 'DELETE']) !!}
                                         {!! Form::button('Delete', ['class' => 'option-list', 'type' => 'submit', 'onclick' => 'return confirm("Are you sure delete this album?")']) !!}
                                       {!! Form::close() !!}
                                     </div>
@@ -58,7 +58,7 @@
                               </div><!-- End image-preview -->
                               <div class="album-body">
                                 <div class="album-link">
-                                  <b><a href="{!! route('album.show', $album['id']) !!}">{!! $album['album_name'] !!}</a></b>
+                                  <b><a href="{!! route('album.show', [$album['user_id'], $album['id']]) !!}">{!! $album['album_name'] !!}</a></b>
                                 </div><!-- End album-link -->
                                 <div class="image-number">
                                   <i>{!! count($album['images']) !!} photos</i>
@@ -79,29 +79,16 @@
       </div><!-- End row -->
     </div><!-- End container -->
   </div><!-- End #content -->
+@endsection
+
+@section('footer.js')
+  <script src="{!! asset('js/album.js') !!}"></script>
+@endsection
+
+@section('js')
   <script type="text/javascript">
-  $(function() {
-    $('.album .image-preview img').height($('.album').height());
-    $('.album .image-preview img').width($('.album').width());
-
-    $('.album .image-preview').each(function() {
-      if($(this).children('img').length > 1) {
-        $(this).children('img:gt(0)').hide();
-        $(this).parent().hover(function() {
-          var fun = $(this);
-          setTimeout(function() {
-            fun.children('.image-preview').children('img:first-child').fadeOut('slow').next('img').fadeIn('slow').end().appendTo(fun.children('.image-preview'));
-          }, 700);
-        });
-      }else if($(this).children('img').length < 1){
-        $(this).parent().css({'background':'#fff', 'border':'1px solid rgba(0,0,0,0.15)'}).find('.image-preview').html('<div class="text-danger text-center" style="padding-top: 50px"><h4>No photos in this album</h4></div>')
-        .parent().parent().find('.album-body').css('background', '#222');
-      }
-    });
-
-    $('.dropdown-menu-option').click(function() {
-      $(this).children('.album-menu-option').toggleClass('show');
-    });
+  $(function(){
+    loadAlbum();
   });
   </script>
 @endsection

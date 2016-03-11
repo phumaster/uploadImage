@@ -11,18 +11,36 @@
 |
 */
 
+// Index
+
 Route::get('/', function () {
-    if(\Auth::check()) {
-      return view('helloworld');
-    }
-    return view('non-authorize');
+    return view('helloworld');
 });
+
+Route::group(['prefix' => 'accounts/{account_id}'], function () {
+    Route::get('detail', function ($account_id)    {
+        // Matches The accounts/{account_id}/detail URL
+        //dd(\App\Comment_album::where('album_id', '=', 4)->delete());
+    });
+});
+
+Route::get('/this-is-my-love', function() {
+  return 'This is my love!';
+});
+
+/*
+* @Admin routes
+*/
 
 Route::group(['prefix' => 'admin'], function(){
   Route::get('/', function(){
     return public_path();
   });
 });
+
+/*
+* @Authentication routes
+*/
 
 Route::get('/login', [
   'as' => 'login',
@@ -48,93 +66,120 @@ Route::get('/logout', [
 ]);
 
 /*
-* @Image router
+* @User profile routes
 */
 
-Route::group(['prefix' => 'image'], function() {
+Route::group(['prefix' => '/{user}'], function() {
   Route::get('/', [
-    'as' => 'image.index',
-    'uses' => 'ImageController@index'
+    'as' => 'user.profile',
+    'uses' => 'UserController@index'
   ]);
 
-  Route::post('/', [
-    'as' => 'image.store',
-    'uses' => 'ImageController@store'
+  Route::post('/update/profile_picture', [
+    'as' => 'update.profile_picture',
+    'uses' => 'ChangeImageProfileController@changeProfilePicture'
   ]);
 
-  Route::get('/upload', [
-    'as' => 'image.create',
-    'uses' => 'ImageController@create'
+  Route::post('/update/cover_photo', [
+    'as' => 'update.cover_photo',
+    'uses' => 'ChangeImageProfileController@changeCoverPhoto'
   ]);
 
-  Route::get('/{user}/{id}', [
-    'as' => 'image.show',
-    'uses' => 'ImageController@show'
-  ])->where(['id' => '[0-9]+']);
-
-  Route::put('/{user}/{id}', [
-    'as' => 'image.update',
-    'uses' => 'ImageController@update'
-  ])->where(['id' => '[0-9]+']);
-
-  Route::delete('/{id}', [
-    'as' => 'image.destroy',
-    'uses' => 'ImageController@destroy'
-  ])->where(['id' => '[0-9]+']);
-
-  Route::get('/{id}/edit', [
-    'as' => 'image.edit',
-    'uses' => 'ImageController@edit'
+  Route::get('/about', [
+    'as' => 'user.about',
+    'uses' => 'UserController@index'
   ]);
 
-  Route::post('/{user}/{id}/comment', [
-    'as' => 'image.comment',
-    'uses' => 'CommentImageController@postComment'
-  ]);
-});
+  /*
+  * @Album routes
+  */
 
-/*
-* @Album router
-*/
+  Route::group(['prefix' => 'album'], function() {
+    Route::get('/', [
+      'as' => 'album.index',
+      'uses' => 'AlbumController@index'
+    ]);
 
-Route::group(['prefix' => 'album'], function() {
-  Route::get('/', [
-    'as' => 'album.index',
-    'uses' => 'AlbumController@index'
-  ]);
+    Route::post('/', [
+      'as' => 'album.store',
+      'uses' => 'AlbumController@store'
+    ]);
 
-  Route::post('/', [
-    'as' => 'album.store',
-    'uses' => 'AlbumController@store'
-  ]);
+    Route::get('/create', [
+      'as' => 'album.create',
+      'uses' => 'AlbumController@create'
+    ]);
 
-  Route::get('/create', [
-    'as' => 'album.create',
-    'uses' => 'AlbumController@create'
-  ]);
+    Route::get('/{id}', [
+      'as' => 'album.show',
+      'uses' => 'AlbumController@show'
+    ])->where(['id' => '[0-9]+']);
 
-  Route::get('/{id}', [
-    'as' => 'album.show',
-    'uses' => 'AlbumController@show'
-  ])->where(['id' => '[0-9]+']);
+    Route::put('/{id}', [
+      'as' => 'album.update',
+      'uses' => 'AlbumController@update'
+    ])->where(['id' => '[0-9]+']);
 
-  Route::put('/{id}', [
-    'as' => 'album.update',
-    'uses' => 'AlbumController@update'
-  ])->where(['id' => '[0-9]+']);
+    Route::delete('/{id}', [
+      'as' => 'album.destroy',
+      'uses' => 'AlbumController@destroy'
+    ])->where(['id' => '[0-9]+']);
 
-  Route::delete('/{id}', [
-    'as' => 'album.destroy',
-    'uses' => 'AlbumController@destroy'
-  ])->where(['id' => '[0-9]+']);
+    Route::get('/{id}/edit', [
+      'as' => 'album.edit',
+      'uses' => 'AlbumController@edit'
+    ])->where(['id' => '[0-9]+']);
 
-  Route::get('/{id}/edit', [
-    'as' => 'album.edit',
-    'uses' => 'AlbumController@edit'
-  ])->where(['id' => '[0-9]+']);
+    Route::post('/{id}/comment', [
+      'as' => 'album.comment',
+      'uses' => 'CommentAlbumController@postComment'
+    ]);
+  });
 
-  Route::post('/{user}/{id}/comment', [
-    'as' => 'album.comment',
-    'uses' => 'CommentAlbumController@postComment'
-  ]);
+
+  /*
+  * @Image routes
+  */
+
+  Route::group(['prefix' => 'image'], function() {
+    Route::get('/', [
+      'as' => 'image.index',
+      'uses' => 'ImageController@index'
+    ]);
+
+    Route::post('/', [
+      'as' => 'image.store',
+      'uses' => 'ImageController@store'
+    ]);
+
+    Route::get('/upload', [
+      'as' => 'image.create',
+      'uses' => 'ImageController@create'
+    ]);
+
+    Route::get('/{id}', [
+      'as' => 'image.show',
+      'uses' => 'ImageController@show'
+    ])->where(['id' => '[0-9]+']);
+
+    Route::put('/{id}', [
+      'as' => 'image.update',
+      'uses' => 'ImageController@update'
+    ])->where(['id' => '[0-9]+']);
+
+    Route::delete('/{id}', [
+      'as' => 'image.destroy',
+      'uses' => 'ImageController@destroy'
+    ])->where(['id' => '[0-9]+']);
+
+    Route::get('/{id}/edit', [
+      'as' => 'image.edit',
+      'uses' => 'ImageController@edit'
+    ]);
+
+    Route::post('/{id}/comment', [
+      'as' => 'image.comment',
+      'uses' => 'CommentImageController@postComment'
+    ]);
+  });
 });

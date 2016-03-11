@@ -19,12 +19,12 @@
                   <b><i class="fa fa-frown-o"></i> Opps!</b>
                   <ul>
                     @foreach($errors->all() as $error)
-                      <li>{!! $error !!}</li> 
+                      <li>{!! $error !!}</li>
                     @endforeach
                   </ul>
                 </div>
               @endif
-              {!! Form::open(['route' => 'album.store', 'method' => 'POST']) !!}
+              {!! Form::open(['route' => ['album.store', \Auth::user()->id], 'method' => 'POST']) !!}
                 <div class="form-group">
                   {!! Form::label('album_name', 'Name') !!}
                   {!! Form::text('album_name', '', ['class' => 'form-control', 'id' => 'album_name']) !!}

@@ -24,7 +24,7 @@
                   </ul>
                 </div>
               @endif
-              {!! Form::open(['route' => 'image.store','files' => true, 'method' => 'POST']) !!}
+              {!! Form::open(['route' => ['image.store', \Auth::user()->id],'files' => true, 'method' => 'POST']) !!}
                 <div class="form-group">
                   {!! Form::label('image_caption', 'Write something...') !!}
                   {!! Form::textarea('image_caption', '', ['class' => 'form-control', 'id' => 'image_caption']) !!}
@@ -48,7 +48,7 @@
                   </div>
                 @endif
                 <div class="form-group">
-                  {!! Form::button('<i class="fa fa-upload"></i> Upload', ['class' => 'btn btn-primary', 'type' => 'submit']) !!}
+                  {!! Form::button('<i class="fa fa-upload"></i> Upload', ['class' => 'btn-main', 'type' => 'submit']) !!}
                   {!! Form::button('<i class="fa fa-refresh"></i> Reset', ['class' => 'btn btn-default', 'type' => 'reset']) !!}
                 </div>
               {!! Form::close() !!}

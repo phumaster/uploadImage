@@ -24,7 +24,7 @@
                   </ul>
                 </div>
               @endif
-              {!! Form::open(['route' => ['album.update', $album->id], 'method' => 'PUT']) !!}
+              {!! Form::open(['route' => ['album.update', $album->user_id, $album->id], 'method' => 'PUT']) !!}
                 <div class="form-group">
                   {!! Form::label('album_name', 'Name') !!}
                   {!! Form::text('album_name', $album->album_name, ['class' => 'form-control', 'id' => 'album_name']) !!}

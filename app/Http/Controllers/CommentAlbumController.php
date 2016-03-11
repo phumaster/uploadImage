@@ -22,8 +22,8 @@ class CommentAlbumController extends Controller
     ];
 
     if(\App\Comment_album::create(array_merge($data, $request->only('comment_content')))) {
-      return redirect()->route('album.show', $id)->with(['message' => 'Your comment has been post']);
+      return redirect()->route('album.show', [$user, $id])->with(['message' => 'Your comment has been post']);
     }
-    return redirect()->route('album.show', $id)->withErrors('Unexpected error!');
+    return redirect()->route('album.show', [$user, $id])->withErrors('Unexpected error!');
   }
 }

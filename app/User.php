@@ -35,9 +35,13 @@ class User extends Model implements AuthenticatableContract,
      *
      * @var array
      */
-    protected $hidden = ['password', 'remember_token'];
+    protected $hidden = ['password', 'remember_token', 'email', 'sex', 'birthday', 'created_at', 'updated_at'];
 
     public function album(){
       return $this->hasMany('App\Album', 'user_id');
+    }
+
+    public function images() {
+      return $this->hasMany('App\Image', 'user_id');
     }
 }
