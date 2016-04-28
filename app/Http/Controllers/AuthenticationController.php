@@ -12,6 +12,9 @@ use App\Http\Controllers\Controller;
 
 class AuthenticationController extends Controller
 {
+    public function __construct() {
+      $this->middleware('guest', ['except' => 'getLogout']);
+    }
     public function getLogin(){
       return view('login');
     }
@@ -28,7 +31,9 @@ class AuthenticationController extends Controller
       $append = [
         'address' => '',
         'description' => '',
-        'password' => bcrypt($request->get('password'))
+        'password' => bcrypt($request->get('password')),
+        'birthday' => '',
+        'sex' => ''
       ];
       if(\App\User::create(array_merge($request->except(['_token', 'confPassword', 'password']), $append))){
         return redirect()->route('login')->with(['message' => 'Create account success. Please login now!']);

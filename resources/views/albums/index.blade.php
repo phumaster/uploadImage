@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('header.title')
-  Album of {!! $user->lastName !!}
+  Album of {!! $user->name !!}
 @endsection
 
 @section('body.content')

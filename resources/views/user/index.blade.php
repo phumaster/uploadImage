@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('header.title')
-  {!! $user->firstName.' '.$user->lastName !!}
+  {!! $user->name !!}
 @endsection
 
 @section('body.content')
@@ -39,7 +39,7 @@
                   <div class="panel-body">
                     <h4><i class="fa fa-link"></i> Basic info</h4>
                     <hr/>
-                    <p><b>Name: </b> {!! $user->firstName.' '.$user->lastName !!}</p>
+                    <p><b>Name: </b> {!! $user->name !!}</p>
                     <p><b>Sex: </b> {!! $user->sex !!}</p>
                     <p><b>Birthday: </b> {!! $user->birthday !!}</p>
                     <hr/>

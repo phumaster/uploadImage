@@ -24,12 +24,11 @@ class RegisterRequest extends Request
     public function rules()
     {
         return [
-            'firstName' => 'required|between:2,32',
-            'lastName' => 'required|between:2,32',
+            'name' => 'required|between:2,32',
             'email' => 'required|email|unique:users',
             'password' => 'required|between:6,60',
             'confPassword' => 'required|between:6,60|same:password',
-            'birthday' => 'required|regex:/^([0-9]+)\/([0-9]+)\/([0-9]{2,4})$/'
+            //'birthday' => 'required|regex:/^([0-9]+)\/([0-9]+)\/([0-9]{2,4})$/'
         ];
     }
 }

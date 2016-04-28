@@ -24,18 +24,14 @@ Route::group(['prefix' => 'accounts/{account_id}'], function () {
     });
 });
 
-Route::get('/this-is-my-love', function() {
-  return 'This is my love!';
-});
-
 /*
 * @Admin routes
 */
 
-Route::group(['prefix' => 'admin'], function(){
-  Route::get('/', function(){
-    return public_path();
-  });
+Route::group(['prefix' => 'admin', 'middleware' => 'role:author'], function(){
+  Route::get('/',[
+    'uses' => 'Test@test'
+  ]);
 });
 
 /*

@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-md-12">
       <h4><i class="fa fa-link fa-fw"></i> Full name</h4>
-      <p>{!! $user->firstName.' '.$user->lastName !!}</p>
+      <p>{!! $user->name !!}</p>
       <hr>
       <h4><i class="fa fa-link fa-fw"></i> Email</h4>
       <p>{!! $user->email !!}</p>

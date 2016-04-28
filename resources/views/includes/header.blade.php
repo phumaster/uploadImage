@@ -25,7 +25,7 @@
                       <a class="show-menu link"><i class="fa fa-bars fa-fw"></i></a>
                     </div>
                     <div class="sub-menu">
-                      <a href="{!! route('user.profile', \Auth::user()->id) !!}"><i class="fa fa-user"></i> <b>{!! \Auth::user()->firstName.' '.\Auth::user()->lastName !!}</b></a>
+                      <a href="{!! route('user.profile', \Auth::user()->id) !!}"><i class="fa fa-user"></i> <b>{!! \Auth::user()->name !!}</b></a>
                       <a href="{!! route('album.index', \Auth::user()->id) !!}"><i class="fa fa-bolt"></i> Album</a>
                       <a href="{!! route('image.index', \Auth::user()->id) !!}"><i class="fa fa-picture-o"></i> All photos</a>
                       <a href="{!! route('logout') !!}" onclick="return confirm('Do you want to logout?')"><i class="fa fa-sign-out fa-fw"></i> Logout</a>

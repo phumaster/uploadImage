@@ -26,12 +26,8 @@ Register
             @endif
             {!! Form::open(['route' => 'register', 'method' => 'POST']) !!}
               <div class="form-group">
-                {!! Form::label('firstName', 'First name') !!}
-                {!! Form::text('firstName', '' , ['class' => 'form-control', 'id' => 'firstName']) !!}
-              </div>
-              <div class="form-group">
-                {!! Form::label('lastName', 'Last name') !!}
-                {!! Form::text('lastName', '', ['class' => 'form-control', 'id' => 'lastName']) !!}
+                {!! Form::label('name', 'Name') !!}
+                {!! Form::text('name', '' , ['class' => 'form-control', 'id' => 'name']) !!}
               </div>
               <div class="form-group">
                 {!! Form::label('email', 'Email address') !!}
@@ -44,22 +40,6 @@ Register
               <div class="form-group">
                 {!! Form::label('confPassword', 'Confirm password') !!}
                 {!! Form::password('confPassword', ['class' => 'form-control', 'id' => 'confPassword']) !!}
-              </div>
-              <div class="form-group">
-                {!! Form::label('sex', 'Sex') !!}
-                {!!
-                  Form::select('sex', [
-                    'male' => 'Male',
-                    'female' => 'Female',
-                    'gay' => 'Gay',
-                    'lesbian' => 'Lesbian',
-                    'bisexual' => 'Bisexual'
-                  ], null, ['class' => 'form-control', 'title' => 'Select your sex...'])
-                !!}
-              </div>
-              <div class="form-group">
-                {!! Form::label('birthday', 'Birthday') !!}
-                {!! Form::text('birthday', '', ['class' => 'form-control', 'id' => 'birthday']) !!}
               </div>
               <div class="form-group">
                 {!! Form::button('<i class="fa fa-check"></i> Register', ['class' => 'btn btn-primary', 'type' => 'submit']) !!}

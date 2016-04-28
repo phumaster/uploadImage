@@ -134,10 +134,6 @@ body {
   background:  #2A363B;
 }
 
-.show {
-  display: block;
-}
-
 .list-image {
   position: relative;
 }
@@ -177,7 +173,7 @@ body {
 }
 
 .header-prefix {
-  padding: 10px 0px;
+  padding: auto;
 }
 
 .menu-user {
@@ -188,14 +184,24 @@ body {
 .menu-user .sub-menu {
   position: absolute;
   background: #fff;
+  opacity: 0;
   width: 100%;
-  top: 30px;
+  top: 55px;
   right: 0px;
   min-width: 150px;
   z-index: 999;
-  display: none;
   box-shadow: 2px 3px 4px rgba(0, 0, 0, 0.15);
   border-top: 2px solid #E84A5F;
+  pointer-events: none;
+  transition: all 400ms ease;
+  -moz-transition: all 400ms ease;
+  -webkit-transition: all 400ms ease;
+}
+
+.show {
+  opacity: 1 !important;
+  top: 30px !important;
+  pointer-events: all !important;
 }
 
 .menu-user .sub-menu a {
@@ -391,4 +397,8 @@ body {
 }
 .btn-default {
   border: 0px !important;
+}
+.btn-primary {
+  background-color: #2A363B !important;
+  border-color: #2A363B !important;
 }

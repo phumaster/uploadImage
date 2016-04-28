@@ -37,7 +37,7 @@
                       <div id="file-result" class="text-success" style="padding: 10px 5px"></div>
                     </div>
                     <div class="col-md-6">
-                      <img src="" class="thumbnail" id="preview-thumbnail" style="max-width: 100%" alt="Image preview..."/>
+                      <img src="" class="thumbnail hide" id="preview-thumbnail" style="max-width: 100%" alt="Image preview..."/>
                     </div>
                   </div>
                 </div>
@@ -71,14 +71,12 @@
     }
     if(image) {
       reader.readAsDataURL(image);
+      preview.setAttribute('class', 'thumbnail');
     }else{
       preview.src = "";
     }
-    document.getElementById('file-result').innerHTML = '<div class="panel panel-default">'
-    +'<div class="panel-heading">File detail</div>'
-    +'<div class="panel-body">'
-    +'<p><b>File name:</b> '+name+'</p>'
-    +'<p><b>File size:</b> '+Math.floor(size/1024)+' <b>Kb</b></p>'+'<p><b>File type:</b> '+type+'</p></div></div>';
+    document.getElementById('file-result').innerHTML = '<p><b>File name:</b> '+name+'</p>'
+    +'<p><b>File size:</b> '+Math.floor(size/1024)+' <b>Kb</b></p>'+'<p><b>File type:</b> '+type+'</p>';
   }
   document.getElementById('image').addEventListener('change', changeImage, false);
   </script>
