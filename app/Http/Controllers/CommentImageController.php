@@ -6,7 +6,13 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+
+// use requests
 use App\Http\Requests\PostCommentImageRequest;
+
+// use models
+use Auth;
+use Comment_image;
 
 class CommentImageController extends Controller
 {
@@ -21,7 +27,7 @@ class CommentImageController extends Controller
         'image_id' => $id
       ];
 
-      if(\App\Comment_image::create(array_merge($request->except('_token'), $data))) {
+      if(Comment_image::create(array_merge($request->except('_token'), $data))) {
         return redirect()->route('image.show', [$user, $id])->with(['message' => 'Your comment has been post']);
       }
       return redirect()->route('image.show', [$user, $id])->withErrors('Unexpected errors');

@@ -6,7 +6,17 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+
+// use requests
 use App\Http\Requests\CreateAlbumRequest;
+
+// use models
+use Auth;
+use App\User;
+use App\Image;
+use App\Album;
+use App\Comment_image;
+use App\Comment_album;
 
 class AlbumController extends Controller
 {
@@ -21,10 +31,10 @@ class AlbumController extends Controller
      */
     public function index($user, Request $request)
     {
-        $user_data = \App\User::find($user);
+        $user_data = User::find($user);
         $alb = $user_data->album()->get()->toArray();
         foreach ($alb as $album) {
-          $images['images'] = \App\Album::find($album['id'])->images()->get()->toArray();
+          $images['images'] = Album::find($album['id'])->images()->get()->toArray();
           $albums[] = array_merge($album, $images);
         }
 
@@ -58,7 +68,7 @@ class AlbumController extends Controller
     public function store(CreateAlbumRequest $request, $user)
     {
         $resource['user_id'] = $user;
-        return \App\Album::create(array_merge($request->except(['_token']), $resource)) ? redirect()->route('album.index', $user)->with(['message' => 'Album created!']) : redirect()->route('album.index', $user)->withErrors('Unexpected error!');
+        return Album::create(array_merge($request->except(['_token']), $resource)) ? redirect()->route('album.index', $user)->with(['message' => 'Album created!']) : redirect()->route('album.index', $user)->withErrors('Unexpected error!');
     }
 
     /**
@@ -69,7 +79,7 @@ class AlbumController extends Controller
      */
     public function show($user ,$id)
     {
-        $album = \App\Album::where(['id' => $id, 'user_id' => $user])->get()->first();
+        $album = Album::where(['id' => $id, 'user_id' => $user])->get()->first();
         if(count($album) <= 0) {
           return redirect()->route('album.index', $user)->withErrors('No album available.');
         }
@@ -87,7 +97,7 @@ class AlbumController extends Controller
      */
     public function edit($user, $id)
     {
-        $data['album'] = \App\Album::where(['id' => $id, 'user_id' => $user])->get()->first();
+        $data['album'] = Album::where(['id' => $id, 'user_id' => $user])->get()->first();
 
         if(count($data['album']) <= 0) {
           return redirect()->route('album.index', $user)->withErrors('No album available.');
@@ -104,8 +114,8 @@ class AlbumController extends Controller
      */
     public function update(Request $request, $user, $id)
     {
-        $user_id = \Auth::user()->id;
-        if(\App\Album::whereRaw("`id` = {$id} AND `user_id` = {$user_id}")->update($request->except(['_method', '_token']))) {
+        $user_id = Auth::user()->id;
+        if(Album::whereRaw("`id` = {$id} AND `user_id` = {$user_id}")->update($request->except(['_method', '_token']))) {
           return redirect()->route('album.index', $user)->with(['message' => 'Album has been update.']);
         }
         return redirect()->route('album.edit', [$user, $id])->withErrors('Unexpected error!');
@@ -119,27 +129,27 @@ class AlbumController extends Controller
      */
     public function destroy($user, $id)
     {
-      $album = \App\Album::where(['id' => $id, 'user_id' => $user]);
+      $album = Album::where(['id' => $id, 'user_id' => $user]);
       $is_del = true;
       if(count($album->get()->toArray())) {
-        $images = \App\Album::find($id);
+        $images = Album::find($id);
         if(count($images) > 0) {
           $images = $images->images()->get()->toArray();
           foreach($images as $image) {
-            $comment_img = \App\Comment_image::where('image_id', $image['id']);
+            $comment_img = Comment_image::where('image_id', $image['id']);
             if(count($comment_img->get()->toArray())) {
               if(false == $comment_img->delete()) {
                 $is_del = false;
               }
             }
-            if(false == unlink(public_path().'/'.$image['image_url']) || false == \App\Image::destroy($image['id'])) {
+            if(false == unlink(public_path().'/'.$image['image_url']) || false == Image::destroy($image['id'])) {
               $is_del = false;
               break;
             }
           }
         }
         $album_id = $album->get()->first()->id;
-        $comment = \App\Comment_album::where('album_id', $album_id);
+        $comment = Comment_album::where('album_id', $album_id);
 
         if(count($comment->get()->toArray())) {
           if(false == $comment->delete()) {

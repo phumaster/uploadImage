@@ -6,9 +6,15 @@ use Illuminate\Http\Request;
 
 use Auth;
 use App\Http\Requests;
+use App\Http\Controllers\Controller;
+
+// use requests
 use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\LoginRequest;
-use App\Http\Controllers\Controller;
+
+// use models
+use App\User;
+use App\UserRole;
 
 class AuthenticationController extends Controller
 {
@@ -35,8 +41,11 @@ class AuthenticationController extends Controller
         'birthday' => '',
         'sex' => ''
       ];
-      if(\App\User::create(array_merge($request->except(['_token', 'confPassword', 'password']), $append))){
-        return redirect()->route('login')->with(['message' => 'Create account success. Please login now!']);
+      if($user = User::create(array_merge($request->except(['_token', 'confPassword', 'password']), $append))){
+        if(UserRole::create(['user_id' => $user->id, 'role_id' => 3])) {
+          return redirect()->route('login')->with(['message' => 'Create account success. Please login now!']);
+        }
+        return redirect()->route('register')->withErrors('Grant permission failed!');
       }
       return redirect()->route('register')->withErrors('Unexpected error!');
     }

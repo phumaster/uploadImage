@@ -21,6 +21,7 @@ class CreateAlbumTable extends Migration
             $table->integer('views')->nullable()->default(0);
             $table->integer('user_id');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

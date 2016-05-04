@@ -6,7 +6,16 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+
+// use requests0
 use App\Http\Requests\UploadImageRequest;
+
+// use models
+use Auth;
+use App\User;
+use App\Image;
+use App\Album;
+use App\Comment_image;
 
 class ImageController extends Controller
 {
@@ -23,7 +32,7 @@ class ImageController extends Controller
      */
     public function index($user, Request $request)
     {
-        $data['images'] = \App\Image::where('user_id', $user)->paginate(10);
+        $data['images'] = Image::where('user_id', $user)->paginate(10);
         if($request->ajax()) {
           return json_encode($data);
         }
@@ -37,7 +46,7 @@ class ImageController extends Controller
      */
     public function create($user)
     {
-        $albums = \App\User::find(\Auth::user()->id)->album()->get()->toArray();
+        $albums = User::find(\Auth::user()->id)->album()->get()->toArray();
         foreach ($albums as $key => $value) {
           $data['albums'][$value['id']] = $value['album_name'];
         }
@@ -54,8 +63,8 @@ class ImageController extends Controller
      */
     public function store(UploadImageRequest $request, $user)
     {
-        $id = \Auth::user()->id;
-        $auth = \Auth::user()->email;
+        $id = Auth::user()->id;
+        $auth = Auth::user()->email;
         $resource = $request->except(['_token', 'image']);
 
         //dd($request->file('image'));
@@ -68,7 +77,7 @@ class ImageController extends Controller
             'user_id' => $id
           ];
 
-          if(!$album = \App\Album::create($data_album)) {
+          if(!$album = Album::create($data_album)) {
             return redirect()->route('image.create', $user)->withErrors('Unexpected error!');
           }
 
@@ -93,7 +102,7 @@ class ImageController extends Controller
             'image_url' => $path.'/'.$imageName
           ];
 
-          if($file->move($destination, $imageName) && \App\Image::create(array_merge($resource, $image))) {
+          if($file->move($destination, $imageName) && Image::create(array_merge($resource, $image))) {
             return redirect()->route('image.index', $user)->with(['message' => 'Your image has been upload!']);
           }
 
@@ -109,15 +118,15 @@ class ImageController extends Controller
      */
     public function show($user, $id)
     {
-        $image = \App\Image::where(['id' => $id, 'user_id' => $user])->get()->first();
+        $image = Image::where(['id' => $id, 'user_id' => $user])->get()->first();
 
         if(count($image) <= 0) {
           return redirect()->route('image.index')->withErrors('No image to show.');
         }
 
-        $user_data = \App\Image::find($id)->user()->get()->first();
-        $album = \App\Image::find($id)->album()->get()->first();
-        $comments = \App\Image::find($id)->comments()->get();
+        $user_data = Image::find($id)->user()->get()->first();
+        $album = Image::find($id)->album()->get()->first();
+        $comments = Image::find($id)->comments()->get();
 
         $data['image'] = $image;
         $data['user'] = $user_data;
@@ -135,8 +144,8 @@ class ImageController extends Controller
      */
     public function edit($user, $id)
     {
-        $data['image'] = \App\Image::find($id);
-        $albums = \App\User::find(\Auth::user()->id)->album()->get()->toArray();
+        $data['image'] = Image::find($id);
+        $albums = User::find(Auth::user()->id)->album()->get()->toArray();
         foreach ($albums as $key => $value) {
           $data['albums'][$value['id']] = $value['album_name'];
         }
@@ -156,9 +165,9 @@ class ImageController extends Controller
      */
     public function update(Request $request, $user, $id)
     {
-      $data = \App\Image::find($id);
-      $user_id = \Auth::user()->id;
-      $auth = \Auth::user()->email;
+      $data = Image::find($id);
+      $user_id = Auth::user()->id;
+      $auth = Auth::user()->email;
       $resource = $request->except(['_token', 'image', '_method']);
 
       if($request->hasFile('image')) {
@@ -179,13 +188,13 @@ class ImageController extends Controller
         ];
 
 
-        if(unlink(public_path().'/'.$data->image_url) && $file->move($destination, $imageName) && \App\Image::whereRaw("`id` = {$id} AND `user_id` = {$user_id}")->update(array_merge($resource, $image))) {
+        if(unlink(public_path().'/'.$data->image_url) && $file->move($destination, $imageName) && Image::whereRaw("`id` = {$id} AND `user_id` = {$user_id}")->update(array_merge($resource, $image))) {
           return redirect()->route('image.index', $user)->with(['message' => 'Your image has been update!']);
         }
 
       }
 
-      if(\App\Image::whereRaw("`id` = {$id} AND `user_id` = {$user_id}")->update($resource)) {
+      if(Image::whereRaw("`id` = {$id} AND `user_id` = {$user_id}")->update($resource)) {
         return redirect()->route('image.index', $user)->with(['message' => 'Your image has been update!']);
       }
       return redirect()->route('image.edit', [$user, $id])->withErrors('Unexpected error!');
@@ -199,10 +208,10 @@ class ImageController extends Controller
      */
     public function destroy($user, $id)
     {
-        $image = \App\Image::where(['id' => $id, 'user_id' => $user]);
+        $image = Image::where(['id' => $id, 'user_id' => $user]);
         if(count($image->get()->toArray()) > 0) {
-          if(count(\App\Comment_image::find($id)) > 0){
-            \App\Comment_image::where('image_id', $id)->delete();
+          if(count(Comment_image::find($id)) > 0){
+            Comment_image::where('image_id', $id)->delete();
           }
           if(unlink(public_path().'/'.$image->get()->first()->image_url) && $image->delete()) {
             return redirect()->route('image.index', $user)->with(['message' => 'The image has been delete.']);

@@ -25,6 +25,7 @@ class CreateImagesTable extends Migration
             $table->integer('make_as_profile_picture')->default(0);
             $table->integer('make_as_cover_photo')->default(0);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -28,7 +28,7 @@ Route::group(['prefix' => 'accounts/{account_id}'], function () {
 * @Admin routes
 */
 
-Route::group(['prefix' => 'admin', 'middleware' => 'role:author'], function(){
+Route::group(['prefix' => 'admin', 'middleware' => 'role:admin'], function(){
   Route::get('/',[
     'uses' => 'Test@test'
   ]);

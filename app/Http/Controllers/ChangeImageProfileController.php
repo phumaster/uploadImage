@@ -6,8 +6,15 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+
+// use requests
 use App\Http\Requests\UpdateProfilePictureRequest;
 use App\Http\Requests\UpdateCoverPhotoRequest;
+
+// use models
+use App\User;
+use App\Album;
+use App\Image;
 
 class ChangeImageProfileController extends Controller
 {
@@ -15,17 +22,17 @@ class ChangeImageProfileController extends Controller
 
     public function __construct(Request $request) {
       $this->middleware('auth');
-      $this->user = \App\User::find($request->user()->id);
+      $this->user = User::find($request->user()->id);
     }
 
     public function changeProfilePicture($user, UpdateProfilePictureRequest $request) {
       if($request->hasFile('image')) {
         $file = $request->file('image');
-        $album = \App\Album::where('album_name', 'Profile picture')->get()->first();
+        $album = Album::where('album_name', 'Profile picture')->get()->first();
         if(count($album)) {
           $albumId = $album->id;
         }else{
-          if($newAlbum = \App\Album::create([
+          if($newAlbum = Album::create([
             'album_name' => 'Profile picture',
             'album_title' => 'Profile picture',
             'album_description' => '',
@@ -54,12 +61,12 @@ class ChangeImageProfileController extends Controller
           'album_id' => $albumId,
           'make_as_profile_picture' => 1
         ];
-        $changeImage = \App\Image::find($this->hasProfilePicture($this->user->id));
+        $changeImage = Image::find($this->hasProfilePicture($this->user->id));
         if(!is_null($changeImage)) {
           $changeImage->make_as_profile_picture = 0;
           $changeImage->save();
         }
-        if($file->move($destination, $imageName) && \App\Image::create($imageArr)) {
+        if($file->move($destination, $imageName) && Image::create($imageArr)) {
           $data['errors'] = 0;
           $data['msg'] = 'Your profile picture has been change!';
           $data['imageUrl'] = url($imageUrl);
@@ -72,11 +79,11 @@ class ChangeImageProfileController extends Controller
     public function changeCoverPhoto($user, UpdateCoverPhotoRequest $request) {
       if($request->hasFile('image')) {
         $file = $request->file('image');
-        $album = \App\Album::where('album_name', 'Cover photos')->get()->first();
+        $album = Album::where('album_name', 'Cover photos')->get()->first();
         if(count($album)) {
           $albumId = $album->id;
         }else{
-          if($newAlbum = \App\Album::create([
+          if($newAlbum = Album::create([
             'album_name' => 'Cover photos',
             'album_title' => 'Cover photos',
             'album_description' => '',
@@ -105,12 +112,12 @@ class ChangeImageProfileController extends Controller
           'album_id' => $albumId,
           'make_as_cover_photo' => 1
         ];
-        $changeImage = \App\Image::find($this->hasCoverPhoto($this->user->id));
+        $changeImage = Image::find($this->hasCoverPhoto($this->user->id));
         if(!is_null($changeImage)) {
           $changeImage->make_as_cover_photo = 0;
           $changeImage->save();
         }
-        if($file->move($destination, $imageName) && \App\Image::create($imageArr)) {
+        if($file->move($destination, $imageName) && Image::create($imageArr)) {
           $data['errors'] = 0;
           $data['msg'] = 'Your cover photo has been change!';
           $data['imageUrl'] = url($imageUrl);
@@ -121,12 +128,12 @@ class ChangeImageProfileController extends Controller
     }
 
     private function hasProfilePicture($user_id) {
-      $need = \App\Image::where(['user_id' => $user_id, 'make_as_profile_picture' => 1])->get()->first();
+      $need = Image::where(['user_id' => $user_id, 'make_as_profile_picture' => 1])->get()->first();
       return ($need) ? $need->id : null;
     }
 
     private function hasCoverPhoto($user_id) {
-      $need = \App\Image::where(['user_id' => $user_id, 'make_as_cover_photo' => 1])->get()->first();
+      $need = Image::where(['user_id' => $user_id, 'make_as_cover_photo' => 1])->get()->first();
       return ($need) ? $need->id : null;
     }
 }
