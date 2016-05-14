@@ -9,20 +9,20 @@
     <div class="container">
       <div class="user-view-profile">
         <div class="user-header">
-          <div class="cover-photo"
-          @if(!is_null($cover))
-            style="background: url({!! url($cover->image_url) !!}) no-repeat;"
+          <div class="cover-photo bg-cover"
+          @if(!is_null($user->getCoverPhotoUrl()))
+            style="background: url({!! url($user->getCoverPhotoUrl()) !!}) no-repeat;"
           @endif
             >
             <div class="box-cover">
-              @if(is_null($profile))
+              @if(is_null($user->getProfilePictureUrl()))
                 <a class="btn btn-primary btn-sm" href="javascript:;" onclick="popup.profile();" id="update-profile-picture">Update profile picture</a>
               @else
-                <img src="{!! asset($profile->image_url) !!}" class="profile-picture" alt="Avatar">
+                <img src="{!! asset($user->getProfilePictureUrl()) !!}" class="profile-picture" alt="Avatar">
               @endif
             </div>
             <div class="edit-option">
-              @if(!is_null($profile))
+              @if(!is_null($user->getCoverPhotoUrl()))
                 <a class="btn-main btn-sm" href="javascript:;" onclick="popup.profile();" id="update-profile-picture">Update profile picture</a>
               @endif
               <a class="btn-main btn-sm" href="javascript:;" onclick="popup.cover()" id="update-cover-photo">Update cover photo</a>

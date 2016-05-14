@@ -35,14 +35,14 @@ class User extends Model implements AuthenticatableContract,
      *
      * @var array
      */
-    protected $fillable = ['name', 'email', 'password', 'sex', 'address', 'birthday', 'description'];
+    protected $fillable = ['name', 'email', 'password', 'sex', 'address', 'birthday', 'description', 'friends'];
 
     /**
      * The attributes excluded from the model's JSON form.
      *
      * @var array
      */
-    protected $hidden = ['password', 'remember_token', 'email', 'sex', 'birthday', 'created_at', 'updated_at'];
+    protected $hidden = ['password', 'remember_token', 'email', 'sex', 'birthday', 'created_at', 'updated_at', 'deleted_at'];
 
     public function album(){
       return $this->hasMany('App\Album', 'user_id');
@@ -56,12 +56,17 @@ class User extends Model implements AuthenticatableContract,
       return $this->belongsToMany('App\Role', 'user_roles', 'role_id', 'user_id');
     }
 
-    public function hasAnyRole($role) {
-      if(null == $role) {
-        return false;
-      }
-      if($this->hasRole($role)) {
-        return true;
+    public function hasAnyRole($roles) {
+      if(is_array($roles)) {
+        foreach($roles as $role) {
+          if($this->hasRole($role)) {
+            return true;
+          }
+        }
+      }else{
+        if($this->hasRole($roles)) {
+          return true;
+        }
       }
       return false;
     }
@@ -71,5 +76,19 @@ class User extends Model implements AuthenticatableContract,
         return true;
       }
       return false;
+    }
+
+    public function getProfilePictureUrl() {
+      $image = $this->images()->where('make_as_profile_picture', 1)->first();
+      return is_null($image) ? null : $image->image_url;
+    }
+
+    public function getCoverPhotoUrl() {
+      $image = $this->images()->where('make_as_cover_photo', 1)->first();
+      return is_null($image) ? null : $image->image_url;
+    }
+
+    public function friends() {
+      return $this->find(json_decode($this->friends));
     }
 }

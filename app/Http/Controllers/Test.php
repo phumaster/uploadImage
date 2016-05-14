@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 class Test extends Controller
 {
     public function test(Request $request) {
-      dd($request->user()->hasAnyRole('author'));
+      dd($request->user()->friends());
+      //dd($request->user()->hasAnyRole('author'));
     }
 }

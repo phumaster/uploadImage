@@ -22,13 +22,20 @@ class ChangeImageProfileController extends Controller
 
     public function __construct(Request $request) {
       $this->middleware('auth');
-      $this->user = User::find($request->user()->id);
+      $this->user = User::find($request->user() ? $request->user()->id : NULL);
+
+      if(!file_exists(public_path().'/upload')) {
+        mkdir(public_path().'/upload');
+      }
+      if(!file_exists(public_path().'/upload/images/')) {
+        mkdir(public_path().'/upload/images');
+      }
     }
 
     public function changeProfilePicture($user, UpdateProfilePictureRequest $request) {
       if($request->hasFile('image')) {
         $file = $request->file('image');
-        $album = Album::where('album_name', 'Profile picture')->get()->first();
+        $album = Album::where(['album_name' => 'Profile picture', 'user_id' => $this->user->id])->get()->first();
         if(count($album)) {
           $albumId = $album->id;
         }else{
@@ -79,7 +86,7 @@ class ChangeImageProfileController extends Controller
     public function changeCoverPhoto($user, UpdateCoverPhotoRequest $request) {
       if($request->hasFile('image')) {
         $file = $request->file('image');
-        $album = Album::where('album_name', 'Cover photos')->get()->first();
+        $album = Album::where(['album_name' => 'Cover photos', 'user_id' => $this->user->id])->get()->first();
         if(count($album)) {
           $albumId = $album->id;
         }else{

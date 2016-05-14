@@ -402,3 +402,9 @@ body {
   background-color: #2A363B !important;
   border-color: #2A363B !important;
 }
+.bg-cover {
+  background-size: cover !important;
+  -o-background-size: cover !important;
+  -moz-background-size: cover !important;
+  -webkit-background-size: cover !important;
+}

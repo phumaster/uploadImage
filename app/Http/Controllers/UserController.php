@@ -18,8 +18,6 @@ class UserController extends Controller
 
     public function index($user, Request $request) {
       $data['user'] = User::find($user);
-      $data['profile'] = Image::where(['user_id' => $data['user']->id, 'make_as_profile_picture' => 1])->get()->first();
-      $data['cover'] = Image::where(['user_id' => $data['user']->id, 'make_as_cover_photo' => 1])->get()->first();
       if($request->ajax()) {
         return view('user.info', $data);
       }

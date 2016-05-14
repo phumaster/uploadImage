@@ -63,6 +63,13 @@ class ImageController extends Controller
      */
     public function store(UploadImageRequest $request, $user)
     {
+        if(!file_exists(public_path().'/upload')) {
+          mkdir(public_path().'/upload');
+        }
+        if(!file_exists(public_path().'/upload/images/')) {
+          mkdir(public_path().'/upload/images');
+        }
+
         $id = Auth::user()->id;
         $auth = Auth::user()->email;
         $resource = $request->except(['_token', 'image']);
@@ -118,14 +125,14 @@ class ImageController extends Controller
      */
     public function show($user, $id)
     {
-        $image = Image::where(['id' => $id, 'user_id' => $user])->get()->first();
+        $image = Image::where(['id' => $id, 'user_id' => $user])->first();
 
         if(count($image) <= 0) {
           return redirect()->route('image.index')->withErrors('No image to show.');
         }
 
-        $user_data = Image::find($id)->user()->get()->first();
-        $album = Image::find($id)->album()->get()->first();
+        $user_data = Image::find($id)->user()->first();
+        $album = Image::find($id)->album()->first();
         $comments = Image::find($id)->comments()->get();
 
         $data['image'] = $image;
