@@ -26,7 +26,10 @@ class AuthenticationController extends Controller
     }
 
     public function postLogin(LoginRequest $request){
-      return Auth::attempt($request->only(['email', 'password'])) ? redirect('/') : redirect()->route('login')->withErrors('The email or password wrong!');
+      if(Auth::attempt($request->only(['email', 'password']))){
+         return $request->ajax() ? json_encode(['error' => 0]) : redirect('/');
+      }
+      return $request->ajax() ? json_encode(['error' => 1, 'message' => 'The email or password wrong!']) : redirect()->route('login')->withErrors('The email or password wrong!');
     }
 
     public function getRegister(){
@@ -42,15 +45,14 @@ class AuthenticationController extends Controller
         'sex' => ''
       ];
       if($user = User::create(array_merge($request->except(['_token', 'confPassword', 'password']), $append))){
-        if(UserRole::create(['user_id' => $user->id, 'role_id' => 3])) {
-          return redirect()->route('login')->with(['message' => 'Create account success. Please login now!']);
-        }
-        return redirect()->route('register')->withErrors('Grant permission failed!');
+        $user->role()->attach($user->id, ['role_id' => 3]);
+        return $request->ajax() ? json_encode(['error' => 0, 'forceLogin' => 1, 'message' => 'Create account success. Please login now!']) : redirect()->route('login')->with(['message' => 'Create account success. Please login now!']);
       }
-      return redirect()->route('register')->withErrors('Unexpected error!');
+      return $request->ajax() ? json_encode(['error' => 1, 'message' => 'unexpected error!']) : redirect()->route('register')->withErrors('Unexpected error!');
     }
 
     public function getLogout(){
-      return Auth::logout() ? redirect('/') : redirect('/');
+      Auth::logout();
+      return redirect('/');
     }
 }

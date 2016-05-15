@@ -15,7 +15,12 @@ class UpdateProfilePictureRequest extends Request
      */
     public function authorize()
     {
-        return true;
+        $routeParam = isset(Request::route()->user) ? Request::route()->user : null;
+        $id = $this->user;
+        if($routeParam == $id) {
+          return true;
+        }
+        return redirect()->back();
     }
 
     /**

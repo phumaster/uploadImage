@@ -13,7 +13,12 @@ class UploadImageRequest extends Request
      */
     public function authorize()
     {
+      $routeParam = isset(Request::route()->user) ? Request::route()->user : null;
+      $id = $this->user;
+      if($routeParam == $id) {
         return true;
+      }
+      return redirect()->back();
     }
 
     /**

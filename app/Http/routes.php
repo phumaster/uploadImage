@@ -13,9 +13,10 @@
 
 // Index
 
-Route::get('/', function () {
-    return view('helloworld');
-});
+Route::get('/', [
+  'as' => 'non-authorize',
+  'uses' => 'IndexController@index'
+]);
 
 Route::group(['prefix' => 'accounts/{account_id}'], function () {
     Route::get('detail', function ($account_id)    {

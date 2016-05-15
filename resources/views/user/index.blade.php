@@ -15,18 +15,16 @@
           @endif
             >
             <div class="box-cover">
-              @if(is_null($user->getProfilePictureUrl()))
-                <a class="btn btn-primary btn-sm" href="javascript:;" onclick="popup.profile();" id="update-profile-picture">Update profile picture</a>
-              @else
+              @if(!is_null($user->getProfilePictureUrl()))
                 <img src="{!! asset($user->getProfilePictureUrl()) !!}" class="profile-picture" alt="Avatar">
               @endif
             </div>
+            @if($user->isAuthor($user->id))
             <div class="edit-option">
-              @if(!is_null($user->getCoverPhotoUrl()))
-                <a class="btn-main btn-sm" href="javascript:;" onclick="popup.profile();" id="update-profile-picture">Update profile picture</a>
-              @endif
+              <a class="btn-main btn-sm" href="javascript:;" onclick="popup.profile();" id="update-profile-picture">Update profile picture</a>
               <a class="btn-main btn-sm" href="javascript:;" onclick="popup.cover()" id="update-cover-photo">Update cover photo</a>
             </div>
+            @endif
           </div><!-- End cover-photo -->
         </div><!-- End user-header -->
         @include('includes.navbar-user-profile')

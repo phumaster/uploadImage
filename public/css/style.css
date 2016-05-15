@@ -36,6 +36,7 @@ body {
 .logo-header .logo {
   filter: grayscale(100%);
   -webkit-filter: grayscale(100%);
+  padding-top: 5px;
 }
 .logo-header .logo:hover {
   filter: grayscale(0%);
@@ -184,24 +185,14 @@ body {
 .menu-user .sub-menu {
   position: absolute;
   background: #fff;
-  opacity: 0;
+  display: none;
   width: 100%;
-  top: 55px;
+  top: 50px;
   right: 0px;
   min-width: 150px;
   z-index: 999;
   box-shadow: 2px 3px 4px rgba(0, 0, 0, 0.15);
   border-top: 2px solid #E84A5F;
-  pointer-events: none;
-  transition: all 400ms ease;
-  -moz-transition: all 400ms ease;
-  -webkit-transition: all 400ms ease;
-}
-
-.show {
-  opacity: 1 !important;
-  top: 30px !important;
-  pointer-events: all !important;
 }
 
 .menu-user .sub-menu a {
@@ -232,12 +223,6 @@ body {
   height: 0;
   width: 0;
 }
-
-.user-profile {
-  padding: 10px 0px;
-}
-
-
 .list-image-all .image-grid {
   width: 24.7%;
   display: inline-block;
@@ -407,4 +392,27 @@ body {
   -o-background-size: cover !important;
   -moz-background-size: cover !important;
   -webkit-background-size: cover !important;
+}
+.logo-user {
+  width: 26px;
+}
+
+.header-navigation {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  top: -7px;
+}
+
+.header-navigation li {
+  display: inline-block;
+}
+
+.header-navigation li a {
+  padding: 5px;
+  display: block;
+}
+.header-navigation li:first-child {
+  border-right: 1px solid #ccc;
 }

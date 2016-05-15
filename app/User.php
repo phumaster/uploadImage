@@ -11,6 +11,7 @@ use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Auth;
 
 class User extends Model implements AuthenticatableContract,
                                     AuthorizableContract,
@@ -90,5 +91,13 @@ class User extends Model implements AuthenticatableContract,
 
     public function friends() {
       return $this->find(json_decode($this->friends));
+    }
+
+    public function isAuthor($user) {
+      return $user == Auth::user()->id;
+    }
+
+    public function isAdmin() {
+      return $this->hasAnyRole('admin');
     }
 }

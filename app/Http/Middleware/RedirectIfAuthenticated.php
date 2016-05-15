@@ -35,7 +35,7 @@ class RedirectIfAuthenticated
     public function handle($request, Closure $next)
     {
         if ($this->auth->check()) {
-            return redirect('/');
+            return $request->ajax() ? json_encode(['error' => 1, 'message' => 'You\'re logged in']) : redirect('/');
         }
 
         return $next($request);
