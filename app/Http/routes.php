@@ -18,12 +18,13 @@ Route::get('/', [
   'uses' => 'IndexController@index'
 ]);
 
-Route::group(['prefix' => 'accounts/{account_id}'], function () {
-    Route::get('detail', function ($account_id)    {
-        // Matches The accounts/{account_id}/detail URL
-        //dd(\App\Comment_album::where('album_id', '=', 4)->delete());
-    });
-});
+// features
+
+Route::get('/features', [
+  'as' => 'features',
+  'middleware' => 'auth',
+  'uses' => 'FeaturesController@index'
+]);
 
 /*
 * @Admin routes

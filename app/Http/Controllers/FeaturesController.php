@@ -8,13 +8,12 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use Auth;
+use App\User;
 
-class IndexController extends Controller
+class FeaturesController extends Controller
 {
     public function index() {
-      if(!Auth::check()) {
-        return view('helloworld');
-      }
-      return redirect()->route('features');
+      $data['user'] = Auth::user();
+      return view('features', $data);
     }
 }
