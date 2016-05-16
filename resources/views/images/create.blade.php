@@ -34,7 +34,6 @@
                     <div class="col-md-6">
                       {!! Form::label('image', 'Choose an image') !!}
                       {!! Form::file('image', ['id' => 'image', 'class' => '']) !!}
-                      <div id="file-result" class="text-success" style="padding: 10px 5px"></div>
                     </div>
                     <div class="col-md-6">
                       <img src="" class="thumbnail hide" id="preview-thumbnail" style="max-width: 100%" alt="Image preview..."/>
@@ -63,9 +62,9 @@
     var reader = new FileReader();
     var image = document.getElementById('image').files[0];
     var preview = document.getElementById('preview-thumbnail');
-    var name = image.name;
-    var size = image.size;
-    var type = image.type;
+    // var name = image.name;
+    // var size = image.size;
+    // var type = image.type;
     reader.onload = function(){
       preview.src = reader.result;
     }
@@ -75,8 +74,6 @@
     }else{
       preview.src = "";
     }
-    document.getElementById('file-result').innerHTML = '<p><b>File name:</b> '+name+'</p>'
-    +'<p><b>File size:</b> '+Math.floor(size/1024)+' <b>Kb</b></p>'+'<p><b>File type:</b> '+type+'</p>';
   }
   document.getElementById('image').addEventListener('change', changeImage, false);
   </script>

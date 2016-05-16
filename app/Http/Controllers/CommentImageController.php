@@ -12,7 +12,7 @@ use App\Http\Requests\PostCommentImageRequest;
 
 // use models
 use Auth;
-use Comment_image;
+use App\Comment_image;
 
 class CommentImageController extends Controller
 {

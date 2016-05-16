@@ -10,7 +10,8 @@ use App\Http\Controllers\Controller;
 class Test extends Controller
 {
     public function test(Request $request) {
-      dd($request->user()->friends());
-      //dd($request->user()->hasAnyRole('author'));
+      $strTime = '2016-05-15 17:21:02';
+      $time = strtotime($strTime);
+      echo date("d/m/Y - H:i:s" ,$time);
     }
 }

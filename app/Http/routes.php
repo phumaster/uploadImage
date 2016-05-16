@@ -30,7 +30,7 @@ Route::get('/features', [
 * @Admin routes
 */
 
-Route::group(['prefix' => 'admin', 'middleware' => 'roles', 'roles' => [1,2,3]], function(){
+Route::group(['prefix' => 'admin'], function(){
   Route::get('/',[
     'uses' => 'Test@test'
   ]);
@@ -178,6 +178,10 @@ Route::group(['prefix' => '/{user}'], function() {
     Route::post('/{id}/comment', [
       'as' => 'image.comment',
       'uses' => 'CommentImageController@postComment'
+    ]);
+
+    Route::post('/{id}/like', [
+      'as' => 'image.like'
     ]);
   });
 });
