@@ -427,9 +427,6 @@ a {
   padding: 5px;
   display: block;
 }
-.header-navigation li:first-child {
-  border-right: 1px solid #ccc;
-}
 .margin-content {
   margin-top: 60px;
 }
@@ -469,11 +466,10 @@ a {
 }
 .no-post {
   text-align: center;
-  padding: 20px;
   font-size: 18px;
   font-weight: bold;
 }
-.post, .content-right {
+.post, .content-right, .no-post {
   background: #fff;
   box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.15);
   padding: 10px;
@@ -492,4 +488,8 @@ a {
 }
 .form-in-this-post {
   display: none;
+}
+.like, .like:active, .like:focus, .like:hover {
+  font-weight: 700;
+  color: #F25268;
 }

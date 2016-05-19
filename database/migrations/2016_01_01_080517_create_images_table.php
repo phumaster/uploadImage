@@ -18,7 +18,7 @@ class CreateImagesTable extends Migration
             $table->string('image_url');
             $table->string('image_size');
             $table->text('image_caption');
-            $table->integer('likes')->nullable()->default(0);
+            $table->text('likes')->nullable();
             $table->integer('views')->nullable()->default(0);
             $table->integer('user_id');
             $table->integer('album_id');

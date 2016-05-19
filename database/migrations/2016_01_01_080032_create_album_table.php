@@ -17,7 +17,7 @@ class CreateAlbumTable extends Migration
             $table->string('album_name');
             $table->string('album_title');
             $table->text('album_description');
-            $table->integer('likes')->nullable()->default(0);
+            $table->text('likes')->nullable();
             $table->integer('views')->nullable()->default(0);
             $table->integer('user_id');
             $table->timestamps();

@@ -15,7 +15,7 @@ class CreateCommentImageTable extends Migration
         Schema::create('comment_images', function (Blueprint $table) {
             $table->increments('id');
             $table->text('comment_content');
-            $table->integer('likes')->nullable()->default(0);
+            $table->text('likes')->nullable();
             $table->string('comment_status');
             $table->integer('user_id');
             $table->integer('image_id');

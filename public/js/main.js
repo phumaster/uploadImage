@@ -167,6 +167,7 @@ function notification() {
   // working .... But I must sleep :((
 
   this.push = function(message, type = 'success') {
+    this.show();
     var div = document.createElement('DIV');
     var str = document.createTextNode(message);
     if(type == 'success') {

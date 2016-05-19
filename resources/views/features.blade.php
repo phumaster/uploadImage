@@ -32,7 +32,7 @@ Features
       </div><!-- end .col-sm-2 -->
       <div class="col-sm-6">
         <div class="body-content">
-          @if(is_null($posts))
+          @if(count($posts) < 0)
             <div class="no-post">
               <i class="fa fa-fw fa-frown-o fa-2x"></i>
               <br/>
@@ -48,7 +48,7 @@ Features
               </div><!-- end .post-header -->
               <div class="post-body">
                 <div class="text-center">
-                  <a href="{!! route('image.show', [$post->user->id, $post->id]) !!}" class="view-this-post">
+                  <a href="{!! route('image.show', [$post->user_id, $post->id]) !!}" class="view-this-post">
                     <img src="{!! asset($post->image_url) !!}" class="img-responsive"/>
                   </a>
                 </div>
@@ -57,7 +57,7 @@ Features
                 <div><i class="post-time">{!! $post->created_at !!}</i></div>
                 <div class="text-center">
                   <div class="nav-this-post">
-                    <a href="#" class="like-this-post"><i class="fa fa-fw fa-heart-o"></i> {!! count($post->like) > 0 ? count($post->like) : "" !!} like</a> |
+                    <a href="{!! route('image.like', [$post->user_id, $post->id]) !!}" class="like-this-post {!! in_array(\Auth::user()->id, json_decode(is_null($post->likes) ? '[]' : $post->likes, true)) ? 'like' : '' !!}"><i class="fa fa-fw fa-heart-o"></i> {!! count(json_decode($post->likes, true)) > 0 ? count($post->likes) : "" !!} like</a> |
                     <a href="#" class="comment-this-post"><i class="fa fa-fw fa-comment-o"></i> {!! count($post->comments) > 0 ? count($post->comments) : "" !!} comment</a>
                     <div class="form-in-this-post">
                       <hr/>
@@ -96,7 +96,54 @@ Features
 
     $('.comment-this-post').click(function(e) {
       e.preventDefault();
+      var parent = $(this);
       $(this).next('.form-in-this-post').slideToggle().find('.input-comment').focus();
+      $(this).next('.form-in-this-post').find('.form-post-comment').submit(function(e) {
+        e.preventDefault();
+        var elm = $(this);
+        e.preventDefault();
+        $.ajax({
+          method: 'POST',
+          contentType: false,
+          processData: false,
+          url: $(this).attr('action'),
+          data: new FormData(this),
+          success: function(response) {
+            var data = JSON.parse(response);
+            notification.push(data.message, 'success');
+            elm.find('.input-comment').val("");
+            parent.html('<i class="fa fa-fw fa-comment-o"></i> '+data.commentCount+' comment');
+          },
+          error: function(response) {
+            $.each(response.responseJSON, function(i, v) {
+              notification.push(v, 'danger');
+            });
+          }
+        });
+      });
+    });
+
+    $('.like-this-post').click(function(e) {
+      var elm = $(this);
+      e.preventDefault();
+      $.ajax({
+        method: 'POST',
+        url: $(this).attr('href'),
+        data: {'_token':'{!! csrf_token() !!}'},
+        success: function(response) {
+          var data = JSON.parse(response);
+          notification.push(data.message, 'info');
+          elm.html('<i class="fa fa-fw fa-heart-o"></i> '+data.likeCount+' like');
+          if(typeof data.like != "undefined" && data.like == 1) {
+            elm.addClass('like');
+          }else if(typeof data.like != "undefined" && data.like == 0) {
+            elm.removeClass('like');
+          }
+        },
+        error: function(response) {
+          alert("Photo does not exists");
+        }
+      });
     });
   });
 </script>

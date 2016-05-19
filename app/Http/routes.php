@@ -181,7 +181,8 @@ Route::group(['prefix' => '/{user}'], function() {
     ]);
 
     Route::post('/{id}/like', [
-      'as' => 'image.like'
+      'as' => 'image.like',
+      'uses' => 'LikeImageController@index'
     ]);
   });
 });

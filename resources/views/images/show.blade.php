@@ -16,7 +16,7 @@
           </div><!-- End col-md-8 -->
           <div class="col-md-4 image-comment-bg">
             <div class="image-author">
-              <h4><a href="{!! url('/') !!}">{!! $user->firstName.' '.$user->lastName !!}</a></h4>
+              <h4><a href="{!! url('/') !!}">{!! $user->name !!}</a></h4>
             </div>
             {!! Form::open(['route' => ['image.destroy',$image->user_id, $image->id], 'method' => 'DELETE']) !!}
               {!! Form::button('xóa ảnh', ['class' => 'btn-link text-danger', 'type' => 'submit']) !!}
@@ -46,7 +46,7 @@
                 @foreach($comments as $comment)
                   <div class="comment">
                     <p>
-                      <span class="comment-author"><a href="{!! url('/') !!}">{!! $comment->user->firstName.' '.$comment->user->lastName !!}</a></span>
+                      <span class="comment-author"><a href="{!! url('/') !!}">{!! $comment->user->name !!}</a></span>
                       <span class="comment-content">{{ $comment->comment_content }}</span>
                     </p>
                   </div>

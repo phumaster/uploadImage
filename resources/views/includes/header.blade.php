@@ -19,7 +19,8 @@
                       <div id="loading-icon" style="display: inline-block">
                       </div>
                       <ul class="header-navigation">
-                        <li><a href="{!! route('image.create', \Auth::user()->id) !!}" class="link"><i class="fa fa-upload fa-fw"></i></a></li>
+                        <li><a href="{!! route('image.create', \Auth::user()->id) !!}" class="link"><i class="fa fa-cloud-upload fa-fw"></i></a></li>
+                        <li><a href="#" class="link"><i class="fa fa-bell fa-fw"></i></a></li>
                         <li><a href="{!! route('album.index', \Auth::user()->id) !!}" class="link"><i class="fa fa-camera-retro fa-fw visible-xs"></i> <span class="hidden-xs">albums</span></a></li>
                         <li><a href="{!! route('image.index', \Auth::user()->id) !!}" class="link"><i class="fa fa-picture-o fa-fw visible-xs"></i> <span class="hidden-xs">photos</span></a></li>
                         <li><a href="javascript:return;" class="show-menu link"><img src="{!! !is_null(\Auth::user()->getProfilePictureUrl()) ? \Auth::user()->getProfilePictureUrl() : url('images/logo.png') !!}"/ class="logo-user"> <i class="fa fa-fw fa-angle-down"></i></a></li>

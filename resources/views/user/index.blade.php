@@ -148,7 +148,6 @@
             $('.box-cover').html('<img src="" class="profile-picture" alt="Avatar">');
             $('.profile-picture').attr('src', data.imageUrl);
             popup.remove();
-            notification.show();
             notification.push(data.msg, 'success');
             //$('#notification').html('').addClass('text-success').html('<span>'+data.msg+'</span>').show(0).delay(4000).fadeOut(500);
           },
