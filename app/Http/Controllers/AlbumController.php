@@ -79,7 +79,7 @@ class AlbumController extends Controller
      */
     public function show($user ,$id)
     {
-        $album = Album::where(['id' => $id, 'user_id' => $user])->get()->first();
+        $album = Album::where(['id' => $id, 'user_id' => $user])->first();
         if(count($album) <= 0) {
           return redirect()->route('album.index', $user)->withErrors('No album available.');
         }
@@ -97,7 +97,7 @@ class AlbumController extends Controller
      */
     public function edit($user, $id)
     {
-        $data['album'] = Album::where(['id' => $id, 'user_id' => $user])->get()->first();
+        $data['album'] = Album::where(['id' => $id, 'user_id' => $user])->first();
 
         if(count($data['album']) <= 0) {
           return redirect()->route('album.index', $user)->withErrors('No album available.');
@@ -142,7 +142,7 @@ class AlbumController extends Controller
                 $is_del = false;
               }
             }
-            if(false == unlink(public_path().'/'.$image['image_url']) || false == Image::destroy($image['id'])) {
+            if(false == unlink(public_path().'/'.$image['fullsize_url']) || false == Image::destroy($image['id'])) {
               $is_del = false;
               break;
             }

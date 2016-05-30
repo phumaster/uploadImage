@@ -35,7 +35,7 @@
                         {!! Form::button('xóa', ['class' => 'btn btn-danger btn-sm', 'type' => 'submit']) !!}
                       {!! Form::close() !!}
                     </div>
-                    <img src="{!! asset($image->image_url) !!}">
+                    <img src="{!! asset($image->fullsize_url) !!}">
                   </div>
                 </a>
               @endforeach

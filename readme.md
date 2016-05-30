@@ -15,3 +15,11 @@ Project phục vụ quá trình học laravel của mình.
 `git clone git@github.com:phumaster/uploadImage`
 
 `composer install`
+
+## Ý tưởng
+
+Rảnh rỗi muốn tạp một mạng xã hội upload ảnh như instagram
+
+## Created at
+
+`Jan 3, 2016`

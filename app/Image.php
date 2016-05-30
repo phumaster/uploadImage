@@ -13,10 +13,10 @@ class Image extends Model
     * use SoftDeletes
     **/
     protected $dates = ['deleted_at'];
-    
+
     protected $table = 'images';
 
-    protected $fillable = ['id', 'image_name', 'image_url', 'image_size', 'image_caption', 'likes', 'views', 'user_id', 'album_id', 'make_as_cover_photo', 'make_as_profile_picture'];
+    protected $fillable = ['id', 'image_name', 'fullsize_url', 'image_size', 'image_caption', 'likes', 'views', 'user_id', 'album_id', 'make_as_cover_photo', 'make_as_profile_picture'];
 
     public function user() {
       return $this->belongsTo('App\User', 'user_id');

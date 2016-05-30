@@ -36,7 +36,7 @@ class User extends Model implements AuthenticatableContract,
      *
      * @var array
      */
-    protected $fillable = ['name', 'email', 'password', 'sex', 'address', 'birthday', 'description', 'friends'];
+    protected $fillable = ['name', 'email', 'password', 'sex', 'address', 'birthday', 'description', 'friends', 'skip_add_info'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -44,6 +44,10 @@ class User extends Model implements AuthenticatableContract,
      * @var array
      */
     protected $hidden = ['password', 'remember_token', 'email', 'sex', 'birthday', 'created_at', 'updated_at', 'deleted_at'];
+
+    public function messages() {
+      return $this->hasMany('App\Message', 'to');
+    }
 
     public function album(){
       return $this->hasMany('App\Album', 'user_id');
@@ -81,16 +85,24 @@ class User extends Model implements AuthenticatableContract,
 
     public function getProfilePictureUrl() {
       $image = $this->images()->where('make_as_profile_picture', 1)->first();
-      return is_null($image) ? null : $image->image_url;
+      return is_null($image) ? null : $image->fullsize_url;
     }
 
     public function getCoverPhotoUrl() {
       $image = $this->images()->where('make_as_cover_photo', 1)->first();
-      return is_null($image) ? null : $image->image_url;
+      return is_null($image) ? null : $image->fullsize_url;
     }
 
     public function friends() {
       return $this->find(json_decode($this->friends));
+    }
+
+    public function isFriend($user) {
+      $friends = array_keys(json_decode(Auth::user()->friends, true));
+      if(in_array($user, $friends)) {
+        return true;
+      }
+      return false;
     }
 
     public function isAuthor($user) {
@@ -99,5 +111,22 @@ class User extends Model implements AuthenticatableContract,
 
     public function isAdmin() {
       return $this->hasAnyRole('admin');
+    }
+
+    public function hasFriendRequest() {
+      return $this->hasMany('App\FriendShip', 'from');
+    }
+
+    public function isSentRequest($user) {
+      $allFriendRequest = $this->hasFriendRequest()->get();
+      if($allFriendRequest->count() == 0) {
+        return false;
+      }
+      foreach($allFriendRequest as $k) {
+        if($user == $k['to'] && $k['accepted'] == 0) {
+          return true;
+        }
+      }
+      return false;
     }
 }

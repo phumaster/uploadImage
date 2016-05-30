@@ -4,6 +4,7 @@ body {
 
 a {
   outline: none !important;
+  cursor: pointer;
 }
 
 #content {
@@ -249,6 +250,11 @@ a {
   height: inherit;
 }
 
+.image-comment-bg .image-comment {
+  overflow-y: auto;
+  height: 200px;
+}
+
 .user-view-profile {
   box-shadow: 0px 6px 6px rgba(0, 0, 0, 0.15);
   padding: 0px;
@@ -277,6 +283,12 @@ a {
   border: 2px solid rgba(255, 255, 255, 0.15);
   box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.15);
   border-radius: 50%;
+}
+
+.cover-photo .contact-people {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
 }
 
 .user-view-profile .user-body {
@@ -469,7 +481,8 @@ a {
   font-size: 18px;
   font-weight: bold;
 }
-.post, .content-right, .no-post {
+.post, .content-right, .no-post, .card {
+  position: relative;
   background: #fff;
   box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.15);
   padding: 10px;
@@ -492,4 +505,33 @@ a {
 .like, .like:active, .like:focus, .like:hover {
   font-weight: 700;
   color: #F25268;
+}
+
+.fix-margin {
+  margin-top: 80px;
+}
+h4.text-indent {
+  text-indent: 20px;
+}
+
+.suggest-friend .suggest-single-friend {
+  display: inline-block;
+}
+.suggest-friend .suggest-thumbnail {
+  width: 70px;
+  border: 1px solid rgba(0,0,0,0.15);
+  margin-bottom: 5px;
+}
+.display-block {
+  display: block;
+}
+.overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.25);
+  z-index: 10;
+  display: none;
 }

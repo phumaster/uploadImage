@@ -15,7 +15,10 @@ class CreateImagesTable extends Migration
         Schema::create('images', function (Blueprint $table) {
             $table->increments('id');
             $table->string('image_name');
-            $table->string('image_url');
+            $table->string('fullsize_url');
+            $table->string('avatar_url')->nullable();
+            $table->string('cover_url')->nullable();
+            $table->string('show_on_timeline_url')->nullable();
             $table->string('image_size');
             $table->text('image_caption');
             $table->text('likes')->nullable();

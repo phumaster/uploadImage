@@ -14,16 +14,8 @@
 // Index
 
 Route::get('/', [
-  'as' => 'non-authorize',
+  'as' => 'index',
   'uses' => 'IndexController@index'
-]);
-
-// features
-
-Route::get('/features', [
-  'as' => 'features',
-  'middleware' => 'auth',
-  'uses' => 'FeaturesController@index'
 ]);
 
 /*
@@ -63,6 +55,15 @@ Route::get('/logout', [
   'uses' => 'AuthenticationController@getLogout'
 ]);
 
+Route::get('/messages', function() {
+  return "x";
+});
+
+Route::any('/pull', [
+  'as' => 'pull.request',
+  'uses' => 'PullRequestController@handle'
+]);
+
 /*
 * @User profile routes
 */
@@ -71,6 +72,16 @@ Route::group(['prefix' => '/{user}'], function() {
   Route::get('/', [
     'as' => 'user.profile',
     'uses' => 'UserController@index'
+  ]);
+
+  Route::post('/add-friend', [
+    'as' => 'add-friend',
+    'uses' => 'FriendController@add'
+  ]);
+
+  Route::post('/add-info', [
+    'as' => 'add-info',
+    'uses' => 'AddInfoController@add'
   ]);
 
   Route::post('/update/profile_picture', [

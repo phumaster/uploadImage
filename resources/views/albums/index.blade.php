@@ -52,7 +52,7 @@
                               <div class="image-preview">
                                 @if(count($album['images']) > 0)
                                   @foreach($album['images'] as $image)
-                                    <img src="{!! asset($image['image_url']) !!}" id="image_{!! $image['id'] !!}">
+                                    <img src="{!! asset($image['fullsize_url']) !!}" id="image_{!! $image['id'] !!}">
                                   @endforeach
                                 @endif
                               </div><!-- End image-preview -->

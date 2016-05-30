@@ -15,6 +15,7 @@
     <script type="text/javascript" src="{!! asset('js/jquery-1.11.3.min.js') !!}"></script>
     <script type="text/javascript" src="{!! asset('js/bootstrap.min.js') !!}"></script>
     <script src="{!! asset('js/main.js') !!}"></script>
+    <script src="{!! asset('js/extends.js') !!}"></script>
     @yield('header.js')
   </head>
   <body class="@yield('body.class')">
@@ -32,12 +33,15 @@
             $('.sub-menu').hide(200);
           }
         });
+        $('[data-toggle="tooltip"]').tooltip();
       });
     </script>
     @yield('footer.js')
     <script type="text/javascript">
       notification.create();
     </script>
+    <script type="text/javascript" src="{!! asset('js/add-friend.js') !!}"></script>
+    <script type="text/javascript" src="{!! asset('js/pull.js') !!}"></script>
     @yield('js')
   </body>
 </html>

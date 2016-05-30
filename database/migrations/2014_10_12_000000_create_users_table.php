@@ -22,6 +22,8 @@ class CreateUsersTable extends Migration
             $table->string('birthday')->nullable();
             $table->text('description')->nullable();
             $table->text('friends')->nullable();
+            $table->integer('skip_add_info')->default(0);
+            $table->integer('online')->default(0);
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

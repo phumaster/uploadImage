@@ -80,7 +80,6 @@ class ImageController extends Controller
           $data_album = [
             'album_name' => 'Untitled',
             'album_title' => 'Untitled album',
-            'album_description' => '',
             'user_id' => $id
           ];
 
@@ -106,7 +105,7 @@ class ImageController extends Controller
             'image_name' => $imageName,
             'image_size' => $file->getSize(),
             'user_id' => $id,
-            'image_url' => $path.'/'.$imageName
+            'fullsize_url' => $path.'/'.$imageName
           ];
 
           if($file->move($destination, $imageName) && Image::create(array_merge($resource, $image))) {
@@ -131,14 +130,7 @@ class ImageController extends Controller
           return redirect()->route('image.index')->withErrors('No image to show.');
         }
 
-        $user_data = Image::find($id)->user()->first();
-        $album = Image::find($id)->album()->first();
-        $comments = Image::find($id)->comments()->get();
-
         $data['image'] = $image;
-        $data['user'] = $user_data;
-        $data['album'] = $album;
-        $data['comments'] = $comments;
 
         return view('images.show', $data);
     }
@@ -172,9 +164,10 @@ class ImageController extends Controller
      */
     public function update(Request $request, $user, $id)
     {
+      $a = Auth::user();
       $data = Image::find($id);
-      $user_id = Auth::user()->id;
-      $auth = Auth::user()->email;
+      $user_id = $a->id;
+      $auth = $a->email;
       $resource = $request->except(['_token', 'image', '_method']);
 
       if($request->hasFile('image')) {
@@ -191,11 +184,11 @@ class ImageController extends Controller
         $image = [
           'image_name' => $imageName,
           'image_size' => $file->getSize(),
-          'image_url' => $path.'/'.$imageName
+          'fullsize_url' => $path.'/'.$imageName
         ];
 
 
-        if(unlink(public_path().'/'.$data->image_url) && $file->move($destination, $imageName) && Image::whereRaw("`id` = {$id} AND `user_id` = {$user_id}")->update(array_merge($resource, $image))) {
+        if(unlink(public_path().'/'.$data->fullsize_url) && $file->move($destination, $imageName) && Image::whereRaw("`id` = {$id} AND `user_id` = {$user_id}")->update(array_merge($resource, $image))) {
           return redirect()->route('image.index', $user)->with(['message' => 'Your image has been update!']);
         }
 
@@ -220,7 +213,7 @@ class ImageController extends Controller
           if(count(Comment_image::find($id)) > 0){
             Comment_image::where('image_id', $id)->delete();
           }
-          if(unlink(public_path().'/'.$image->get()->first()->image_url) && $image->delete()) {
+          if(unlink(public_path().'/'.$image->get()->first()->fullsize_url) && $image->delete()) {
             return redirect()->route('image.index', $user)->with(['message' => 'The image has been delete.']);
           }
         }

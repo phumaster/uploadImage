@@ -37,7 +37,7 @@
                       <div id="file-result" class="text-success" style="padding: 10px 5px"></div>
                     </div>
                     <div class="col-md-6">
-                      <img src="{!! asset($image->image_url) !!}" class="thumbnail" id="preview-thumbnail" style="max-width: 100%" alt="Image preview..."/>
+                      <img src="{!! asset($image->fullsize_url) !!}" class="thumbnail" id="preview-thumbnail" style="max-width: 100%" alt="Image preview..."/>
                     </div>
                   </div>
                 </div>

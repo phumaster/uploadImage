@@ -21,8 +21,21 @@
             </div>
             @if($user->isAuthor($user->id))
             <div class="edit-option">
-              <a class="btn-main btn-sm" href="javascript:;" onclick="popup.profile();" id="update-profile-picture">Update profile picture</a>
-              <a class="btn-main btn-sm" href="javascript:;" onclick="popup.cover()" id="update-cover-photo">Update cover photo</a>
+              <a class="btn-main btn-sm" onclick="popup.profile();" id="update-profile-picture">Update profile picture</a>
+              <a class="btn-main btn-sm" onclick="popup.cover()" id="update-cover-photo">Update cover photo</a>
+            </div>
+            @endif
+            @if(!$user->isAuthor($user->id))
+            <div class="contact-people">
+              @if(\Auth::user()->isFriend($user->id))
+              <?php $text = '<i class="fa fa-fw fa-check"></i>'." See relationship"; $btn = "btn-success"; ?>
+              @elseif(\Auth::user()->isSentRequest($user->id))
+              <?php $text = '<i class="fa fa-fw fa-check"></i> '."Friend request sent"; $btn = "btn-success";?>
+              @else
+              <?php $text = '<i class="fa fa-fw fa-plus"></i>'." Add friend"; $btn = "btn-default";?>
+              @endif
+              <a class="btn {!! $btn !!} btn-sm btn-add-friend" data-target-xhr="{!! route('add-friend', $user->id) !!}">{!! $text !!}</a>
+              <a class="btn btn-default btn-sm btn-send-message"><i class="fa fa-fw fa-envelope"></i> Message</a>
             </div>
             @endif
           </div><!-- End cover-photo -->

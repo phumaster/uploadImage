@@ -38,11 +38,8 @@ class AuthenticationController extends Controller
 
     public function postRegister(RegisterRequest $request){
       $append = [
-        'address' => '',
-        'description' => '',
         'password' => bcrypt($request->get('password')),
-        'birthday' => '',
-        'sex' => ''
+        'friends' => '{}'
       ];
       if($user = User::create(array_merge($request->except(['_token', 'confPassword', 'password']), $append))){
         $user->role()->attach($user->id, ['role_id' => 3]);

@@ -38,7 +38,7 @@ Welcome
                     <br/>
                     {!! Form::open(['route' => 'login', 'method' => 'POST', 'id' => 'formLogin']) !!}
                       <div class="form-group">
-                        {!! Form::email('email', '', ['class' => 'form-control', 'id' => 'email', 'placeholder' => 'Email']) !!}
+                        {!! Form::email('email', '', ['class' => 'form-control', 'id' => 'email', 'placeholder' => 'Email', 'autocomplete' => 'off']) !!}
                       </div>
                       <div class="form-group">
                         {!! Form::password('password', ['class' => 'form-control', 'id' => 'password', 'placeholder' => 'Password']) !!}
@@ -52,13 +52,13 @@ Welcome
                     <br/>
                     {!! Form::open(['route' => 'register', 'method' => 'POST', 'id' => 'formRegister']) !!}
                       <div class="form-group">
-                        {!! Form::text('name', '' , ['class' => 'form-control', 'id' => 'name', 'placeholder' => 'Your name']) !!}
+                        {!! Form::text('name', '' , ['class' => 'form-control', 'placeholder' => 'Your name', 'autocomplete' => 'off']) !!}
                       </div>
                       <div class="form-group">
-                        {!! Form::email('email', '', ['class' => 'form-control', 'id' => 'email', 'placeholder' => 'Email']) !!}
+                        {!! Form::email('email', '', ['class' => 'form-control', 'placeholder' => 'Email', 'autocomplete' => 'off']) !!}
                       </div>
                       <div class="form-group">
-                        {!! Form::password('password', ['class' => 'form-control', 'id' => 'password', 'placeholder' => 'Password']) !!}
+                        {!! Form::password('password', ['class' => 'form-control', 'placeholder' => 'Password']) !!}
                       </div>
                       <div class="form-group">
                         {!! Form::password('confPassword', ['class' => 'form-control', 'id' => 'confPassword', 'placeholder' => 'Re-type password']) !!}
@@ -102,81 +102,86 @@ Welcome
 
 @section('js')
 <script type="text/javascript">
-  $('.slide-content').height(window.innerHeight);
-  $('.body-content').css({'min-height':window.innerHeight});
-  var li = $('.slide-content li');
-  $('.slide-content').css({
-    '-moz-transform':'translateX(0px)',
-    '-webkit-transform':'translateX(0px)',
-    'transform':'translateX(0px)'
-  });
-  li.width(window.innerWidth).height(window.innerHeight);
-  $.each(li, function(i){
-    var translate = window.innerWidth*i;
-    $(this).addClass('bg-item-slide-content'+i).css({
-      '-moz-transform':'translateX('+translate+'px)',
-      '-webkit-transform':'translateX('+translate+'px)',
-      'transform':'translateX('+translate+'px)'
-    });
-  });
-  var i = 1;
-  var bool = true;
-  setInterval(function(){
-    var translate = -window.innerWidth*i;
+  $(document).ready(function() {
+    $('.slide-content').height(window.innerHeight);
+    $('.body-content').css({'min-height':window.innerHeight});
+    var li = $('.slide-content li');
     $('.slide-content').css({
-      '-moz-transform':'translateX('+translate+'px)',
-      '-webkit-transform':'translateX('+translate+'px)',
-      'transform':'translateX('+translate+'px)'
+      '-moz-transform':'translateX(0px)',
+      '-webkit-transform':'translateX(0px)',
+      'transform':'translateX(0px)'
     });
-    if(i >= li.length - 1) {
-      i = li.length - 1;
-      bool = false;
-      i--;
-    }else if(i == 0){
-      bool = true;
-      i++;
-    }else{
-      if(bool) {
+    li.width(window.innerWidth).height(window.innerHeight);
+    $.each(li, function(i){
+      var translate = window.innerWidth*i;
+      $(this).addClass('bg-item-slide-content'+i).css({
+        '-moz-transform':'translateX('+translate+'px)',
+        '-webkit-transform':'translateX('+translate+'px)',
+        'transform':'translateX('+translate+'px)'
+      });
+    });
+    var i = 1;
+    var bool = true;
+    setInterval(function(){
+      var translate = -window.innerWidth*i;
+      $('.slide-content').css({
+        '-moz-transform':'translateX('+translate+'px)',
+        '-webkit-transform':'translateX('+translate+'px)',
+        'transform':'translateX('+translate+'px)'
+      });
+      if(i >= li.length - 1) {
+        i = li.length - 1;
+        bool = false;
+        i--;
+      }else if(i == 0){
+        bool = true;
         i++;
       }else{
-        i--;
-      }
-    }
-  }, 3000);
-
-  $('#formRegister, #formLogin').submit(function(event){
-    event.preventDefault();
-    $('.btn-register, .btn-login').attr('disabled', 'disabled').addClass('disabled');
-    $.ajax({
-      url: $(this).attr('action')+'?p='+Math.floor(Math.random()*100),
-      method: 'POST',
-      data: new FormData(this),
-      contentType: false,
-      processData: false,
-      success: function(response) {
-        $('#response').html("");
-        var data = JSON.parse(response);
-        if(data.error === 1) {
-          $('#response').append('<div class="text-danger">'+data.message+'</div>');
+        if(bool) {
+          i++;
         }else{
-          if(typeof data.message == "undefined") {
-            window.location.reload();
-          }else{
-            if(typeof data.forceLogin != "undefined" && data.forceLogin === 1) {
-              $('.tabLoginLink').click();
-            }
-            $('#response').append('<div class="text-success">'+data.message+'</div>');
-          }
+          i--;
         }
-        $('.btn-register, .btn-login').removeAttr('disabled').removeClass('disabled');
-      },
-      error: function(response) {
-        $('#response').html("");
-        $.each(response.responseJSON, function(i, val){
-          $('#response').append('<div class="text-danger">'+val+'</div>');
-        });
-        $('.btn-register, .btn-login').removeAttr('disabled').removeClass('disabled');
       }
+    }, 3000);
+
+    $('#formRegister, #formLogin').submit(function(event){
+      event.preventDefault();
+      $('.btn-register, .btn-login').attr('disabled', 'disabled').addClass('disabled');
+      $.ajax({
+        url: $(this).attr('action')+'?p='+Math.floor(Math.random()*100),
+        method: 'POST',
+        data: new FormData(this),
+        contentType: false,
+        processData: false,
+        success: function(response) {
+          $('#response').html("");
+          var data = JSON.parse(response);
+          if(data.error === 1) {
+            $('#response').append('<div class="text-danger">'+data.message+'</div>');
+          }else{
+            if(typeof data.message == "undefined") {
+              window.location.reload();
+            }else{
+              if(typeof data.forceLogin != "undefined" && data.forceLogin === 1) {
+                $('.tabLoginLink').click();
+              }
+              $('#response').append('<div class="text-success">'+data.message+'</div>');
+            }
+          }
+          $('.btn-register, .btn-login').removeAttr('disabled').removeClass('disabled');
+        },
+        error: function(response) {
+          $('#response').html("");
+          $.each(response.responseJSON, function(i, val){
+            $('#response').append('<div class="text-danger">'+val+'</div>');
+          });
+          $('.btn-register, .btn-login').removeAttr('disabled').removeClass('disabled');
+        }
+      });
+    });
+    $('#popUpAuthentication').on('shown.bs.modal', function () {
+      $('#email').focus()
     });
   });
 </script>

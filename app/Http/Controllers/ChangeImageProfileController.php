@@ -61,7 +61,7 @@ class ChangeImageProfileController extends Controller
         $imageUrl = 'upload/images/'.$this->user->id.'_'.$this->user->email.'/avatar/'.$imageName;
         $imageArr = [
           'image_name' => $imageName,
-          'image_url' => $imageUrl,
+          'fullsize_url' => $imageUrl,
           'image_size' => $file->getSize(),
           'image_caption' => '',
           'user_id' => $this->user->id,
@@ -112,7 +112,7 @@ class ChangeImageProfileController extends Controller
         $imageUrl = 'upload/images/'.$this->user->id.'_'.$this->user->email.'/cover/'.$imageName;
         $imageArr = [
           'image_name' => $imageName,
-          'image_url' => $imageUrl,
+          'fullsize_url' => $imageUrl,
           'image_size' => $file->getSize(),
           'image_caption' => '',
           'user_id' => $this->user->id,
