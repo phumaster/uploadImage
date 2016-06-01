@@ -24,7 +24,7 @@
                   </ul>
                 </div>
               @endif
-              {!! Form::open(['route' => ['image.update', $image->id],'files' => true, 'method' => 'PUT']) !!}
+              {!! Form::open(['route' => ['photo.update', $image->id],'files' => true, 'method' => 'PUT']) !!}
                 <div class="form-group">
                   {!! Form::label('image_caption', 'Write something...') !!}
                   {!! Form::textarea('image_caption', $image->image_caption, ['class' => 'form-control', 'id' => 'image_caption']) !!}

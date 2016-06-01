@@ -150,49 +150,49 @@ Route::group(['prefix' => '/{user}'], function() {
   * @Image routes
   */
 
-  Route::group(['prefix' => 'image'], function() {
+  Route::group(['prefix' => 'photo'], function() {
     Route::get('/', [
-      'as' => 'image.index',
+      'as' => 'photo.index',
       'uses' => 'ImageController@index'
     ]);
 
     Route::post('/', [
-      'as' => 'image.store',
+      'as' => 'photo.store',
       'uses' => 'ImageController@store'
     ]);
 
     Route::get('/upload', [
-      'as' => 'image.create',
+      'as' => 'photo.create',
       'uses' => 'ImageController@create'
     ]);
 
     Route::get('/{id}', [
-      'as' => 'image.show',
+      'as' => 'photo.show',
       'uses' => 'ImageController@show'
     ])->where(['id' => '[0-9]+']);
 
     Route::put('/{id}', [
-      'as' => 'image.update',
+      'as' => 'photo.update',
       'uses' => 'ImageController@update'
     ])->where(['id' => '[0-9]+']);
 
     Route::delete('/{id}', [
-      'as' => 'image.destroy',
+      'as' => 'photo.destroy',
       'uses' => 'ImageController@destroy'
     ])->where(['id' => '[0-9]+']);
 
     Route::get('/{id}/edit', [
-      'as' => 'image.edit',
+      'as' => 'photo.edit',
       'uses' => 'ImageController@edit'
     ]);
 
     Route::post('/{id}/comment', [
-      'as' => 'image.comment',
+      'as' => 'photo.comment',
       'uses' => 'CommentImageController@postComment'
     ]);
 
     Route::post('/{id}/like', [
-      'as' => 'image.like',
+      'as' => 'photo.like',
       'uses' => 'LikeImageController@index'
     ]);
   });

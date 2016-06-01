@@ -27,7 +27,7 @@ class CommentImageController extends Controller
         if($request->ajax()) {
           return json_encode(['error' => 1, 'message' => 'Opps! Cann\'t post your comment! Maybe photo has been delete!']);
         }
-        return redirect()->route('image.show', [$user, $id])->withErrors('The photo does not exist!');
+        return redirect()->route('photo.show', [$user, $id])->withErrors('The photo does not exist!');
       }
       $data = [
         'comment_status' => 1,
@@ -39,11 +39,11 @@ class CommentImageController extends Controller
         if($request->ajax()) {
           return json_encode(['error' => 0, 'message' => 'You said: '.$request->get('comment_content'), 'commentCount' => $image->first()->comments()->count()]);
         }
-        return redirect()->route('image.show', [$user, $id])->with(['message' => 'Your comment has been post']);
+        return redirect()->route('photo.show', [$user, $id])->with(['message' => 'Your comment has been post']);
       }
       if($request->ajax()) {
         return json_encode(['error' => 1, 'message' => 'Opps! Cann\'t post your comment! Maybe photo has been delete!']);
       }
-      return redirect()->route('image.show', [$user, $id])->withErrors('Unexpected errors');
+      return redirect()->route('photo.show', [$user, $id])->withErrors('Unexpected errors');
     }
 }

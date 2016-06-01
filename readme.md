@@ -18,7 +18,7 @@ Project phục vụ quá trình học laravel của mình.
 
 ## Ý tưởng
 
-Rảnh rỗi muốn tạp một mạng xã hội upload ảnh như instagram
+Rảnh rỗi muốn tạo một mạng xã hội upload ảnh như instagram
 
 ## Created at
 

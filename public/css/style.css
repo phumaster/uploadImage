@@ -8,7 +8,7 @@ a {
 }
 
 #content {
-    margin-top: 100px;
+    margin-top: 60px;
 }
 
 ::selection {
@@ -443,38 +443,44 @@ a {
   margin-top: 60px;
 }
 
-.horizontal-column {
+.vertical-column {
+  display: block;
   background: #fff;
-  padding: 0 !important;
-  box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.15);
+  width: 290px;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  height: 100%;
+  box-shadow: 2px 0px 3px rgba(0, 0, 0, 0.15);
 }
 
-#horizontal-menu {
+#vertical-menu {
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
-#horizontal-menu a {
+#vertical-menu a {
   display: block;
-  padding: 5px 15px;
+  padding: 15px 15px;
   color: #222;
   text-decoration: none;
+  transition: color 300ms ease-in;
+  -moz-transition: color 300ms ease-in;
+  -webkit-transition: color 300ms ease-in;
 }
 
-#horizontal-menu a:hover {
-  background: #2A363B;
-  color: #ccc;
-  box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.15);
+#vertical-menu a:hover {
+  color: #E84A5F;
 }
 
 .chat {
   padding: 0px 15px;
 }
 
-.horizontal-menu-a.active {
-  background: #2A363B;
-  color: #ccc !important;
+.vertical-menu-a.active {
+  font-weight: bold;
+  color: #E84A5F !important;
 }
 .no-post {
   text-align: center;
@@ -510,6 +516,9 @@ a {
 .fix-margin {
   margin-top: 80px;
 }
+.fix-padding-col-right {
+  padding: 0 !important;
+}
 h4.text-indent {
   text-indent: 20px;
 }
@@ -534,4 +543,62 @@ h4.text-indent {
   background: rgba(0, 0, 0, 0.25);
   z-index: 10;
   display: none;
+}
+
+
+
+#message-container {
+  position: fixed;
+  bottom: 0;
+  right: 5px;
+}
+
+.message-box {
+  display: inline-block;
+  margin: 0px 5px;
+  width: 250px;
+  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.15);
+}
+
+#message-container, .message-box, .message-header, .message-body, .message-footer {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+
+#message-container .message-box > .message-header {
+  padding: 5px;
+  background: #2A363B;
+}
+
+#message-container .message-box > .message-body {
+  background: #fff;
+  height: 200px;
+  overflow-y: scroll;
+  padding: 5px;
+}
+
+#message-container .message-box > .message-footer {
+  border-top: 1px solid rgba(0, 0, 0, 0.15);
+  background: #fff;
+}
+
+.message-box-input {
+  outline: none;
+  background: #fff;
+  border: 0px;
+  width: 100%;
+  display: block;
+  padding: 5px;
+}
+
+.list-friends .send-message-to-friend {
+  padding: 5px;
+  color: #222222;
+  cursor: pointer;
+}
+
+.list-friends .send-message-to-friend:hover {
+  font-weight: bold;
+  color: #E84A5F;
 }

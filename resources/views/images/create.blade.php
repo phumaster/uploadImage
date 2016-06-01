@@ -24,7 +24,7 @@
                   </ul>
                 </div>
               @endif
-              {!! Form::open(['route' => ['image.store', \Auth::user()->id],'files' => true, 'method' => 'POST']) !!}
+              {!! Form::open(['route' => ['photo.store', \Auth::user()->id],'files' => true, 'method' => 'POST']) !!}
                 <div class="form-group">
                   {!! Form::label('image_caption', 'Write something...') !!}
                   {!! Form::textarea('image_caption', '', ['class' => 'form-control', 'id' => 'image_caption']) !!}
@@ -32,7 +32,7 @@
                 <div class="form-group">
                   <div class="row">
                     <div class="col-md-6">
-                      {!! Form::label('image', 'Choose an image') !!}
+                      {!! Form::label('image', 'Choose an photo') !!}
                       {!! Form::file('image', ['id' => 'image', 'class' => '']) !!}
                     </div>
                     <div class="col-md-6">
@@ -62,9 +62,6 @@
     var reader = new FileReader();
     var image = document.getElementById('image').files[0];
     var preview = document.getElementById('preview-thumbnail');
-    // var name = image.name;
-    // var size = image.size;
-    // var type = image.type;
     reader.onload = function(){
       preview.src = reader.result;
     }

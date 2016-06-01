@@ -84,7 +84,7 @@ class ImageController extends Controller
           ];
 
           if(!$album = Album::create($data_album)) {
-            return redirect()->route('image.create', $user)->withErrors('Unexpected error!');
+            return redirect()->route('photo.create', $user)->withErrors('Unexpected error!');
           }
 
           $resource['album_id'] = $album->id;
@@ -109,11 +109,11 @@ class ImageController extends Controller
           ];
 
           if($file->move($destination, $imageName) && Image::create(array_merge($resource, $image))) {
-            return redirect()->route('image.index', $user)->with(['message' => 'Your image has been upload!']);
+            return redirect()->route('photo.index', $user)->with(['message' => 'Your image has been upload!']);
           }
 
         }
-        return redirect()->route('image.create', $user)->withErrors('Unexpected error!');
+        return redirect()->route('photo.create', $user)->withErrors('Unexpected error!');
     }
 
     /**
@@ -127,7 +127,7 @@ class ImageController extends Controller
         $image = Image::where(['id' => $id, 'user_id' => $user])->first();
 
         if(count($image) <= 0) {
-          return redirect()->route('image.index')->withErrors('No image to show.');
+          return redirect()->route('photo.index')->withErrors('No image to show.');
         }
 
         $data['image'] = $image;
@@ -150,7 +150,7 @@ class ImageController extends Controller
         }
 
         if(count($data['image']) <= 0) {
-          return redirect()->route('image.index', $user)->withErrors('Image does not exists.');
+          return redirect()->route('photo.index', $user)->withErrors('Image does not exists.');
         }
         return view('images.edit', $data);
     }
@@ -189,15 +189,15 @@ class ImageController extends Controller
 
 
         if(unlink(public_path().'/'.$data->fullsize_url) && $file->move($destination, $imageName) && Image::whereRaw("`id` = {$id} AND `user_id` = {$user_id}")->update(array_merge($resource, $image))) {
-          return redirect()->route('image.index', $user)->with(['message' => 'Your image has been update!']);
+          return redirect()->route('photo.index', $user)->with(['message' => 'Your image has been update!']);
         }
 
       }
 
       if(Image::whereRaw("`id` = {$id} AND `user_id` = {$user_id}")->update($resource)) {
-        return redirect()->route('image.index', $user)->with(['message' => 'Your image has been update!']);
+        return redirect()->route('photo.index', $user)->with(['message' => 'Your image has been update!']);
       }
-      return redirect()->route('image.edit', [$user, $id])->withErrors('Unexpected error!');
+      return redirect()->route('photo.edit', [$user, $id])->withErrors('Unexpected error!');
     }
 
     /**
@@ -214,9 +214,9 @@ class ImageController extends Controller
             Comment_image::where('image_id', $id)->delete();
           }
           if(unlink(public_path().'/'.$image->get()->first()->fullsize_url) && $image->delete()) {
-            return redirect()->route('image.index', $user)->with(['message' => 'The image has been delete.']);
+            return redirect()->route('photo.index', $user)->with(['message' => 'The image has been delete.']);
           }
         }
-        return redirect()->route('image.index', $user)->withErrors('The image does not exists.');
+        return redirect()->route('photo.index', $user)->withErrors('The image does not exists.');
     }
 }

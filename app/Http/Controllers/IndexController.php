@@ -20,6 +20,8 @@ class IndexController extends Controller
 
   public function index(Request $request) {
     $auth = Auth::user();
+    $data = [];
+    $data['albums'] = [];
 
     if(!Auth::check()) {
       return view('helloworld');
@@ -60,9 +62,14 @@ class IndexController extends Controller
     * sort posts by time
     */
     $this->sortPostsByTime();
+    /* all album */
+    foreach ($auth->album as $v) {
+      $data['albums'][$v['id']] = $v['album_name'];
+    }
     /* bind data to view */
     $data['posts'] = $this->postByFriend;
     $data['suggest'] = $this->suggestFriend($auth);
+    $data['friends'] = $this->friendList;
     return view('news-feed', $data);
   }
 

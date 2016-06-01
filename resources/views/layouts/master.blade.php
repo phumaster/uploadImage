@@ -19,6 +19,7 @@
     @yield('header.js')
   </head>
   <body class="@yield('body.class')">
+    @include('includes.vertical-menu')
     @include('includes.header')
     @yield('body.content')
     <footer id="footer">
@@ -39,6 +40,15 @@
     @yield('footer.js')
     <script type="text/javascript">
       notification.create();
+      $(document).ready(function() {
+        $('.vertical-menu-a').click(function(e){
+          e.preventDefault();
+          $('#vertical-menu li a').removeClass('active');
+          $(this).addClass('active');
+        });
+        var h_h = $('#header').height();
+        $('.vertical-column').css({"padding-top":h_h+10});
+      });
     </script>
     <script type="text/javascript" src="{!! asset('js/add-friend.js') !!}"></script>
     <script type="text/javascript" src="{!! asset('js/pull.js') !!}"></script>

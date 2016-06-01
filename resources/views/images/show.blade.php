@@ -19,7 +19,7 @@
               <div class="image-author">
                 <h4><a href="{!! url('/') !!}">{!! $image->user->name !!}</a></h4>
               </div>
-              {!! Form::open(['route' => ['image.destroy',$image->user_id, $image->id], 'method' => 'DELETE']) !!}
+              {!! Form::open(['route' => ['photo.destroy',$image->user_id, $image->id], 'method' => 'DELETE']) !!}
                 {!! Form::button('xóa ảnh', ['class' => 'btn-link text-danger', 'type' => 'submit']) !!}
               {!! Form::close() !!}
               <div class="image-caption">
@@ -35,7 +35,7 @@
                 <div class="text-success"><h5>{!! Session::get('message') !!}</h5></div>
               @endif
               <div class="image-form-comment">
-                {!! Form::open(['route' => ['image.comment', $image->user_id, $image->id], 'method' => 'POST', 'class' => 'comment-this-photo']) !!}
+                {!! Form::open(['route' => ['photo.comment', $image->user_id, $image->id], 'method' => 'POST', 'class' => 'comment-this-photo']) !!}
                   <div class="form-group">
                     {!! Form::text('comment_content', '', ['class' => 'form-control input-comment', 'placeholder' => 'Write something...', 'autocomplete' => 'off', 'autofocus' => 'true']) !!}
                   </div>

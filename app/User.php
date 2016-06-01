@@ -85,7 +85,7 @@ class User extends Model implements AuthenticatableContract,
 
     public function getProfilePictureUrl() {
       $image = $this->images()->where('make_as_profile_picture', 1)->first();
-      return is_null($image) ? null : $image->fullsize_url;
+      return is_null($image) ? "images/logo.png" : $image->fullsize_url;
     }
 
     public function getCoverPhotoUrl() {

@@ -8,29 +8,7 @@ News feed
 <div class="container-fuild margin-content">
   <div class="container">
     <div class="row">
-      <div class="col-sm-2 horizontal-column hidden-xs">
-        <div class="horizontal-menu">
-          <ul id="horizontal-menu">
-            <li><a class="horizontal-menu-a active" data-target-xhr="{!! route('index') !!}"><i class="fa fa-fw fa-feed"></i> News feed</a></li>
-            <li><a href="#" class="horizontal-menu-a"><i class="fa fa-fw fa-comments"></i> Messages <span class="badge">5</span></a></li>
-            <li><a href="#" class="horizontal-menu-a"><i class="fa fa-fw fa-cogs"></i> Setting</a></li>
-            <li><a href="#" class="horizontal-menu-a"><i class="fa fa-fw fa-sliders"></i> Preferences</a></li>
-            <li><a href="#" class="horizontal-menu-a"><i class="fa fa-fw fa-line-chart"></i> Activity log</a></li>
-          </ul>
-        </div>
-        <hr/>
-        <div class="chat">
-          <h4>Who's online?</h4>
-          <span>No friend online</span>
-        </div>
-        <hr/>
-        <div class="copyright">
-          <div class="text-center">
-            <h5>&copy; {!! date("Y") !!} Phú Master</h5>
-          </div>
-        </div>
-      </div><!-- end .col-sm-2 -->
-      <div class="col-sm-6">
+      <div class="col-sm-6 col-sm-offset-2">
         <div class="body-content">
           @if(count($suggest) > 0)
             <div class="card suggest-friend text-center">
@@ -39,7 +17,7 @@ News feed
                 <div class="suggest-single-friend">
                   <div class="suggest-friend-header">
                     <a href="{!! route('user.profile', $singleFriend->id) !!}" class="link">
-                      <img src="{!! !is_null($singleFriend->getProfilePictureUrl()) ? $singleFriend->getProfilePictureUrl() : url('images/logo.png') !!}"/ class="suggest-thumbnail" data-toggle="tooltip" data-placement="right" title="{!! $singleFriend->name !!}">
+                      <img src="{!! $singleFriend->getProfilePictureUrl() !!}"/ class="suggest-thumbnail" data-toggle="tooltip" data-placement="right" title="{!! $singleFriend->name !!}">
                     </a>
                   </div>
                   @if(\Auth::user()->isSentRequest($singleFriend->id))
@@ -71,7 +49,7 @@ News feed
               </div><!-- end .post-header -->
               <div class="post-body">
                 <div class="text-center">
-                  <a href="{!! route('image.show', [$post->user_id, $post->id]) !!}" class="view-this-post">
+                  <a href="{!! route('photo.show', [$post->user_id, $post->id]) !!}" class="view-this-post">
                     <img src="{!! asset($post->fullsize_url) !!}" class="img-responsive"/>
                   </a>
                 </div>
@@ -80,11 +58,11 @@ News feed
                 <div><i class="post-time">{!! $post->created_at !!}</i></div>
                 <div class="text-center">
                   <div class="nav-this-post">
-                    <a data-target-xhr="{!! route('image.like', [$post->user_id, $post->id]) !!}" class="like-this-post {!! in_array(\Auth::user()->id, json_decode(is_null($post->likes) ? '[]' : $post->likes, true)) ? 'like' : '' !!}"><i class="fa fa-fw fa-heart-o"></i> {!! count(json_decode($post->likes, true)) > 0 ? count($post->likes) : "" !!} like</a> |
+                    <a data-target-xhr="{!! route('photo.like', [$post->user_id, $post->id]) !!}" class="like-this-post {!! in_array(\Auth::user()->id, json_decode(is_null($post->likes) ? '[]' : $post->likes, true)) ? 'like' : '' !!}"><i class="fa fa-fw fa-heart-o"></i> {!! count(json_decode($post->likes, true)) > 0 ? count($post->likes) : "" !!} like</a> |
                     <a class="comment-this-post"><i class="fa fa-fw fa-comment-o"></i> {!! count($post->comments) > 0 ? count($post->comments) : "" !!} comment</a>
                     <div class="form-in-this-post">
                       <hr/>
-                      {!! Form::open(['route' => ['image.comment', $post->user->id, $post->id], 'method' => 'POST', 'class' => 'form-post-comment']) !!}
+                      {!! Form::open(['route' => ['photo.comment', $post->user->id, $post->id], 'method' => 'POST', 'class' => 'form-post-comment']) !!}
                       <div class="form-group">
                         {!! Form::text('comment_content', '', ['class' => 'form-control input-comment', 'placeholder' => 'write a comment...']) !!}
                       </div>
@@ -98,17 +76,85 @@ News feed
           @endif
         </div>
       </div><!-- end .col-sm-6 -->
-      <div class="col-sm-4 hidden-xs">
+      <div class="col-sm-4 hidden-xs fix-padding-col-right">
         <div class="content-right">
-          <div class="">
-            <a href="{!! route('image.create', \Auth::user()->id) !!}" class="btn btn-main btn-block">Upload new photos</a>
-            <a href="{!! route('album.create', \Auth::user()->id) !!}" class="btn btn-main btn-block">New album</a>
+          <div class="btn-navigator">
+            <a class="btn btn-main" data-toggle="modal" data-target="#show-upload-modal"><i class="fa fa-fw fa-upload"></i> Upload new photos</a>
+            <a class="btn btn-main" data-toggle="modal" data-target="#show-create-album-modal"><i class="fa fa-fw fa-plus"></i> New album</a>
           </div>
+          <hr/>
+          <div class="list-friends">
+            <h4>Friends</h4>
+            @if(count($friends) > 0)
+              @foreach($friends as $friend)
+                <div class="send-message-to-friend" data-name="{!! $friend->name !!}" data-id="{!! $friend->id !!}" data-target-xhr="">
+                  <span data-toggle="tooltip" data-placement="right" title="Click to send message"><img src="{!! $friend->getProfilePictureUrl() !!}" class="logo-user"/> {!! $friend->name !!}</span>
+                </div>
+              @endforeach
+            @else
+              <div class="text-center">
+                <a href="#" class="btn btn-primary btn-sm">Find friend</a>
+              </div>
+            @endif
+          </div><!-- end list-friends -->
           <hr/>
           <p>Viết gì vào đây giờ....</p>
         </div>
       </div><!-- end col-sm-2-->
     </div>
+    <div class="modal fade" tabindex="-1" role="dialog" id="show-upload-modal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Upload a new photo</h4>
+          </div>
+          <div class="modal-body">
+            {!! Form::open(['route' => ['photo.store', \Auth::user()->id],'files' => true, 'method' => 'POST']) !!}
+              <div class="form-group">
+                {!! Form::label('image_caption', 'Write something...') !!}
+                {!! Form::textarea('image_caption', '', ['class' => 'form-control', 'id' => 'image_caption']) !!}
+              </div>
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-md-6">
+                    {!! Form::label('image', 'Choose a photo') !!}
+                    {!! Form::file('image', ['id' => 'image', 'class' => '']) !!}
+                  </div>
+                  <div class="col-md-6">
+                    <img src="" class="thumbnail hide" id="preview-thumbnail" style="max-width: 100%" alt="Image preview..."/>
+                  </div>
+                </div>
+              </div>
+              @if(count($albums) > 0)
+                <div class="form-group">
+                  {!! Form::label('album_id', 'Select album') !!}
+                  {!! Form::select('album_id', $albums, null, ['class' => 'form-control', 'id' => 'album_id']) !!}
+                </div>
+              @endif
+              <div class="form-group">
+                {!! Form::button('<i class="fa fa-upload"></i> Upload', ['class' => 'btn-main', 'type' => 'submit']) !!}
+                {!! Form::button('<i class="fa fa-refresh"></i> Reset', ['class' => 'btn btn-default', 'type' => 'reset']) !!}
+              </div>
+            {!! Form::close() !!}
+          </div>
+        </div>
+      </div>
+    </div><!-- end .modal -->
+    <!-- create album modal -->
+    <div class="modal fade" tabindex="-1" id="show-create-album-modal" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
+            <h4 class="modal-title">Create new album</h4>
+          </div>
+          <div class="modal-body">
+            @include('includes.form-create-album')
+          </div>
+        </div>
+      </div>
+    </div><!-- end .modal#show-create-album-modal -->
   </div><!-- end .container -->
 </div>
 @endsection
@@ -116,14 +162,6 @@ News feed
 @section('js')
 <script type="text/javascript">
   $(function(){
-    // $('.author-name').showHoverCard();
-
-    $('.horizontal-menu-a').click(function(e){
-      e.preventDefault();
-      $('#horizontal-menu li a').removeClass('active');
-      $(this).addClass('active');
-    });
-
     $('.comment-this-post').click(function(e) {
       e.preventDefault();
       var parent = $(this);
@@ -133,6 +171,24 @@ News feed
     $('.form-post-comment').commentThisPhoto();
 
     $('.like-this-post').likeThisPhoto();
+
+    $('.send-message-to-friend').click(function() {
+      var xhr = $(this).attr('data-target-xhr');
+      var id = $(this).attr('data-id');
+      var name = $(this).attr('data-name');
+
+      $(this).createChatBox(xhr, id, name);
+
+      $('.close-message-box').click(function() {
+        $(this).parent().parent().remove();
+      });
+
+      $('.message-box-input').keydown(function(e) {
+        if(e.keyCode == 13 && $(this).val() != "") {
+          $(this).sendMessageTo(xhr, $(this).val());
+        }
+      });
+    });
   });
 </script>
 @endsection

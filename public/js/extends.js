@@ -1,10 +1,5 @@
 (function($) {
   $.fn.extend({
-    showHoverCard: function() {
-      this.click(function(event) {
-        //event.preventDefault();
-      });
-    },
     commentThisPhoto: function() {
       this.submit(function(e) {
         e.preventDefault();
@@ -49,6 +44,76 @@
           },
         });
       });
+    },
+
+    previewImage: function() {
+      var reader = new FileReader();
+      var image = document.getElementById('image').files[0];
+      var preview = document.getElementById('preview-thumbnail');
+      reader.onload = function(){
+        preview.src = reader.result;
+      }
+      if(image) {
+        reader.readAsDataURL(image);
+        preview.setAttribute('class', 'thumbnail');
+      }else{
+        preview.src = "";
+      }
+    },
+
+    createChatBox: function(xhr, id, name) {
+      var item = document.createElement('DIV');
+      var messageHeader = document.createElement('DIV');
+      var messageBody = document.createElement('DIV');
+      var messageFooter = document.createElement('DIV');
+      var a = document.createElement('A');
+      var close = document.createElement('SPAN');
+      var i = document.createElement('INPUT');
+
+      item.setAttribute('class', 'message-box');
+      item.setAttribute('id', "uid"+id);
+      messageHeader.setAttribute('class', 'message-header');
+      messageBody.setAttribute('class', 'message-body');
+      messageFooter.setAttribute('class', 'message-footer');
+      a.setAttribute('data-target-xhr', xhr);
+      a.style.color = "#fff";
+      a.style.textDecoration = "none";
+      a.style.fontWeight = "bold";
+      a.innerHTML = name;
+      close.innerHTML = "&times;";
+      close.style.color = "#fff";
+      close.style.cursor = "pointer";
+      close.setAttribute('class', 'pull-right close-message-box');
+      /* form */
+      i.setAttribute('type', 'text');
+      i.setAttribute('name', 'content');
+      i.setAttribute('class', 'message-box-input');
+      i.setAttribute('autocomplete', 'off');
+      i.setAttribute('data-target-xhr', xhr);
+      i.setAttribute('placeholder', 'write something...');
+      /* append */
+      item.appendChild(messageHeader);
+      item.appendChild(messageBody);
+      item.appendChild(messageFooter);
+      messageHeader.appendChild(a);
+      messageHeader.appendChild(close);
+      messageFooter.appendChild(i);
+
+      if(document.querySelector('#message-container') == null) {
+        var div = document.createElement('DIV');
+        /* container messages */
+        div.setAttribute('id', 'message-container');
+        div.insertBefore(item, div.firstChild);
+        document.body.appendChild(div);
+      }else{
+        var messageContainer = document.querySelector('#message-container');
+        messageContainer.insertBefore(item, messageContainer.firstChild);
+      }
+    },
+
+    sendMessageTo: function(xhr, content) {
+      var newMessage = new message(xhr, content);
+      newMessage.send();
     }
   });
 }(jQuery));

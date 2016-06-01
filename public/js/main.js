@@ -192,6 +192,22 @@ function notification() {
   //this.create();
 }
 
+function message(url, content) {
+  this.xhr = url;
+  this.content = content;
+
+  this.send = function() {
+    $.ajax({
+      method:'POST',
+      url: this.xhr,
+      data: {'_token':$('meta[name=csrf-token]').attr('content'), 'content':this.content},
+      success: function(response) {
+        console.log(response);
+      }
+    });
+  };
+}
+
 // initialize
 
 var popup = new popup();
