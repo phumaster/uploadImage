@@ -11,6 +11,6 @@ class Message extends Model
     protected $fillable = ['from', 'to', 'content', 'read', 'attachment_url'];
 
     public function user() {
-      return $this->belongsTo('App\User', 'to');
+      return $this->belongsTo('App\User', 'from');
     }
 }

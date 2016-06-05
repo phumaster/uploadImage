@@ -11,22 +11,14 @@ function _(elm) {
 * @ style loading process
 */
 
-function loading(){
-  var elm = _('loading-icon');
-  var i = document.createElement('I');
-  elm.innerHTML = '';
-  i.innerHTML = 'loading data...';
-  i.style.color = 'green';
-  elm.appendChild(i);
-}
+function loading() {
+  this.show = function() {
 
-/*
-* @ remove loading function
-*/
+  };
 
-function endLoad() {
-  var cl = _('loading-icon').children;
-  cl[0].innerHTML = '';
+  this.hide = function() {
+
+  };
 }
 
 /*
@@ -83,7 +75,7 @@ function popup() {
     +'<input type="file" name="image" id="profile-picture"/>'
     +'</div>'
     +'<div class="form-group">'
-    +'<button class="btn btn-sm btn-primary"><i class="fa fa-fw fa-upload"></i> Upload</button>'
+    +'<button class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-cloud-upload"></span> Upload</button>'
     +'</div>'
     +'</form>'
     +'<hr/>'
@@ -116,7 +108,7 @@ function popup() {
     +'<input type="file" name="image" id="cover"/>'
     +'</div>'
     +'<div class="form-group">'
-    +'<button class="btn btn-sm btn-primary"><i class="fa fa-fw fa-upload"></i> Upload</button>'
+    +'<button class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-cloud-upload"></span> Upload</button>'
     +'</div>'
     +'</form>'
     +'<hr/>'
@@ -196,19 +188,35 @@ function message(url, content) {
   this.xhr = url;
   this.content = content;
 
-  this.send = function() {
+  this.send = function(responseTo) {
     $.ajax({
       method:'POST',
       url: this.xhr,
       data: {'_token':$('meta[name=csrf-token]').attr('content'), 'content':this.content},
       success: function(response) {
-        console.log(response);
+        var data = JSON.parse(response);
+        responseTo.find('.message-body')
+          .append('<div class="item-block"><div class="message-item send">'+data.message+'</div><div class="clear-fix"></div></div>');
       }
     });
   };
+}
+
+function fire() {
+  $(document).on('click', 'a[data-target-xhr].target', function(e) {
+    $.ajax({
+      method:'GET',
+      url: $(this).attr('data-target-xhr'),
+      cache:false,
+      success: function(response) {
+        $('#content').html(response);
+      }
+    });
+  });
 }
 
 // initialize
 
 var popup = new popup();
 var notification = new notification();
+var loading = new loading();

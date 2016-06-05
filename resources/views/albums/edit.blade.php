@@ -8,7 +8,7 @@
   <div id="content">
     <div class="container">
       <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-10 col-sm-offset-2">
           <div class="panel panel-default">
             <div class="panel-heading">
               <span>Edit album {!! $album->album_name !!}</span>
@@ -16,7 +16,7 @@
             <div class="panel-body">
               @if(count($errors) > 0)
                 <div class="alert alert-danger">
-                  <b><i class="fa fa-frown-o"></i> Opps!</b>
+                  <b>:( Opps!</b>
                   <ul>
                     @foreach($errors->all() as $error)
                       <li>{!! $error !!}</li>
@@ -38,8 +38,8 @@
                   {!! Form::textarea('album_description', $album->album_description, ['class' => 'form-control', 'id' => 'album_description']) !!}
                 </div>
                 <div class="form-group">
-                  {!! Form::button('<i class="fa fa-plus"></i> Update', ['class' => 'btn btn-primary', 'type' => 'submit']) !!}
-                  {!! Form::button('<i class="fa fa-refresh"></i> Reset', ['class' => 'btn btn-default', 'type' => 'reset']) !!}
+                  {!! Form::button('<span class="glyphicon glyphicon-plus"></span> Update', ['class' => 'btn btn-primary', 'type' => 'submit']) !!}
+                  {!! Form::button('<span class="glyphicon glyphicon-refresh"></span> Reset', ['class' => 'btn btn-default', 'type' => 'reset']) !!}
                 </div>
               {!! Form::close() !!}
             </div><!-- End panel-body -->

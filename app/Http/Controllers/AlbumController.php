@@ -42,10 +42,6 @@ class AlbumController extends Controller
         $data['user'] = $user_data;
         $data['albums'] = $albums;
 
-        if($request->ajax()) {
-          return json_encode($data);
-        }
-
         return view('albums.index', $data);
     }
 

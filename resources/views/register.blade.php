@@ -16,7 +16,7 @@ Register
           <div class="panel-body">
             @if(count($errors) > 0)
               <div class="alert alert-danger">
-                <b><i class="fa fa-frown-o"></i> Opps!</b>
+                <b>:( Opps!</b>
                 <ul>
                   @foreach( $errors->all() as $error )
                     <li>{!! $error !!}</li>
@@ -42,8 +42,8 @@ Register
                 {!! Form::password('confPassword', ['class' => 'form-control', 'id' => 'confPassword']) !!}
               </div>
               <div class="form-group">
-                {!! Form::button('<i class="fa fa-check"></i> Register', ['class' => 'btn btn-primary', 'type' => 'submit']) !!}
-                {!! Form::button('<i class="fa fa-refresh"></i> Reset', ['class' => 'btn btn-default', 'type' => 'reset']) !!}
+                {!! Form::button('<span class="glyphicon glyphicon-check"></span> Register', ['class' => 'btn btn-primary', 'type' => 'submit']) !!}
+                {!! Form::button('<span class="glyphicon glyphicon-refresh"></span> Reset', ['class' => 'btn btn-default', 'type' => 'reset']) !!}
               </div>
             {!! Form::close() !!}
           </div><!-- End panel-body -->

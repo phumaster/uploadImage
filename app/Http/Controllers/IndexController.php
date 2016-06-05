@@ -70,7 +70,10 @@ class IndexController extends Controller
     $data['posts'] = $this->postByFriend;
     $data['suggest'] = $this->suggestFriend($auth);
     $data['friends'] = $this->friendList;
-    return view('news-feed', $data);
+    if($request->ajax()) {
+      return view('news-feed', $data);
+    }
+    return view('index', $data);
   }
 
   private function suggestFriend($auth) {

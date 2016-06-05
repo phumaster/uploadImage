@@ -17,7 +17,7 @@ Welcome
       </div><!-- end .col-sm-8 -->
       <div class="col-sm-4">
         <div class="pull-right">
-          <a href="#" class="join-now" data-toggle="modal" data-target="#popUpAuthentication"><i class="fa fa-fw fa-sign-in"></i> join now</a>
+          <a href="#" class="join-now" data-toggle="modal" data-target="#popUpAuthentication">Join now</a>
         </div>
         <!-- popup -->
         <div class="modal fade" id="popUpAuthentication"  role="dialog">
@@ -44,7 +44,7 @@ Welcome
                         {!! Form::password('password', ['class' => 'form-control', 'id' => 'password', 'placeholder' => 'Password']) !!}
                       </div>
                       <div class="form-group">
-                        {!! Form::button('<i class="fa fa-unlock"></i> Login', ['class' => 'btn btn-primary btn-login btn-sm', 'type' => 'submit']) !!}
+                        {!! Form::button('<span class="glyphicon glyphicon-check"></span> Login', ['class' => 'btn btn-primary btn-login btn-sm', 'type' => 'submit']) !!}
                       </div>
                     {!! Form::close() !!}
                   </div>
@@ -64,8 +64,8 @@ Welcome
                         {!! Form::password('confPassword', ['class' => 'form-control', 'id' => 'confPassword', 'placeholder' => 'Re-type password']) !!}
                       </div>
                       <div class="form-group">
-                        {!! Form::button('<i class="fa fa-check"></i> Register', ['class' => 'btn btn-primary btn-register btn-sm', 'type' => 'submit']) !!}
-                        {!! Form::button('<i class="fa fa-refresh"></i> Reset', ['class' => 'btn btn-default btn-sm', 'type' => 'reset']) !!}
+                        {!! Form::button('<span class="glyphicon glyphicon-check"></span> Register', ['class' => 'btn btn-primary btn-register btn-sm', 'type' => 'submit']) !!}
+                        {!! Form::button('<span class="glyphicon glyphicon-refresh"></span> Reset', ['class' => 'btn btn-default btn-sm', 'type' => 'reset']) !!}
                       </div>
                     {!! Form::close() !!}
                   </div>

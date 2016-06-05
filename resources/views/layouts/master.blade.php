@@ -9,7 +9,6 @@
     @yield('header.metaTags')
     <title>@yield('header.title')</title>
     <link rel="stylesheet" type="text/css" href="{!! asset('css/bootstrap.min.css') !!}" />
-    <link rel="stylesheet" type="text/css" href="{!! asset('css/font-awesome.min.css') !!}" />
     <link rel="stylesheet" type="text/css" href="{!! asset('css/style.css') !!}" />
     @yield('header.css')
     <script type="text/javascript" src="{!! asset('js/jquery-1.11.3.min.js') !!}"></script>
@@ -19,19 +18,26 @@
     @yield('header.js')
   </head>
   <body class="@yield('body.class')">
-    @include('includes.vertical-menu')
+    @if(\Auth::check())
+      @include('includes.vertical-menu')
+    @endif
     @include('includes.header')
-    @yield('body.content')
+    <div id="content">
+      @yield('body.content')
+    </div>
     <footer id="footer">
       @include('includes.footer')
     </footer>
     <script type="text/javascript">
       $(function(){
         $('.show-menu').click(function(){
+          var elm = $(this);
           if($('.sub-menu').is(':hidden')) {
             $('.sub-menu').show(200);
+            elm.html('<span class="glyphicon glyphicon-menu-up"></span>');
           }else{
             $('.sub-menu').hide(200);
+            elm.html('<span class="glyphicon glyphicon-menu-down"></span>');
           }
         });
         $('[data-toggle="tooltip"]').tooltip();
@@ -48,6 +54,7 @@
         });
         var h_h = $('#header').height();
         $('.vertical-column').css({"padding-top":h_h+10});
+        fire();
       });
     </script>
     <script type="text/javascript" src="{!! asset('js/add-friend.js') !!}"></script>

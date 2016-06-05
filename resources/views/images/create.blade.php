@@ -8,7 +8,7 @@
   <div id="content">
     <div class="container">
       <div class="row">
-        <div class="col-md-6 col-md-offset-3">
+        <div class="col-sm-10 col-md-offset-2">
           <div class="panel panel-default">
             <div class="panel-heading">
               <span>Upload an image</span>
@@ -16,7 +16,7 @@
             <div class="panel-body">
               @if(count($errors) > 0)
                 <div class="alert alert-danger">
-                  <b><i class="fa fa-frown-o"></i> Opps!</b>
+                  <b>:( Opps!</b>
                   <ul>
                     @foreach($errors->all() as $error)
                       <li>{!! $error !!}</li>
@@ -47,8 +47,8 @@
                   </div>
                 @endif
                 <div class="form-group">
-                  {!! Form::button('<i class="fa fa-upload"></i> Upload', ['class' => 'btn-main', 'type' => 'submit']) !!}
-                  {!! Form::button('<i class="fa fa-refresh"></i> Reset', ['class' => 'btn btn-default', 'type' => 'reset']) !!}
+                  {!! Form::button('<span class="glyphicon glyphicon-cloud-upload"></span> Upload', ['class' => 'btn-main', 'type' => 'submit']) !!}
+                  {!! Form::button('<span class="glyphicon glyphicon-refresh"></span> Reset', ['class' => 'btn btn-default', 'type' => 'reset']) !!}
                 </div>
               {!! Form::close() !!}
             </div><!-- End panel-body -->

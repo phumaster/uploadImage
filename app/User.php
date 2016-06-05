@@ -45,8 +45,20 @@ class User extends Model implements AuthenticatableContract,
      */
     protected $hidden = ['password', 'remember_token', 'email', 'sex', 'birthday', 'created_at', 'updated_at', 'deleted_at'];
 
-    public function messages() {
+    public function messagesSent() {
+      return $this->hasMany('App\Message', 'from');
+    }
+
+    public function messagesReceived() {
       return $this->hasMany('App\Message', 'to');
+    }
+
+    public function newMessage() {
+      return $this->hasMany('App\Message', 'to')->where('read', 0);
+    }
+
+    public function conversations() {
+      return $this->hasMany('App\Conversation', 'from');
     }
 
     public function album(){

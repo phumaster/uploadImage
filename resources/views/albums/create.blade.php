@@ -8,7 +8,7 @@
   <div id="content">
     <div class="container">
       <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-10 col-sm-offset-2">
           <div class="panel panel-default">
             <div class="panel-heading">
               <span>Create a new album</span>
@@ -16,7 +16,7 @@
             <div class="panel-body">
               @if(count($errors) > 0)
                 <div class="alert alert-danger">
-                  <b><i class="fa fa-frown-o"></i> Opps!</b>
+                  <b>:(( Opps!</b>
                   <ul>
                     @foreach($errors->all() as $error)
                       <li>{!! $error !!}</li>

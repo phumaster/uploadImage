@@ -55,9 +55,20 @@ Route::get('/logout', [
   'uses' => 'AuthenticationController@getLogout'
 ]);
 
-Route::get('/messages', function() {
-  return "x";
-});
+Route::get('/messages', [
+  'as' => 'messages',
+  'uses' => 'MessageController@index'
+]);
+
+Route::get('/messages/{user}', [
+  'as' => 'message.show',
+  'uses' => 'MessageController@show'
+])->where(['user' => '[0-9]+']);
+
+Route::post('/messages/to-{id}', [
+  'as' => 'message',
+  'uses' => 'MessageController@handle'
+]);
 
 Route::any('/pull', [
   'as' => 'pull.request',

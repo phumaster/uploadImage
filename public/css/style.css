@@ -7,10 +7,6 @@ a {
   cursor: pointer;
 }
 
-#content {
-    margin-top: 60px;
-}
-
 ::selection {
   background: #2A363B;
   color: #fff;
@@ -51,8 +47,8 @@ a {
 .logo-header .logo {
   filter: grayscale(100%);
   -webkit-filter: grayscale(100%);
-  padding-top: 5px;
 }
+
 .logo-header .logo:hover {
   filter: grayscale(0%);
   -webkit-filter: grayscale(0%);
@@ -71,7 +67,7 @@ a {
   box-shadow: 2px 2px 7px rgba(0, 0, 0, 0.15);
   transition: box-shadow 400ms ease;
   position: relative;
-  height: 250px;
+  height: 200px;
   overflow: hidden;
   background: #fff;
   border: 1px solid rgba(0, 0, 0, 0.15);
@@ -202,7 +198,7 @@ a {
   background: #2A363B;
   display: none;
   width: 100%;
-  top: 50px;
+  top: 40px;
   right: 0px;
   min-width: 150px;
   z-index: 999;
@@ -226,6 +222,10 @@ a {
   color: #fff;
 }
 
+#content {
+  margin-top: 60px;
+}
+
 .menu-user .sub-menu:after {
   content: "";
   border-left: 6px solid transparent;
@@ -242,7 +242,7 @@ a {
   width: 24.7%;
   display: inline-block;
   overflow: hidden;
-  height: 250px;
+  height: 200px;
 }
 
 .list-image-all .image-grid img {
@@ -428,7 +428,6 @@ a {
   margin: 0;
   padding: 0;
   position: relative;
-  top: -7px;
 }
 
 .header-navigation li {
@@ -436,7 +435,7 @@ a {
 }
 
 .header-navigation li a {
-  padding: 5px;
+  padding: 10px;
   display: block;
 }
 .margin-content {
@@ -487,7 +486,7 @@ a {
   font-size: 18px;
   font-weight: bold;
 }
-.post, .content-right, .no-post, .card {
+.post, .content-right, .no-post, .card, .messages {
   position: relative;
   background: #fff;
   box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.15);
@@ -573,7 +572,7 @@ h4.text-indent {
 
 #message-container .message-box > .message-body {
   background: #fff;
-  height: 200px;
+  height: 250px;
   overflow-y: scroll;
   padding: 5px;
 }
@@ -581,6 +580,41 @@ h4.text-indent {
 #message-container .message-box > .message-footer {
   border-top: 1px solid rgba(0, 0, 0, 0.15);
   background: #fff;
+}
+
+#message-container .message-box .item-block {
+  display: block;
+  margin: 5px;
+}
+
+#message-container .item-block .message-item {
+  padding: 5px;
+  background: #337AC0;
+  color: #fff;
+  display: block;
+  border-radius: 5px;
+  position: relative;
+}
+
+#message-container .item-block .message-item::after {
+  content: "";
+  display: block;
+  position: absolute;
+  right: -5px;
+  bottom: 10px;
+  height: 0px;
+  width: 0px;
+  border-top: 5px solid transparent;
+  border-left: 5px solid #337AC0;
+  border-bottom: 5px solid transparent;
+}
+
+#message-container .item-block .message-item.send {
+  float: right;
+}
+
+#message-container .item-block .message-item.receive {
+  float: left;
 }
 
 .message-box-input {
@@ -601,4 +635,95 @@ h4.text-indent {
 .list-friends .send-message-to-friend:hover {
   font-weight: bold;
   color: #E84A5F;
+}
+
+.messages .message-link {
+  color: #333;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.messages .message-link:hover {
+  color: #E84A5F;
+}
+
+.messages .message-item {
+  padding: 10px;
+}
+
+.messages .message-body {
+  height: 450px;
+  overflow-y: scroll;
+}
+
+.messages .message-body .author {
+  display: inline-block;
+  margin: 2px;
+}
+
+.messages .message-body .message-content {
+  display: inline-block;
+  padding: 5px;
+  margin: 5px;
+  position: relative;
+  box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.15);
+  color: #fff;
+}
+
+.messages .message-body .left .message-content {
+  background: #337AC0;
+}
+
+.messages .message-body .right .message-content {
+  background: #E84A5F;
+}
+
+.messages .message-body .message-content::before {
+  content: "";
+  height: 0;
+  width: 0;
+  position: absolute;
+  top: 20%;
+}
+
+.messages .message-body .left .message-content::before {
+  border-top: 10px solid transparent;
+  border-right: 10px solid #337AC0;
+  border-bottom: 10px solid transparent;
+  left: -7px;
+}
+
+.messages .message-body .right .message-content::before {
+  border-top: 10px solid transparent;
+  border-left: 10px solid #E84A5F;
+  border-bottom: 10px solid transparent;
+  right: -7px;
+}
+
+.messages .message-body .send-moment {
+  font-size: 12px;
+  color: #ddd;
+}
+
+.messages .message-body .r {
+  display: block;
+}
+
+.send-message-form .input-send-message {
+  height: 48px;
+}
+
+.notify {
+  position: relative;
+}
+
+.notify .badge {
+  position: absolute;
+  top: 2px;
+  right: -7px;
+  background: red;
+  color: #fff;
+  font-size: 12px;
+  padding: 2px;
+  border-radius: 5px;
 }

@@ -16,19 +16,17 @@
                 <div class="user-profile">
                   <div class="menu-user">
                     <div class="primary-link-menu">
-                      <div id="loading-icon" style="display: inline-block">
-                      </div>
                       <ul class="header-navigation">
                         @if(Route::current()->getName() != 'index')
-                        <li><a href="{!! route('photo.create', \Auth::user()->id) !!}" class="link"><i class="fa fa-cloud-upload fa-fw"></i></a></li>
+                        <li><a href="{!! route('photo.create', \Auth::user()->id) !!}" class="link"><span class="glyphicon glyphicon-cloud-upload"></span></a></li>
                         @endif
-                        <li><a href="#" class="link"><i class="fa fa-bell fa-fw"></i></a></li>
-                        <li><a href="#" class="link"><i class="fa fa-comments fa-fw"></i></a></li>
-                        <li><a class="show-menu link"><img src="{!! !is_null(\Auth::user()->getProfilePictureUrl()) ? \Auth::user()->getProfilePictureUrl() : url('images/logo.png') !!}"/ class="logo-user"> <i class="fa fa-fw fa-angle-down"></i></a></li>
+                        <li><a href="#" class="link"><span class="glyphicon glyphicon-globe"></span></a></li>
+                        <li><a href="#" class="link notify"><span class="glyphicon glyphicon-comment"></span><span class="badge badge-message">99+</span></a></li>
+                        <li><a class="show-menu link"><span class="glyphicon glyphicon-menu-down"></span></a></li>
                       </ul>
                       <div class="sub-menu">
-                        <a href="{!! route('user.profile', \Auth::user()->id) !!}"><i class="fa fa-fw fa-user"></i> View profile</a>
-                        <a href="{!! route('logout') !!}" onclick="return confirm('Do you want to logout?')"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        <a href="{!! route('user.profile', \Auth::user()->id) !!}"><img src="{!! !is_null(\Auth::user()->getProfilePictureUrl()) ? \Auth::user()->getProfilePictureUrl() : url('images/logo.png') !!}"/ class="logo-user">  View profile</a>
+                        <a href="{!! route('logout') !!}" onclick="return confirm('Do you want to logout?')"><span class="glyphicon glyphicon-off"></span> Logout</a>
                       </div>
                     </div>
                   </div>

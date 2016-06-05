@@ -28,7 +28,7 @@ class PullRequestController extends Controller
     }
 
     private function hasNewMessages() {
-      $messages = Message::where(['id' => Auth::user()->id, 'read' => 0]);
+      $messages = Message::where(['to' => Auth::user()->id, 'read' => 0]);
       if($messages->count() <= 0) {
         return false;
       }else{

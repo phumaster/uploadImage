@@ -103,8 +103,8 @@ Add your info
               </select>
             </div>
             <div class="form-group">
-              {!! Form::button('<i class="fa fa-check"></i> update my information', ['type' => 'submit', 'class' => 'btn btn-sm btn-primary']) !!}
-              <a class="btn btn-sm btn-main" href="{!! route('index',['skip' => 'yes']) !!}"><i class="fa fa-remove"></i> Skip this step</a>
+              {!! Form::button('<span class="glyphicon glyphicon-ok"></span> update my information', ['type' => 'submit', 'class' => 'btn btn-sm btn-primary']) !!}
+              <a class="btn btn-sm btn-main" href="{!! route('index',['skip' => 'yes']) !!}"><span class="glyphicon glyphicon-remove"></span> Skip this step</a>
             </div>
           {!! Form::close() !!}
         </div><!-- end .form-add-info -->

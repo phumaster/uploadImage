@@ -12,7 +12,7 @@
     {!! Form::textarea('album_description', '', ['class' => 'form-control', 'id' => 'album_description']) !!}
   </div>
   <div class="form-group">
-    {!! Form::button('<i class="fa fa-plus"></i> Create', ['class' => 'btn btn-primary', 'type' => 'submit']) !!}
-    {!! Form::button('<i class="fa fa-refresh"></i> Reset', ['class' => 'btn btn-default', 'type' => 'reset']) !!}
+    {!! Form::button('<span class="glyphicon glyphicon-plus"></span> Create', ['class' => 'btn btn-primary', 'type' => 'submit']) !!}
+    {!! Form::button('<span class="glyphicon glyphicon-refresh"></span> Reset', ['class' => 'btn btn-default', 'type' => 'reset']) !!}
   </div>
 {!! Form::close() !!}

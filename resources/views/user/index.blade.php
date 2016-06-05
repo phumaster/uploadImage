@@ -5,129 +5,127 @@
 @endsection
 
 @section('body.content')
-  <div id="content">
-    <div class="container">
-      <div class="row">
-        <div class="col-sm-10 col-sm-offset-2">
-          <div class="user-view-profile">
-            <div class="user-header">
-              <div class="cover-photo bg-cover"
-              @if(!is_null($user->getCoverPhotoUrl()))
-                style="background: url({!! url($user->getCoverPhotoUrl()) !!}) no-repeat;"
+<div class="container">
+  <div class="row">
+    <div class="col-sm-10 col-sm-offset-2">
+      <div class="user-view-profile">
+        <div class="user-header">
+          <div class="cover-photo bg-cover"
+          @if(!is_null($user->getCoverPhotoUrl()))
+            style="background: url({!! url($user->getCoverPhotoUrl()) !!}) no-repeat;"
+          @endif
+            >
+            <div class="box-cover">
+              @if(!is_null($user->getProfilePictureUrl()))
+                <img src="{!! asset($user->getProfilePictureUrl()) !!}" class="profile-picture" alt="Avatar">
               @endif
-                >
-                <div class="box-cover">
-                  @if(!is_null($user->getProfilePictureUrl()))
-                    <img src="{!! asset($user->getProfilePictureUrl()) !!}" class="profile-picture" alt="Avatar">
-                  @endif
-                </div>
-                @if($user->isAuthor($user->id))
-                <div class="edit-option">
-                  <a class="btn-main btn-sm" onclick="popup.profile();" id="update-profile-picture">Update profile picture</a>
-                  <a class="btn-main btn-sm" onclick="popup.cover()" id="update-cover-photo">Update cover photo</a>
-                </div>
-                @endif
-                @if(!$user->isAuthor($user->id))
-                <div class="contact-people">
-                  @if(\Auth::user()->isFriend($user->id))
-                  <?php $text = '<i class="fa fa-fw fa-check"></i>'." See relationship"; $btn = "btn-success"; ?>
-                  @elseif(\Auth::user()->isSentRequest($user->id))
-                  <?php $text = '<i class="fa fa-fw fa-check"></i> '."Friend request sent"; $btn = "btn-success";?>
-                  @else
-                  <?php $text = '<i class="fa fa-fw fa-plus"></i>'." Add friend"; $btn = "btn-default";?>
-                  @endif
-                  <a class="btn {!! $btn !!} btn-sm btn-add-friend" data-target-xhr="{!! route('add-friend', $user->id) !!}">{!! $text !!}</a>
-                  <a class="btn btn-default btn-sm btn-send-message"><i class="fa fa-fw fa-envelope"></i> Message</a>
-                </div>
-                @endif
-              </div><!-- End cover-photo -->
-            </div><!-- End user-header -->
-            @include('includes.navbar-user-profile')
-            <div class="user-body">
-              <div class="col-md-12">
-                <div class="row">
-                  <div class="tab" id="tab-about">
-                    <!-- info -->
-                    <div class="panel panel-default">
-                      <div class="panel-body">
-                        <h4><i class="fa fa-link"></i> Basic info</h4>
-                        <hr/>
-                        <p><b>Name: </b> {!! $user->name !!}</p>
-                        <p><b>Sex: </b> {!! $user->sex !!}</p>
-                        <p><b>Birthday: </b> {!! $user->birthday !!}</p>
-                        <hr/>
-                        <p><b>Email </b>{!! $user->email !!}</p>
-                        <hr/>
-                        <p><b>Address </b>{!! $user->address !!}</p>
-                        <hr/>
-                        <p><b>Description </b><br/>{!! $user->description !!}</p>
-                      </div>
-                    </div>
-                    <!-- end info -->
-                  </div>
-
-                  <div class="tab" id="tab-albums">
-                    <!-- albums -->
-                    @if(count($user->album) > 0)
-                      <?php $i = 0; ?>
-                            @foreach($user->album as $album)
-                                <div class="width-4">
-                                  <div class="album">
-                                    <div class="image-preview">
-                                      @if(count($album['images']) > 0)
-                                        @foreach($album['images'] as $image)
-                                          <img src="{!! asset($image['fullsize_url']) !!}" id="image_{!! $image['id'] !!}">
-                                        @endforeach
-                                      @endif
-                                    </div><!-- End image-preview -->
-                                    <div class="album-body">
-                                      <div class="album-link">
-                                        <b><a href="{!! route('album.show', [$album['user_id'], $album['id']]) !!}">{!! $album['album_name'] !!}</a></b>
-                                      </div><!-- End album-link -->
-                                      <div class="image-number">
-                                        <i>{!! count($album['images']) !!} photos</i>
-                                      </div><!-- End image-number -->
-                                    </div><!-- End album-body -->
-                                  </div>
-                                </div><!-- End width-4 -->
-                            @endforeach
-                    @else
-                      <div class="text-center">
-                        <div class="text-danger"><h4>No album available</h4></div>
-                      </div>
-                    @endif
-                    <!-- end albums -->
-                  </div>
-
-                  <div class="tab" id="tab-photos">
-                    <!-- photos -->
-                    @if(count($user->images) > 0)
-                    <div class="list-image-all">
-                      @foreach($user->images as $image)
-                        <a href="{!! route('photo.show', [$image->user_id, $image->id]) !!}">
-                          <div class="image-grid" style="position: relative">
-
-                            <img src="{!! asset($image->fullsize_url) !!}">
-                          </div>
-                        </a>
-                      @endforeach
-                    </div><!-- End list-image -->
-                    @else
-                      <div class="text-center text-danger">
-                        No photos to show
-                      </div>
-                    @endif
-                    <!-- end photos -->
+            </div>
+            @if($user->isAuthor($user->id))
+            <div class="edit-option">
+              <a class="btn-main btn-sm" onclick="popup.profile();" id="update-profile-picture">Update profile picture</a>
+              <a class="btn-main btn-sm" onclick="popup.cover()" id="update-cover-photo">Update cover photo</a>
+            </div>
+            @endif
+            @if(!$user->isAuthor($user->id))
+            <div class="contact-people">
+              @if(\Auth::user()->isFriend($user->id))
+              <?php $text = '<i class="fa fa-fw fa-check"></i>'." See relationship"; $btn = "btn-success"; ?>
+              @elseif(\Auth::user()->isSentRequest($user->id))
+              <?php $text = '<i class="fa fa-fw fa-check"></i> '."Friend request sent"; $btn = "btn-success";?>
+              @else
+              <?php $text = '<i class="fa fa-fw fa-plus"></i>'." Add friend"; $btn = "btn-default";?>
+              @endif
+              <a class="btn {!! $btn !!} btn-sm btn-add-friend" data-target-xhr="{!! route('add-friend', $user->id) !!}">{!! $text !!}</a>
+              <a class="btn btn-default btn-sm send-message-to-friend" data-name="{!! $user->name !!}" data-id="{!! $user->id !!}" data-target-xhr="{!! route('message', $user->id) !!}"><i class="fa fa-fw fa-envelope"></i> Message</a>
+            </div>
+            @endif
+          </div><!-- End cover-photo -->
+        </div><!-- End user-header -->
+        @include('includes.navbar-user-profile')
+        <div class="user-body">
+          <div class="col-md-12">
+            <div class="row">
+              <div class="tab" id="tab-about">
+                <!-- info -->
+                <div class="panel panel-default">
+                  <div class="panel-body">
+                    <h4><i class="fa fa-link"></i> Basic info</h4>
+                    <hr/>
+                    <p><b>Name: </b> {!! $user->name !!}</p>
+                    <p><b>Sex: </b> {!! $user->sex !!}</p>
+                    <p><b>Birthday: </b> {!! $user->birthday !!}</p>
+                    <hr/>
+                    <p><b>Email </b>{!! $user->email !!}</p>
+                    <hr/>
+                    <p><b>Address </b>{!! $user->address !!}</p>
+                    <hr/>
+                    <p><b>Description </b><br/>{!! $user->description !!}</p>
                   </div>
                 </div>
+                <!-- end info -->
               </div>
-              <div class="clear-fix"></div>
-            </div><!-- End user-body -->
+
+              <div class="tab" id="tab-albums">
+                <!-- albums -->
+                @if(count($user->album) > 0)
+                  <?php $i = 0; ?>
+                        @foreach($user->album as $album)
+                            <div class="width-4">
+                              <div class="album">
+                                <div class="image-preview">
+                                  @if(count($album['images']) > 0)
+                                    @foreach($album['images'] as $image)
+                                      <img src="{!! asset($image['fullsize_url']) !!}" id="image_{!! $image['id'] !!}">
+                                    @endforeach
+                                  @endif
+                                </div><!-- End image-preview -->
+                                <div class="album-body">
+                                  <div class="album-link">
+                                    <b><a href="{!! route('album.show', [$album['user_id'], $album['id']]) !!}">{!! $album['album_name'] !!}</a></b>
+                                  </div><!-- End album-link -->
+                                  <div class="image-number">
+                                    <i>{!! count($album['images']) !!} photos</i>
+                                  </div><!-- End image-number -->
+                                </div><!-- End album-body -->
+                              </div>
+                            </div><!-- End width-4 -->
+                        @endforeach
+                @else
+                  <div class="text-center">
+                    <div class="text-danger"><h4>No album available</h4></div>
+                  </div>
+                @endif
+                <!-- end albums -->
+              </div>
+
+              <div class="tab" id="tab-photos">
+                <!-- photos -->
+                @if(count($user->images) > 0)
+                <div class="list-image-all">
+                  @foreach($user->images as $image)
+                    <a href="{!! route('photo.show', [$image->user_id, $image->id]) !!}">
+                      <div class="image-grid" style="position: relative">
+
+                        <img src="{!! asset($image->fullsize_url) !!}">
+                      </div>
+                    </a>
+                  @endforeach
+                </div><!-- End list-image -->
+                @else
+                  <div class="text-center text-danger">
+                    No photos to show
+                  </div>
+                @endif
+                <!-- end photos -->
+              </div>
+            </div>
           </div>
-        </div>
-      </div><!-- end .row -->
-    </div><!-- End container -->
-  </div><!-- End #content -->
+          <div class="clear-fix"></div>
+        </div><!-- End user-body -->
+      </div>
+    </div>
+  </div><!-- end .row -->
+</div><!-- End container -->
 @endsection
 
 @section('footer.js')
@@ -149,6 +147,27 @@
       var id = $(this).attr('id');
       $('#tab-'+id).fadeIn(500);
       loadAlbum();
+    });
+
+    $('.send-message-to-friend').click(function() {
+      var xhr = $(this).attr('data-target-xhr');
+      var id = $(this).attr('data-id');
+      var name = $(this).attr('data-name');
+
+      $(this).createChatBox(xhr, id, name);
+
+      $('.close-message-box').click(function() {
+        $(this).parent().parent().remove();
+      });
+
+      $('.message-box-input').keydown(function(e) {
+        if(e.keyCode == 13 && $(this).val() != "") {
+          $(this).sendMessageTo(xhr, $(this).val());
+        }
+        if(e.keyCode == 27) {
+          $(this).parent().parent().remove();
+        }
+      });
     });
     // send ajax update profile picture
     $('#update-profile-picture').click(function() {

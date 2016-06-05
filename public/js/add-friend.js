@@ -12,7 +12,8 @@ $(document).ready(function() {
           elm.removeClass('btn-default').addClass('btn-danger');
         }
         if(data.error == 0 || data.error == -2) {
-          elm.removeClass('btn-default').addClass('btn-success').html('<i class="fa fa-fw fa-check"></i> Friend request sent');
+          elm.removeClass('btn-default').addClass('btn-success').html('<span class="glyphicon glyphicon-check"></span> Friend request sent');
+          notification.push('Friend request sent', 'success');
         }
       }
     });

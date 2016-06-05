@@ -1,31 +1,24 @@
-@extends('layouts.master')
-
-@section('header.title')
-This is title
-@endsection
-
-@section('body.content')
-<div id="content">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-12">
-        @if(Session::has('message'))
-          <div class="alert alert-success">
-            {!! Session::get('message') !!}
-          </div>
-        @endif
-        @if(count($errors) > 0)
-          <div class="alert alert-danger">
-            <b><i class="fa fa-frown-o"></i> Opps!</b>
-            <ul>
-              @foreach($errors->all() as $error)
-                <li>{!! $error !!}</li>
-              @endforeach
-            </ul>
-          </div>
-        @endif
-
-        <div class="image-show-bg">
+<div class="container">
+  <div class="row">
+    <div class="col-sm-10 col-sm-offset-2">
+      <div class="panel panel-primary">
+        <div class="panel-heading">All photos</div>
+        <div class="panel-body">
+          @if(Session::has('message'))
+            <div class="alert alert-success">
+              {!! Session::get('message') !!}
+            </div>
+          @endif
+          @if(count($errors) > 0)
+            <div class="alert alert-danger">
+              <b>:( Opps!</b>
+              <ul>
+                @foreach($errors->all() as $error)
+                  <li>{!! $error !!}</li>
+                @endforeach
+              </ul>
+            </div>
+          @endif
           @if(count($images) > 0)
           <div class="list-image-all">
             @foreach($images as $image)
@@ -47,8 +40,7 @@ This is title
             </div>
           @endif
         </div>
-      </div><!-- End col-md-12 -->
-    </div><!-- End row -->
-  </div><!-- End container -->
-</div><!-- End #content -->
-@endsection
+      </div>
+    </div><!-- End col-md-10 -->
+  </div><!-- End row -->
+</div><!-- End container -->

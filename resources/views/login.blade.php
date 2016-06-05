@@ -16,7 +16,7 @@ Login
           <div class="panel-body">
             @if(count($errors) > 0)
               <div class="alert alert-danger">
-                <b><i class="fa fa-frown-o"></i> Opps!</b>
+                <b>:( Opps!</b>
                 <ul>
                   @foreach( $errors->all() as $error )
                     <li>{!! $error !!}</li>
@@ -39,7 +39,7 @@ Login
                 {!! Form::password('password', ['class' => 'form-control', 'id' => 'password']) !!}
               </div>
               <div class="form-group">
-                {!! Form::button('<i class="fa fa-check"></i> Login', ['class' => 'btn btn-primary', 'type' => 'submit']) !!}
+                {!! Form::button('<span class="glyphicon glyphicon-check"></span> Login', ['class' => 'btn btn-primary', 'type' => 'submit']) !!}
               </div>
             {!! Form::close() !!}
           </div><!-- End panel-body -->

@@ -33,9 +33,6 @@ class ImageController extends Controller
     public function index($user, Request $request)
     {
         $data['images'] = Image::where('user_id', $user)->paginate(10);
-        if($request->ajax()) {
-          return json_encode($data);
-        }
         return view('images.index', $data);
     }
 
