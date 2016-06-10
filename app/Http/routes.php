@@ -63,7 +63,7 @@ Route::get('/messages', [
 Route::get('/messages/{user}', [
   'as' => 'message.show',
   'uses' => 'MessageController@show'
-])->where(['user' => '[0-9]+']);
+]);
 
 Route::post('/messages/to-{id}', [
   'as' => 'message',
@@ -133,7 +133,7 @@ Route::group(['prefix' => '/{user}'], function() {
     Route::get('/{id}', [
       'as' => 'album.show',
       'uses' => 'AlbumController@show'
-    ])->where(['id' => '[0-9]+']);
+    ]);
 
     Route::put('/{id}', [
       'as' => 'album.update',
@@ -143,12 +143,12 @@ Route::group(['prefix' => '/{user}'], function() {
     Route::delete('/{id}', [
       'as' => 'album.destroy',
       'uses' => 'AlbumController@destroy'
-    ])->where(['id' => '[0-9]+']);
+    ]);
 
     Route::get('/{id}/edit', [
       'as' => 'album.edit',
       'uses' => 'AlbumController@edit'
-    ])->where(['id' => '[0-9]+']);
+    ]);
 
     Route::post('/{id}/comment', [
       'as' => 'album.comment',
@@ -180,17 +180,17 @@ Route::group(['prefix' => '/{user}'], function() {
     Route::get('/{id}', [
       'as' => 'photo.show',
       'uses' => 'ImageController@show'
-    ])->where(['id' => '[0-9]+']);
+    ]);
 
     Route::put('/{id}', [
       'as' => 'photo.update',
       'uses' => 'ImageController@update'
-    ])->where(['id' => '[0-9]+']);
+    ]);
 
     Route::delete('/{id}', [
       'as' => 'photo.destroy',
       'uses' => 'ImageController@destroy'
-    ])->where(['id' => '[0-9]+']);
+    ]);
 
     Route::get('/{id}/edit', [
       'as' => 'photo.edit',

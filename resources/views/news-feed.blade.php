@@ -160,26 +160,5 @@
     $('.form-post-comment').commentThisPhoto();
 
     $('.like-this-post').likeThisPhoto();
-
-    $('.send-message-to-friend').click(function() {
-      var xhr = $(this).attr('data-target-xhr');
-      var id = $(this).attr('data-id');
-      var name = $(this).attr('data-name');
-
-      $(this).createChatBox(xhr, id, name);
-
-      $('.close-message-box').click(function() {
-        $(this).parent().parent().remove();
-      });
-
-      $('.message-box-input').keydown(function(e) {
-        if(e.keyCode == 13 && $(this).val() != "") {
-          $(this).sendMessageTo(xhr, $(this).val());
-        }
-        if(e.keyCode == 27) {
-          $(this).parent().parent().remove();
-        }
-      });
-    });
   });
 </script>

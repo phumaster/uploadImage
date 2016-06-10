@@ -12,27 +12,33 @@ use App\Message;
 
 class PullRequestController extends Controller
 {
-    protected $messages;
+    protected $messages = null;
     protected $hasNewMessages = false;
 
     public function handle(Request $request) {
-      $time = time()+50;
+      $time = time()+10;
       while(1) {
-        echo connection_status();
+        // check new messages
         if($this->hasNewMessages() || time() >= $time) {
           break;
         }
         continue;
       }
-      return $this->messages;
+      return response()->json($this->messages);
     }
 
     private function hasNewMessages() {
-      $messages = Message::where(['to' => Auth::user()->id, 'read' => 0]);
+      $messages = Message::where(['to' => Auth::user()->id, 'read' => 0])->get();
       if($messages->count() <= 0) {
         return false;
       }else{
-        $this->messages = $messages->get()->toJson();
+        foreach($messages as $message) {
+          $message->update(['read' => 1]);
+          $u = $message->user()->first();
+          $avatar = $u->getProfilePictureUrl();
+          $data[] = array_merge($message->toArray(), ['user' => $u->toArray(), 'xhr' => route('message', $u['id']), 'avatar_url' => $avatar]);
+        }
+        $this->messages = $data;
         return true;
       }
     }

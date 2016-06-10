@@ -124,7 +124,7 @@ class ImageController extends Controller
         $image = Image::where(['id' => $id, 'user_id' => $user])->first();
 
         if(count($image) <= 0) {
-          return redirect()->route('photo.index')->withErrors('No image to show.');
+          return redirect()->route('photo.index', $user)->withErrors('The photo doesn\'t exists!');
         }
 
         $data['image'] = $image;

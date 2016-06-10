@@ -17,15 +17,32 @@
     @yield('header.js')
   </head>
   <body class="@yield('body.class')">
-    <header id="header">
-      @yield('header')
-    </header>
-    <section>
-      @yield('body.content')
-    </section>
-    <footer id="footer">
-      @yield('footer')
-    </footer>
+    <div id="content">
+      <header id="header">
+        @yield('header')
+      </header>
+      <section>
+        @yield('body.content')
+      </section>
+      <footer id="footer">
+        @yield('footer')
+      </footer>
+    </div>
+    <div id="overlay-loading">
+      <div class="spinner">
+        <div class="circle-spin"></div>
+        <p>loading...</p>
+      </div>
+    </div>
+    <script type="text/javascript">
+    document.getElementById('content').style.display = 'none';
+
+    $(document).ready(function() {
+      $('#overlay-loading').fadeOut(1000, 'swing', function() {
+        $('#content').fadeIn(1000);
+      });
+    });
+    </script>
     @yield('footer.js')
     @yield('js')
   </body>

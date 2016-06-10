@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <base href="http://localhost:8000/" />
+    <base href="{!! url('/').'/'; !!}" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @yield('header.metaTags')
     <title>@yield('header.title')</title>
@@ -24,9 +24,15 @@
     @include('includes.header')
     <div id="content">
       @yield('body.content')
-    </div>
+    </div><!-- end #content -->
     <footer id="footer">
       @include('includes.footer')
+      <div id="overlay-loading">
+        <div class="spinner">
+          <div class="circle-spin"></div>
+          <p>loading...</p>
+        </div>
+      </div>
     </footer>
     <script type="text/javascript">
       $(function(){
@@ -40,25 +46,14 @@
             elm.html('<span class="glyphicon glyphicon-menu-down"></span>');
           }
         });
+        /* show tooltip when hover */
         $('[data-toggle="tooltip"]').tooltip();
       });
     </script>
     @yield('footer.js')
-    <script type="text/javascript">
-      notification.create();
-      $(document).ready(function() {
-        $('.vertical-menu-a').click(function(e){
-          e.preventDefault();
-          $('#vertical-menu li a').removeClass('active');
-          $(this).addClass('active');
-        });
-        var h_h = $('#header').height();
-        $('.vertical-column').css({"padding-top":h_h+10});
-        fire();
-      });
-    </script>
     <script type="text/javascript" src="{!! asset('js/add-friend.js') !!}"></script>
     <script type="text/javascript" src="{!! asset('js/pull.js') !!}"></script>
+    <script type="text/javascript" src="{!! asset('js/extra.js') !!}"></script>
     @yield('js')
   </body>
 </html>

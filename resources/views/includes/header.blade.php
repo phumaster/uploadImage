@@ -5,34 +5,38 @@
         <div class="row header-prefix">
           <div class="col-md-8">
             <div class="logo-header">
-              <div class="pull-left"><a href="{!! url('/') !!}">
-                <img src="{!! asset('images/logo.png') !!}" alt="logo" width="40px" class="logo"/>
+              <div class="pull-left"><a href="{!! url('/') !!}" class="logo">
+                <span class="glyphicon glyphicon-home"></span>
               </a></div>
             </div>
           </div><!-- End col-md-8 -->
           <div class="col-md-4">
-            <div class="pull-right navigation-user">
+            <div class="pull-right">
               @if(\Auth::check())
-                <div class="user-profile">
-                  <div class="menu-user">
-                    <div class="primary-link-menu">
-                      <ul class="header-navigation">
-                        @if(Route::current()->getName() != 'index')
-                        <li><a href="{!! route('photo.create', \Auth::user()->id) !!}" class="link"><span class="glyphicon glyphicon-cloud-upload"></span></a></li>
-                        @endif
-                        <li><a href="#" class="link"><span class="glyphicon glyphicon-globe"></span></a></li>
-                        <li><a href="#" class="link notify"><span class="glyphicon glyphicon-comment"></span><span class="badge badge-message">99+</span></a></li>
-                        <li><a class="show-menu link"><span class="glyphicon glyphicon-menu-down"></span></a></li>
-                      </ul>
-                      <div class="sub-menu">
-                        <a href="{!! route('user.profile', \Auth::user()->id) !!}"><img src="{!! !is_null(\Auth::user()->getProfilePictureUrl()) ? \Auth::user()->getProfilePictureUrl() : url('images/logo.png') !!}"/ class="logo-user">  View profile</a>
-                        <a href="{!! route('logout') !!}" onclick="return confirm('Do you want to logout?')"><span class="glyphicon glyphicon-off"></span> Logout</a>
-                      </div>
-                    </div>
+                <nav class="navigation-menu-header">
+                  @if(Route::current()->getName() != 'index')
+                  <div class="navigator-item">
+                    <a href="{!! route('photo.create', \Auth::user()->id) !!}" data-toggle="tooltip" data-placement="bottom" title="Upload new photo"><span class="glyphicon glyphicon-cloud-upload"></span></a>
                   </div>
+                  @endif
+                  <div class="navigator-item">
+                    <a href="#" class="notify" data-toggle="tooltip" data-placement="bottom" title="Notification"><span class="glyphicon glyphicon-globe"></span></a>
+                  </div>
+                  <div class="navigator-item">
+                    <a href="#" class="notify" id="show-friends-request" data-toggle="tooltip" data-placement="bottom" title="Friend requests"><span class="glyphicon glyphicon-user"></span><span class="badge badge-friends">14+</span></a>
+                  </div>
+                  <div class="navigator-item">
+                    <a href="#" class="notify notify-message" onclick="return document.getElementById('menu-link-message').click()" data-toggle="tooltip" data-placement="bottom" title="Messages"><span class="glyphicon glyphicon-comment"></span><span class="badge badge-message"></span></a>
+                  </div>
+                  <div class="navigator-item">
+                    <a href="{{ route('logout') }}" onclick="return confirm('Do you really want to logout?');" data-toggle="tooltip" data-placement="bottom" title="Logout"><span class="glyphicon glyphicon-off"></span></a>
+                  </div>
+                </nav>
+                <div class="nav-content">
+
                 </div>
               @endif
-            </div>
+            </div><!-- pull right -->
           </div><!-- Enc col-md-4 -->
         </div><!-- End row -->
       </div><!-- End container -->

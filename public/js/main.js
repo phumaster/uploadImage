@@ -196,7 +196,11 @@ function message(url, content) {
       success: function(response) {
         var data = JSON.parse(response);
         responseTo.find('.message-body')
-          .append('<div class="item-block"><div class="message-item send">'+data.message+'</div><div class="clear-fix"></div></div>');
+          .append('<div><div class="r left"><div class="message-content">'+data.message+'</div><div class="clear-fix"></div></div></div>');
+          if($('.uid'+data.reciever) != null) {
+            $('.uid'+data.reciever).find('.row-message')
+            .append('<div><div class="r left"><div class="author"><a href="#"><img src="'+data.avatar_url+'" class="logo-user"/></a></div><div class="message-content">'+data.message+'</div><div class="clear-fix"></div></div></div>');
+          }
       }
     });
   };

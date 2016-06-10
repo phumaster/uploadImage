@@ -2,10 +2,11 @@
   <nav class="vertical-menu">
     <ul id="vertical-menu">
       <li><a class="vertical-menu-a active target" data-target-xhr="{!! route('index') !!}"><span class="glyphicon glyphicon-list-alt"></span> News feed</a></li>
-      <li><a class="vertical-menu-a target" data-target-xhr="{!! route('messages') !!}"><span class="glyphicon glyphicon-inbox"></span> Messages</a></li>
+      <li><a class="vertical-menu-a target" href="{!! route('user.profile', Auth::user()->id) !!}"><span class="glyphicon glyphicon-user"></span> {{ Auth::user()->name }}</a></li>
+      <li><a class="vertical-menu-a target" data-target-xhr="{!! route('messages') !!}" id="menu-link-message"><span class="glyphicon glyphicon-inbox"></span> Messages</a></li>
       <li><a class="vertical-menu-a target" data-target-xhr="{!! route('album.index', \Auth::user()->id) !!}"><span class="glyphicon glyphicon-film"></span> Albums</a></li>
       <li><a class="vertical-menu-a target" data-target-xhr="{!! route('photo.index', \Auth::user()->id) !!}"><span class="glyphicon glyphicon-picture"></span> Photos</a></li>
-      <li><a href="#" class="vertical-menu-a target"><span class="glyphicon glyphicon-option-horizontal"></span> Setting</a></li>
+      <li><a href="#" class="vertical-menu-a target"><span class="glyphicon glyphicon-wrench"></span> Setting</a></li>
       <li><a href="#" class="vertical-menu-a target"><span class="glyphicon glyphicon-tasks"></span> Preferences</a></li>
       <li><a href="#" class="vertical-menu-a target"><span class="glyphicon glyphicon-stats"></span> Activity log</a></li>
     </ul>
