@@ -35,7 +35,7 @@
             @endforeach
           </div><!-- End list-image -->
           @else
-            <div class="text-center text-danger">
+            <div class="text-center text-info">
               No photos to show
             </div>
           @endif

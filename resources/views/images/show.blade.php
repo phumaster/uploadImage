@@ -22,7 +22,7 @@
                     <h4><a href="{!! url('/') !!}">{!! $image->user->name !!}</a></h4>
                   </div>
                   {!! Form::open(['route' => ['photo.destroy',$image->user_id, $image->id], 'method' => 'DELETE']) !!}
-                    {!! Form::button('xóa ảnh', ['class' => 'btn-link text-danger', 'type' => 'submit']) !!}
+                    {!! Form::button('xóa ảnh', ['class' => 'btn-link text-info', 'type' => 'submit']) !!}
                   {!! Form::close() !!}
                   <div class="image-caption">
                     <p>{!! $image->image_caption !!}</p>
@@ -30,7 +30,7 @@
                   <hr/>
                   @if(count($errors) > 0)
                     @foreach($errors->all() as $error)
-                      <div class="text-danger"><h5>{!! $error !!}</h5></div>
+                      <div class="text-info"><h5>{!! $error !!}</h5></div>
                     @endforeach
                   @endif
                   @if(Session::has('message'))
@@ -39,7 +39,7 @@
                   <div class="image-form-comment">
                     {!! Form::open(['route' => ['photo.comment', $image->user_id, $image->id], 'method' => 'POST', 'class' => 'comment-this-photo']) !!}
                       <div class="form-group">
-                        {!! Form::text('comment_content', '', ['class' => 'form-control input-comment', 'placeholder' => 'Write something...', 'autocomplete' => 'off', 'autofocus' => 'true']) !!}
+                        {!! Form::text('comment_content', '', ['class' => 'input-form-primary input-comment', 'placeholder' => 'Write something...', 'autocomplete' => 'off', 'autofocus' => 'true']) !!}
                       </div>
                     {!! Form::close() !!}
                   </div>
@@ -61,7 +61,7 @@
                     </div>
                     <br/>
                   @else
-                    <div class="text-danger"><h5>No comment in this photo</h5></div>
+                    <div class="text-info"><h5>No comment in this photo</h5></div>
                   @endif
                 </div><!-- End image-comment -->
               </div><!-- End col-md-4 -->

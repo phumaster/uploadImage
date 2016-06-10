@@ -38,13 +38,13 @@ Welcome
                     <br/>
                     {!! Form::open(['route' => 'login', 'method' => 'POST', 'id' => 'formLogin']) !!}
                       <div class="form-group">
-                        {!! Form::email('email', '', ['class' => 'form-control', 'id' => 'email', 'placeholder' => 'Email', 'autocomplete' => 'off']) !!}
+                        {!! Form::email('email', '', ['class' => 'input-form-primary', 'id' => 'email', 'placeholder' => 'Email', 'autocomplete' => 'off']) !!}
                       </div>
                       <div class="form-group">
-                        {!! Form::password('password', ['class' => 'form-control', 'id' => 'password', 'placeholder' => 'Password']) !!}
+                        {!! Form::password('password', ['class' => 'input-form-primary', 'id' => 'password', 'placeholder' => 'Password']) !!}
                       </div>
                       <div class="form-group">
-                        {!! Form::button('<span class="glyphicon glyphicon-check"></span> Login', ['class' => 'btn btn-primary btn-login btn-sm', 'type' => 'submit']) !!}
+                        {!! Form::button('<span class="glyphicon glyphicon-check"></span> Login', ['class' => 'btn btn-main btn-login btn-sm', 'type' => 'submit']) !!}
                       </div>
                     {!! Form::close() !!}
                   </div>
@@ -52,25 +52,29 @@ Welcome
                     <br/>
                     {!! Form::open(['route' => 'register', 'method' => 'POST', 'id' => 'formRegister']) !!}
                       <div class="form-group">
-                        {!! Form::text('name', '' , ['class' => 'form-control', 'placeholder' => 'Your name', 'autocomplete' => 'off']) !!}
+                        {!! Form::text('name', '' , ['class' => 'input-form-primary', 'placeholder' => 'Your name', 'autocomplete' => 'off']) !!}
                       </div>
                       <div class="form-group">
-                        {!! Form::email('email', '', ['class' => 'form-control', 'placeholder' => 'Email', 'autocomplete' => 'off']) !!}
+                        {!! Form::email('email', '', ['class' => 'input-form-primary', 'placeholder' => 'Email', 'autocomplete' => 'off']) !!}
                       </div>
                       <div class="form-group">
-                        {!! Form::password('password', ['class' => 'form-control', 'placeholder' => 'Password']) !!}
+                        {!! Form::password('password', ['class' => 'input-form-primary', 'placeholder' => 'Password']) !!}
                       </div>
                       <div class="form-group">
-                        {!! Form::password('confPassword', ['class' => 'form-control', 'id' => 'confPassword', 'placeholder' => 'Re-type password']) !!}
+                        {!! Form::password('confPassword', ['class' => 'input-form-primary', 'id' => 'confPassword', 'placeholder' => 'Re-type password']) !!}
                       </div>
                       <div class="form-group">
-                        {!! Form::button('<span class="glyphicon glyphicon-check"></span> Register', ['class' => 'btn btn-primary btn-register btn-sm', 'type' => 'submit']) !!}
-                        {!! Form::button('<span class="glyphicon glyphicon-refresh"></span> Reset', ['class' => 'btn btn-default btn-sm', 'type' => 'reset']) !!}
+                        {!! Form::button('<span class="glyphicon glyphicon-check"></span> Register', ['class' => 'btn btn-main btn-register btn-sm', 'type' => 'submit']) !!}
                       </div>
                     {!! Form::close() !!}
                   </div>
                 </div>
               </div><!-- .modal-body -->
+              <div class="modal-footer" style="text-align: justify">
+                <p>
+                  Chào mừng đến với project thử nghiệm của <font color="blue">@Phú Master</font> | Xem thêm thông tin project tại <a href="{!! url('/founder') !!}" target="_blank">đây</a>
+                </p>
+              </div>
             </div><!-- end .modal-content -->
           </div>
         </div>
@@ -158,7 +162,7 @@ Welcome
           $('#response').html("");
           var data = JSON.parse(response);
           if(data.error === 1) {
-            $('#response').append('<div class="text-danger">'+data.message+'</div>');
+            $('#response').append('<div class="text-info">'+data.message+'</div>');
           }else{
             if(typeof data.message == "undefined") {
               window.location.reload();
@@ -174,7 +178,7 @@ Welcome
         error: function(response) {
           $('#response').html("");
           $.each(response.responseJSON, function(i, val){
-            $('#response').append('<div class="text-danger">'+val+'</div>');
+            $('#response').append('<div class="text-info">'+val+'</div>');
           });
           $('.btn-register, .btn-login').removeAttr('disabled').removeClass('disabled');
         }
@@ -183,6 +187,10 @@ Welcome
     $('#popUpAuthentication').on('shown.bs.modal', function () {
       $('#email').focus()
     });
+
+    setTimeout(function() {
+      $('.join-now').click();
+    }, 3000);
   });
 </script>
 @endsection

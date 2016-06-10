@@ -62,7 +62,7 @@
                 </div><!-- End row -->
           @else
             <div class="text-center">
-              <div class="text-danger">No album available</div>
+              <div class="text-info">No album available</div>
             </div>
           @endif
         </div><!-- End panel-body -->

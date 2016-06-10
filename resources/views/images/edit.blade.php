@@ -27,7 +27,7 @@
               {!! Form::open(['route' => ['photo.update', $image->id],'files' => true, 'method' => 'PUT']) !!}
                 <div class="form-group">
                   {!! Form::label('image_caption', 'Write something...') !!}
-                  {!! Form::textarea('image_caption', $image->image_caption, ['class' => 'form-control', 'id' => 'image_caption']) !!}
+                  {!! Form::textarea('image_caption', $image->image_caption, ['class' => 'input-form-primary', 'id' => 'image_caption']) !!}
                 </div>
                 <div class="form-group">
                   <div class="row">
@@ -44,11 +44,11 @@
                 @if(count($albums) > 0)
                   <div class="form-group">
                     {!! Form::label('album_id', 'Select album') !!}
-                    {!! Form::select('album_id', $albums, null, ['class' => 'form-control', 'id' => 'album_id']) !!}
+                    {!! Form::select('album_id', $albums, null, ['class' => 'input-form-primary', 'id' => 'album_id']) !!}
                   </div>
                 @endif
                 <div class="form-group">
-                  {!! Form::button('<span class="glyphicon glyphicon-cloud-upload"></span> Upload', ['class' => 'btn btn-primary', 'type' => 'submit']) !!}
+                  {!! Form::button('<span class="glyphicon glyphicon-cloud-upload"></span> Upload', ['class' => 'btn btn-main', 'type' => 'submit']) !!}
                   {!! Form::button('<span class="glyphicon glyphicon-refresh"></span> Reset', ['class' => 'btn btn-default', 'type' => 'reset']) !!}
                 </div>
               {!! Form::close() !!}

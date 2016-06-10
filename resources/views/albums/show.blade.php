@@ -42,7 +42,7 @@
                 @endforeach
               </div><!-- End list-image -->
             @else
-              <div class="text-danger text-center"><h4>No image to show on this album</h4></div>
+              <div class="text-info text-center"><h4>No image to show on this album</h4></div>
             @endif
             <div class="text-center">{!! $images->render() !!}</div>
           </div>
@@ -52,7 +52,7 @@
           <hr/>
           @if(count($errors) > 0)
             @foreach($errors->all() as $error)
-              <div class="text-danger"><h5>{!! $error !!}</h5></div>
+              <div class="text-info"><h5>{!! $error !!}</h5></div>
             @endforeach
           @endif
           @if(Session::has('message'))
@@ -62,7 +62,7 @@
           <div class="form-comment">
             {!! Form::open(['route' => ['album.comment', $album->user_id, $album->id], 'method' => 'POST']) !!}
               <div class="form-group">
-                {!! Form::text('comment_content', '', ['class' => 'form-control', 'placeholder' => 'Write something...', 'autofocus', 'autocomplete' => 'off']) !!}
+                {!! Form::text('comment_content', '', ['class' => 'input-form-primary', 'placeholder' => 'Write something...', 'autofocus', 'autocomplete' => 'off']) !!}
               </div>
             {!! Form::close() !!}
             <hr/>
@@ -77,7 +77,7 @@
                   </div>
                 @endforeach
               @else
-                <div class="text-danger"><h5>No comment in this album</h5></div>
+                <div class="text-info"><h5>No comment in this album</h5></div>
               @endif
             </div><!-- End image-comment -->
           </div>

@@ -27,7 +27,7 @@
               {!! Form::open(['route' => ['photo.store', \Auth::user()->id],'files' => true, 'method' => 'POST']) !!}
                 <div class="form-group">
                   {!! Form::label('image_caption', 'Write something...') !!}
-                  {!! Form::textarea('image_caption', '', ['class' => 'form-control', 'id' => 'image_caption']) !!}
+                  {!! Form::textarea('image_caption', '', ['class' => 'input-form-primary', 'id' => 'image_caption']) !!}
                 </div>
                 <div class="form-group">
                   <div class="row">
@@ -43,7 +43,7 @@
                 @if(count($albums) > 0)
                   <div class="form-group">
                     {!! Form::label('album_id', 'Select album') !!}
-                    {!! Form::select('album_id', $albums, null, ['class' => 'form-control', 'id' => 'album_id']) !!}
+                    {!! Form::select('album_id', $albums, null, ['class' => 'input-form-primary', 'id' => 'album_id']) !!}
                   </div>
                 @endif
                 <div class="form-group">

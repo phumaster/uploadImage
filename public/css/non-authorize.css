@@ -22,7 +22,7 @@
   color: #fff;
 }
 .join-now:hover, .join-now:active, .join-now:focus {
-  color: #E84A5F;
+  color: #03a9f4;
 }
 .body-content {
   position: relative;
@@ -102,9 +102,9 @@
 
 #overlay-loading .spinner .circle-spin {
   border: 3px solid #fff;
-  border-top-color: #E84A5F;
-  height: 48px;
-  width: 48px;
+  border-top-color:  #03a9f4;
+  height: 68px;
+  width: 68px;
   border-radius: 50%;
   -moz-animation: spin-circle 1s linear infinite;
   -webkit-animation: spin-circle 1s linear infinite;
@@ -145,4 +145,47 @@
     transform: rotate(360deg);
     -moz-transform: rotate(360deg);
   }
+}
+
+.modal-header {
+  background: #03A9F4;
+  color: #fff;
+}
+
+.input-form-primary {
+  display: block;
+  width: 100%;
+  padding: 10px 15px;
+  outline: none;
+  border: none;
+  border-bottom: 1px solid #81d4fa;
+  position: relative;
+  transition: all 500ms linear;
+  -webkit-transition: all 500ms linear;
+}
+
+.input-form-primary:focus {
+  border-bottom: 1px solid #03A9F4;
+}
+
+.btn-main {
+  background: #03a9f4;
+  color: #fff !important;
+  display: inline-block;
+  padding: 6px 12px;
+  border: 0px none;
+  font-weight: 400;
+  line-height: 1.42857143;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  box-shadow: 1px 2px 6px rgba(0, 0, 0, 0.15);
+  transition: all 300ms ease;
+  -moz-transition: all 300ms ease;
+  -webkit-transition: all 300ms ease;
+  text-decoration: none !important;
+}
+.btn-main:hover, .btn-main:active {
+  background: #81d4fa;
+  box-shadow: 2px 3px 8px rgba(0, 0, 0, 0.25);
 }

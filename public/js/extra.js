@@ -23,7 +23,7 @@ $(document).ready(function() {
   });
   /* set padding vertical menu */
   var h_h = $('#header').height();
-  $('.vertical-column').css({"padding-top":h_h+10});
+  $('.vertical-column').css({"padding-top":h_h+5});
   /* send AJAX when click link menu */
   fire();
   /* handle click friend -> send message */

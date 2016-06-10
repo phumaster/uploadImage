@@ -41,7 +41,7 @@
                 @endif
               @endforeach
             @else
-              <div class="text-center text-danger">
+              <div class="text-center text-info">
                 Nothing to show
               </div>
             @endif
@@ -49,7 +49,7 @@
         </div>
         <div class="message-footer">
           {!! Form::open(['route' => ['message', $receiver], 'method' => 'POST', 'class' => 'send-message-form', 'id' => 'send-msg']) !!}
-            {!! Form::text('content', '', ['class' => 'input-send-message form-control', 'placeholder' => 'Write something and press "Enter" to send', 'autocomplete' => 'off']) !!}
+            {!! Form::text('content', '', ['class' => 'input-send-message input-form-primary', 'placeholder' => 'Write something and press "Enter" to send', 'autocomplete' => 'off']) !!}
           {!! Form::close() !!}
         </div>
       </div><!-- end .messages -->

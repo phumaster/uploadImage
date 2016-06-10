@@ -18,6 +18,10 @@ Route::get('/', [
   'uses' => 'IndexController@index'
 ]);
 
+Route::get('/founder', function() {
+  return "A";
+});
+
 /*
 * @Admin routes
 */

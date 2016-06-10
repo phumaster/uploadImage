@@ -27,22 +27,22 @@ Register
             {!! Form::open(['route' => 'register', 'method' => 'POST']) !!}
               <div class="form-group">
                 {!! Form::label('name', 'Name') !!}
-                {!! Form::text('name', '' , ['class' => 'form-control', 'id' => 'name']) !!}
+                {!! Form::text('name', '' , ['class' => 'input-form-primary', 'id' => 'name']) !!}
               </div>
               <div class="form-group">
                 {!! Form::label('email', 'Email address') !!}
-                {!! Form::email('email', '', ['class' => 'form-control', 'id' => 'email']) !!}
+                {!! Form::email('email', '', ['class' => 'input-form-primary', 'id' => 'email']) !!}
               </div>
               <div class="form-group">
                 {!! Form::label('password', 'Password') !!}
-                {!! Form::password('password', ['class' => 'form-control', 'id' => 'password']) !!}
+                {!! Form::password('password', ['class' => 'input-form-primary', 'id' => 'password']) !!}
               </div>
               <div class="form-group">
                 {!! Form::label('confPassword', 'Confirm password') !!}
-                {!! Form::password('confPassword', ['class' => 'form-control', 'id' => 'confPassword']) !!}
+                {!! Form::password('confPassword', ['class' => 'input-form-primary', 'id' => 'confPassword']) !!}
               </div>
               <div class="form-group">
-                {!! Form::button('<span class="glyphicon glyphicon-check"></span> Register', ['class' => 'btn btn-primary', 'type' => 'submit']) !!}
+                {!! Form::button('<span class="glyphicon glyphicon-check"></span> Register', ['class' => 'btn btn-main', 'type' => 'submit']) !!}
                 {!! Form::button('<span class="glyphicon glyphicon-refresh"></span> Reset', ['class' => 'btn btn-default', 'type' => 'reset']) !!}
               </div>
             {!! Form::close() !!}

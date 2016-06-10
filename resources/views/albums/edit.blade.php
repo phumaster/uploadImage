@@ -27,18 +27,18 @@
               {!! Form::open(['route' => ['album.update', $album->user_id, $album->id], 'method' => 'PUT']) !!}
                 <div class="form-group">
                   {!! Form::label('album_name', 'Name') !!}
-                  {!! Form::text('album_name', $album->album_name, ['class' => 'form-control', 'id' => 'album_name']) !!}
+                  {!! Form::text('album_name', $album->album_name, ['class' => 'input-form-primary', 'id' => 'album_name']) !!}
                 </div>
                 <div class="form-group">
                   {!! Form::label('album_title', 'Title') !!}
-                  {!! Form::text('album_title', $album->album_title, ['class' => 'form-control', 'id' => 'album_title']) !!}
+                  {!! Form::text('album_title', $album->album_title, ['class' => 'input-form-primary', 'id' => 'album_title']) !!}
                 </div>
                 <div class="form-group">
                   {!! Form::label('album_description', 'Description') !!}
-                  {!! Form::textarea('album_description', $album->album_description, ['class' => 'form-control', 'id' => 'album_description']) !!}
+                  {!! Form::textarea('album_description', $album->album_description, ['class' => 'input-form-primary', 'id' => 'album_description']) !!}
                 </div>
                 <div class="form-group">
-                  {!! Form::button('<span class="glyphicon glyphicon-plus"></span> Update', ['class' => 'btn btn-primary', 'type' => 'submit']) !!}
+                  {!! Form::button('<span class="glyphicon glyphicon-plus"></span> Update', ['class' => 'btn btn-main', 'type' => 'submit']) !!}
                   {!! Form::button('<span class="glyphicon glyphicon-refresh"></span> Reset', ['class' => 'btn btn-default', 'type' => 'reset']) !!}
                 </div>
               {!! Form::close() !!}

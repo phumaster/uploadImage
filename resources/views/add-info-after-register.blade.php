@@ -28,14 +28,14 @@ Add your info
           {!! Form::open(['route' => ['add-info', \Auth::user()->id], 'method' => 'POST']) !!}
             <div class="form-group">
               {!! Form::label('sex', 'You are?') !!}
-              <select name="sex" class="form-control" id="sex">
+              <select name="sex" class="input-form-primary" id="sex">
                 <option value="male">Male</option>
                 <option value="female">Female</option>
               </select>
             </div>
             <div class="form-group">
               {!! Form::label('address', 'Where are you from?') !!}
-              <select name="address" id="address" class="form-control">
+              <select name="address" id="address" class="input-form-primary">
                 <option value="Hà Nội (TP)">Hà Nội (TP)</option>
                 <option value="An Giang">An Giang</option>
                 <option value="Bà Rịa-Vũng Tàu">Bà Rịa-Vũng Tàu</option>
@@ -103,7 +103,7 @@ Add your info
               </select>
             </div>
             <div class="form-group">
-              {!! Form::button('<span class="glyphicon glyphicon-ok"></span> update my information', ['type' => 'submit', 'class' => 'btn btn-sm btn-primary']) !!}
+              {!! Form::button('<span class="glyphicon glyphicon-ok"></span> update my information', ['type' => 'submit', 'class' => 'btn btn-sm btn-main']) !!}
               <a class="btn btn-sm btn-main" href="{!! route('index',['skip' => 'yes']) !!}"><span class="glyphicon glyphicon-remove"></span> Skip this step</a>
             </div>
           {!! Form::close() !!}

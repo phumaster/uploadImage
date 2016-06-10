@@ -56,7 +56,7 @@
                     <hr/>
                     {!! Form::open(['route' => ['photo.comment', $post->user->id, $post->id], 'method' => 'POST', 'class' => 'form-post-comment']) !!}
                     <div class="form-group">
-                      {!! Form::text('comment_content', '', ['class' => 'form-control input-comment', 'placeholder' => 'write a comment...']) !!}
+                      {!! Form::text('comment_content', '', ['class' => 'input-form-primary input-comment', 'placeholder' => 'write a comment...']) !!}
                     </div>
                     {!! Form::close() !!}
                   </div>
@@ -85,7 +85,7 @@
             @endforeach
           @else
             <div class="text-center">
-              <a href="#" class="btn btn-primary btn-sm">Find friend</a>
+              <a href="#" class="btn btn-main btn-sm">Find friend</a>
             </div>
           @endif
         </div><!-- end list-friends -->
@@ -106,7 +106,7 @@
           {!! Form::open(['route' => ['photo.store', \Auth::user()->id],'files' => true, 'method' => 'POST']) !!}
             <div class="form-group">
               {!! Form::label('image_caption', 'Write something...') !!}
-              {!! Form::textarea('image_caption', '', ['class' => 'form-control', 'id' => 'image_caption']) !!}
+              {!! Form::textarea('image_caption', '', ['class' => 'input-form-primary', 'id' => 'image_caption']) !!}
             </div>
             <div class="form-group">
               <div class="row">
@@ -122,7 +122,7 @@
             @if(count($albums) > 0)
               <div class="form-group">
                 {!! Form::label('album_id', 'Select album') !!}
-                {!! Form::select('album_id', $albums, null, ['class' => 'form-control', 'id' => 'album_id']) !!}
+                {!! Form::select('album_id', $albums, null, ['class' => 'input-form-primary', 'id' => 'album_id']) !!}
               </div>
             @endif
             <div class="form-group">

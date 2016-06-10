@@ -32,14 +32,14 @@ Login
             {!! Form::open(['route' => 'login', 'method' => 'POST']) !!}
               <div class="form-group">
                 {!! Form::label('email', 'Email address') !!}
-                {!! Form::email('email', '', ['class' => 'form-control', 'id' => 'email']) !!}
+                {!! Form::email('email', '', ['class' => 'input-form-primary', 'id' => 'email']) !!}
               </div>
               <div class="form-group">
                 {!! Form::label('password', 'Password') !!}
-                {!! Form::password('password', ['class' => 'form-control', 'id' => 'password']) !!}
+                {!! Form::password('password', ['class' => 'input-form-primary', 'id' => 'password']) !!}
               </div>
               <div class="form-group">
-                {!! Form::button('<span class="glyphicon glyphicon-check"></span> Login', ['class' => 'btn btn-primary', 'type' => 'submit']) !!}
+                {!! Form::button('<span class="glyphicon glyphicon-check"></span> Login', ['class' => 'btn btn-main', 'type' => 'submit']) !!}
               </div>
             {!! Form::close() !!}
           </div><!-- End panel-body -->

@@ -92,7 +92,7 @@
                         @endforeach
                 @else
                   <div class="text-center">
-                    <div class="text-danger"><h4>No album available</h4></div>
+                    <div class="text-info"><h4>No album available</h4></div>
                   </div>
                 @endif
                 <!-- end albums -->
@@ -112,7 +112,7 @@
                   @endforeach
                 </div><!-- End list-image -->
                 @else
-                  <div class="text-center text-danger">
+                  <div class="text-center text-info">
                     No photos to show
                   </div>
                 @endif
@@ -169,7 +169,7 @@
           error: function(response) {
             $('.response').html('');
             $.each(response.responseJSON, function(i, val) {
-              $('.response').append('<div class="text-danger">'+val+'</div>');
+              $('.response').append('<div class="text-info">'+val+'</div>');
             });
           }
         });
@@ -197,7 +197,7 @@
           error: function(response) {
             $('.response').html('');
             $.each(response.responseJSON, function(i, val) {
-              $('.response').append('<div class="text-danger">'+val+'</div>');
+              $('.response').append('<div class="text-info">'+val+'</div>');
             });
           }
         });
