@@ -13,8 +13,14 @@
           data: new FormData(this),
           success: function(response) {
             var data = JSON.parse(response);
-            notification.push(data.message, 'success');
+            notification.push('You said: '+data.message, 'success');
             elm.find('.input-comment').val("");
+            $(document).find('.image-comment').prepend('<div class="comment">'
+                        +'<p>'
+                        +'<span class="comment-author"><a href="'+data.route+'">'+data.author+'</a></span>'
+                        +'<span class="comment-content"> '+data.message+'</span>'
+                        +'</p>'
+                        +'</div>');
           },
           error: function(response) {
             $.each(response.responseJSON, function(i, v) {
@@ -88,7 +94,7 @@
         /* form */
         i.setAttribute('type', 'text');
         i.setAttribute('name', 'content');
-        i.setAttribute('class', 'message-box-input');
+        i.setAttribute('class', 'message-box-input input-form-primary');
         i.setAttribute('autocomplete', 'off');
         i.setAttribute('data-target-xhr', xhr);
         i.setAttribute('placeholder', 'write something...');
@@ -121,6 +127,56 @@
       $(this).val('');
       var newMessage = new message(xhr, content);
       newMessage.send($(this).parent().parent());
+    },
+
+    uploadPhoto: function(xhr) {
+      var elm = $(this);
+      var formData = new FormData();
+      formData.append('image_caption', elm.find('textarea[name=image_caption]').val());
+      formData.append('_token', elm.find('input[name=_token]').val());
+      formData.append('album_id', elm.find('select[name=album_id]').val());
+      formData.append('image', elm.find('input[type=file]')[0].files[0]);
+      $.ajax({
+        method: 'POST',
+        url: xhr,
+        processData: false,
+        contentType: false,
+        data: formData,
+        success: function(response) {
+          elm.find('.response').html('<p class="text-success">'+response.message+'</p>');
+        },
+        error: function(response) {
+          elm.find('.response').html('');
+          $.each(response.responseJSON, function(i, val) {
+            elm.find('.response').append('<div class="text-danger">'+val+'</div>');
+          });
+        }
+      });
+    },
+
+    createAlbum: function(xhr) {
+      var elm = $(this);
+      var formData = new FormData();
+      formData.append('album_description', elm.find('textarea[name=album_description]').val());
+      formData.append('_token', elm.find('input[name=_token]').val());
+      formData.append('album_name', elm.find('input[name=album_name]').val());
+      formData.append('album_title', elm.find('input[name=album_title]').val());
+      $.ajax({
+        method: 'POST',
+        url: xhr,
+        processData: false,
+        contentType: false,
+        data: formData,
+        success: function(response) {
+          elm.find('.response').html('<p class="text-success">'+response.message+'</p>');
+        },
+        error: function(response) {
+          elm.find('.response').html('');
+          $.each(response.responseJSON, function(i, val) {
+            elm.find('.response').append('<div class="text-danger">'+val+'</div>');
+          });
+        }
+      });
     }
   });
 }(jQuery));

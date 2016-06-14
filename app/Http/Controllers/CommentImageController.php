@@ -37,7 +37,7 @@ class CommentImageController extends Controller
 
       if(Comment_image::create(array_merge($request->except('_token'), $data))) {
         if($request->ajax()) {
-          return json_encode(['error' => 0, 'message' => 'You said: '.$request->get('comment_content'), 'commentCount' => $image->first()->comments()->count()]);
+          return json_encode(['error' => 0, 'message' => $request->get('comment_content'), 'commentCount' => $image->first()->comments()->count(), 'author' => \Auth::user()->name, 'route' => route('user.profile', Auth::user()->id)]);
         }
         return redirect()->route('photo.show', [$user, $id])->with(['message' => 'Your comment has been post']);
       }

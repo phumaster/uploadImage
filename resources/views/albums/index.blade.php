@@ -27,19 +27,17 @@
                       <div class="width-4">
                         <div class="album">
                           <div class="pull-right">
-                            <div class="album-option" style="position: absolute; top: 0; right: 0; z-index: 98">
-                              <div class="dropdown-menu-option">
-                                <span class="glyphicon glyphicon-menu-down"></span>
-                                <div class="album-menu-option" tabindex="-1">
-                                  <div class="">
-                                    <a href="{!! route('album.edit', [$album['user_id'], $album['id']]) !!}" class="option-list">Edit</a>
-                                  </div>
-                                  {!! Form::open(['route' => ['album.destroy', $album['user_id'], $album['id']], 'method' => 'DELETE']) !!}
-                                    {!! Form::button('Delete', ['class' => 'option-list', 'type' => 'submit', 'onclick' => 'return confirm("Are you sure delete this album?")']) !!}
+                            <div class="show-option">
+                              <a class="show-option-link"><span class="glyphicon glyphicon-option-horizontal"></span></a>
+                              <ul>
+                                <li>
+                                  {!! Form::open(['route' => ['album.destroy',$album['user_id'], $album['id']], 'method' => 'DELETE']) !!}
+                                    {!! Form::button('Xóa album', ['class' => 'btn-block option-item', 'type' => 'submit', 'onclick' => 'return confirm("Are you sure delete this album?")']) !!}
                                   {!! Form::close() !!}
-                                </div>
-                              </div><!-- End dropdown-menu-option -->
-                            </div>
+                                </li>
+                                <li><a href="{!! route('album.edit', [$album['user_id'], $album['id']]) !!}" class="option-item">Chỉnh sửa</a></li>
+                              </ul>
+                            </div><!-- end .show-option -->
                           </div>
                           <div class="image-preview">
                             @if(count($album['images']) > 0)

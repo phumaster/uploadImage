@@ -1,7 +1,11 @@
 <div class="container">
   <div class="row">
-    <div class="col-sm-6 col-sm-offset-2">
+    <div class="col-sm-7 col-sm-offset-2">
       <div class="body-content">
+        <div class="post visible-xs">
+          <a class="btn btn-main" data-toggle="modal" data-target="#show-upload-modal"><span class="glyphicon glyphicon-cloud-upload"></span> Upload new photo</a>
+          <a class="btn btn-main" data-toggle="modal" data-target="#show-create-album-modal"><span class="glyphicon glyphicon-plus"></span> New album</a>
+        </div>
         @if(count($suggest) > 0)
           <div class="card suggest-friend text-center">
             <p><h4>People you may know</h4></p>
@@ -40,6 +44,7 @@
               </div>
             </div><!-- end .post-header -->
             <div class="post-body">
+              <p>{{ $post->image_caption }}</p>
               <div class="text-center">
                 <a href="{!! route('photo.show', [$post->user_id, $post->id]) !!}" class="view-this-post">
                   <img src="{!! asset($post->fullsize_url) !!}" class="img-responsive"/>
@@ -67,22 +72,24 @@
           @endforeach
         @endif
       </div>
-    </div><!-- end .col-sm-6 -->
-    <div class="col-sm-4 hidden-xs fix-padding-col-right">
+    </div><!-- end .col-sm-7 -->
+    <div class="col-sm-3 hidden-xs fix-padding-col-right">
       <div class="content-right">
         <div class="btn-navigator">
-          <a class="btn btn-main" data-toggle="modal" data-target="#show-upload-modal"><span class="glyphicon glyphicon-cloud-upload"></span> Upload new photos</a>
-          <a class="btn btn-main" data-toggle="modal" data-target="#show-create-album-modal"><span class="glyphicon glyphicon-plus"></span> New album</a>
+          <a class="btn btn-main" data-toggle="modal" data-target="#show-upload-modal"><span class="glyphicon glyphicon-cloud-upload"></span> Upload</a>
+          <a class="btn btn-main" data-toggle="modal" data-target="#show-create-album-modal"><span class="glyphicon glyphicon-plus"></span> Album</a>
         </div>
         <hr/>
         <div class="list-friends">
           <h4>Friends</h4>
           @if(count($friends) > 0)
-            @foreach($friends as $friend)
-              <div class="send-message-to-friend" data-name="{!! $friend->name !!}" data-id="{!! $friend->id !!}" data-target-xhr="{!! route('message', $friend->id) !!}">
-                <span data-toggle="tooltip" data-placement="right" title="Click to send message"><img src="{!! $friend->getProfilePictureUrl() !!}" class="logo-user"/> {!! $friend->name !!}</span>
-              </div>
-            @endforeach
+            <div class="friends">
+              @foreach($friends as $friend)
+                <div class="send-message-to-friend" data-name="{!! $friend->name !!}" data-id="{!! $friend->id !!}" data-target-xhr="{!! route('message', $friend->id) !!}">
+                  <span data-toggle="tooltip" data-placement="right" title="Click to send message"><img src="{!! $friend->getProfilePictureUrl() !!}" class="logo-user"/> {!! $friend->name !!}</span>
+                </div>
+              @endforeach
+            </div>
           @else
             <div class="text-center">
               <a href="#" class="btn btn-main btn-sm">Find friend</a>
@@ -90,9 +97,11 @@
           @endif
         </div><!-- end list-friends -->
         <hr/>
-        <p>Viết gì vào đây giờ....</p>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        </p>
       </div>
-    </div><!-- end col-sm-2-->
+    </div><!-- end col-sm-3-->
   </div>
   <!-- upload modal -->
   <div class="modal fade" tabindex="-1" role="dialog" id="show-upload-modal">
@@ -103,7 +112,8 @@
           <h4 class="modal-title">Upload a new photo</h4>
         </div>
         <div class="modal-body">
-          {!! Form::open(['route' => ['photo.store', \Auth::user()->id],'files' => true, 'method' => 'POST']) !!}
+          {!! Form::open(['route' => ['photo.store', \Auth::user()->id],'files' => true, 'method' => 'POST', 'class' => 'form-upload-photo']) !!}
+            <div class="response"></div>
             <div class="form-group">
               {!! Form::label('image_caption', 'Write something...') !!}
               {!! Form::textarea('image_caption', '', ['class' => 'input-form-primary', 'id' => 'image_caption']) !!}

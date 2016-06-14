@@ -12,29 +12,35 @@ class UserTableSeeder extends Seeder
     public function run()
     {
       DB::table('users')->insert([
-          'name' => str_random(10),
+          'name' => 'Administrator',
           'email' => 'phumaster.dev@gmail.com',
           'password' => bcrypt('123456'),
-          'friends' => json_encode([2 => 0.0, 3 => 0.0, 4 => 0.1])
+          'friends' => json_encode([2 => 0.0, 3 => 0.0, 4 => 0.1, 5 => 0.2])
       ]);
 
       DB::table('users')->insert([
-            'name' => str_random(10),
-            'email' => str_random(10).'@gmail.com',
+            'name' => 'Phú Master',
+            'email' => 'phumaster@gmail.com',
             'password' => bcrypt('secret'),
             'friends' => json_encode([1 => 0.0, 3 => 0.2, 4 => 0.0])
         ]);
         DB::table('users')->insert([
-              'name' => str_random(10),
-              'email' => str_random(10).'@gmail.com',
+              'name' => 'Phú Founder',
+              'email' => 'phufounder@gmail.com',
               'password' => bcrypt('secret'),
               'friends' => json_encode([1 => 0.0, 2 => 0.1, 4 => 0.0])
           ]);
           DB::table('users')->insert([
-                'name' => str_random(10),
-                'email' => str_random(10).'@gmail.com',
+                'name' => 'Phú Monster',
+                'email' => 'phumonster@gmail.com',
                 'password' => bcrypt('secret'),
                 'friends' => json_encode([1 => 0.0, 2 => 0.4, 3 => 0.0])
             ]);
+            DB::table('users')->insert([
+                  'name' => 'Phú Cốt Đờ',
+                  'email' => 'phucoder@gmail.com',
+                  'password' => bcrypt('secret'),
+                  'friends' => json_encode([1 => 0.0, 2 => 0.4, 3 => 0.0])
+              ]);
     }
 }

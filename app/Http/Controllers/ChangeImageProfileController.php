@@ -19,10 +19,12 @@ use App\Image;
 class ChangeImageProfileController extends Controller
 {
     private $user;
+    private $folder;
 
     public function __construct(Request $request) {
       $this->middleware('auth');
       $this->user = User::find($request->user() ? $request->user()->id : NULL);
+      $this->folder = substr(md5($this->user->name), 0, 10);
 
       if(!file_exists(public_path().'/upload')) {
         mkdir(public_path().'/upload');
@@ -50,15 +52,15 @@ class ChangeImageProfileController extends Controller
             return response('Unexpected error!', 422);
           }
         }
-        $destination = public_path().'/upload/images/'.$this->user->id.'_'.$this->user->email.'/avatar';
-        if(!file_exists(public_path().'/upload/images/'.$this->user->id.'_'.$this->user->email)) {
-          mkdir(public_path().'/upload/images/'.$this->user->id.'_'.$this->user->email);
+        $destination = public_path().'/upload/images/'.$this->user->id.'_'.$this->folder.'/avatar';
+        if(!file_exists(public_path().'/upload/images/'.$this->user->id.'_'.$this->folder)) {
+          mkdir(public_path().'/upload/images/'.$this->user->id.'_'.$this->folder);
         }
         if(!file_exists($destination)) {
           mkdir($destination);
         }
         $imageName = date('d-m-Y_h-i-s').'_'.$this->user->id.'_'.$file->getClientOriginalName();
-        $imageUrl = 'upload/images/'.$this->user->id.'_'.$this->user->email.'/avatar/'.$imageName;
+        $imageUrl = 'upload/images/'.$this->user->id.'_'.$this->folder.'/avatar/'.$imageName;
         $imageArr = [
           'image_name' => $imageName,
           'fullsize_url' => $imageUrl,
@@ -101,15 +103,15 @@ class ChangeImageProfileController extends Controller
             return response('Unexpected error!', 422);
           }
         }
-        $destination = public_path().'/upload/images/'.$this->user->id.'_'.$this->user->email.'/cover';
-        if(!file_exists(public_path().'/upload/images/'.$this->user->id.'_'.$this->user->email)) {
-          mkdir(public_path().'/upload/images/'.$this->user->id.'_'.$this->user->email);
+        $destination = public_path().'/upload/images/'.$this->user->id.'_'.$this->folder.'/cover';
+        if(!file_exists(public_path().'/upload/images/'.$this->user->id.'_'.$this->folder)) {
+          mkdir(public_path().'/upload/images/'.$this->user->id.'_'.$this->folder);
         }
         if(!file_exists($destination)) {
           mkdir($destination);
         }
         $imageName = date('d-m-Y_h-i-s').'_'.$this->user->id.'_'.$file->getClientOriginalName();
-        $imageUrl = 'upload/images/'.$this->user->id.'_'.$this->user->email.'/cover/'.$imageName;
+        $imageUrl = 'upload/images/'.$this->user->id.'_'.$this->folder.'/cover/'.$imageName;
         $imageArr = [
           'image_name' => $imageName,
           'fullsize_url' => $imageUrl,

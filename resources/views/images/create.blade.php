@@ -24,7 +24,8 @@
                   </ul>
                 </div>
               @endif
-              {!! Form::open(['route' => ['photo.store', \Auth::user()->id],'files' => true, 'method' => 'POST']) !!}
+              {!! Form::open(['route' => ['photo.store', \Auth::user()->id],'files' => true, 'method' => 'POST', 'class' => 'form-upload-photo']) !!}
+                <div class="response"></div>
                 <div class="form-group">
                   {!! Form::label('image_caption', 'Write something...') !!}
                   {!! Form::textarea('image_caption', '', ['class' => 'input-form-primary', 'id' => 'image_caption']) !!}

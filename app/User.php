@@ -58,7 +58,7 @@ class User extends Model implements AuthenticatableContract,
     }
 
     public function conversations() {
-      return $this->hasMany('App\Conversation', 'from');
+      return $this->hasMany('App\Conversation', 'from')->orderBy('updated_at', 'DESC');
     }
 
     public function album(){

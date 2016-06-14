@@ -3,18 +3,10 @@
 * Author: Phú Master
 */
 
-/*
-* hide content when load DOM
-*/
-document.getElementById('content').style.display = 'none';
 /* create notification box */
 notification.create();
 /* when DOM ready */
 $(document).ready(function() {
-  /* hide overlay and show content */
-  $('#overlay-loading').fadeOut(1000, 'swing', function() {
-    $('#content').fadeIn(1000);
-  });
   /* event click on vertical menu */
   $('.vertical-menu-a[data-target-xhr]').click(function(e){
     e.preventDefault();
@@ -47,5 +39,44 @@ $(document).ready(function() {
       }
     });
   });
+  /* send ajax upload photo */
+  $(document).on('submit', '.form-upload-photo', function(event) {
+    event.preventDefault();
+    $(this).uploadPhoto($(this).attr('action'));
+  });
 
+  /* send ajax create album */
+  $(document).on('submit', '.form-create-album', function(event) {
+    event.preventDefault();
+    $(this).createAlbum($(this).attr('action'));
+  });
+  /* show menu vertical */
+  $('#show-vertical-menu').click(function() {
+    $('#content').toggleClass('translate');
+    $('.vertical-column').toggleClass('animate-column');
+  });
+});
+
+/*jQuery masterial design click effect */
+
+$(function(){
+	var ink, d, x, y;
+	$("a").click(function(e){
+    if($(this).find(".ink").length === 0){
+        $(this).prepend("<span class='ink'></span>");
+    }
+
+    ink = $(this).find(".ink");
+    ink.removeClass("animate");
+
+    if(!ink.height() && !ink.width()){
+        d = Math.max($(this).outerWidth(), $(this).outerHeight());
+        ink.css({height: d, width: d});
+    }
+
+    x = e.pageX - $(this).offset().left - ink.width()/2;
+    y = e.pageY - $(this).offset().top - ink.height()/2;
+
+    ink.css({top: y+'px', left: x+'px'}).addClass("animate");
+});
 });

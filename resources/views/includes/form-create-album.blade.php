@@ -1,4 +1,5 @@
-{!! Form::open(['route' => ['album.store', \Auth::user()->id], 'method' => 'POST']) !!}
+{!! Form::open(['route' => ['album.store', \Auth::user()->id], 'method' => 'POST', 'class' => 'form-create-album']) !!}
+  <div class="response"></div>
   <div class="form-group">
     {!! Form::label('album_name', 'Name') !!}
     {!! Form::text('album_name', '', ['class' => 'input-form-primary', 'id' => 'album_name']) !!}

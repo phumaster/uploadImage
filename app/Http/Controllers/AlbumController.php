@@ -64,7 +64,7 @@ class AlbumController extends Controller
     public function store(CreateAlbumRequest $request, $user)
     {
         $resource['user_id'] = $user;
-        return Album::create(array_merge($request->except(['_token']), $resource)) ? redirect()->route('album.index', $user)->with(['message' => 'Album created!']) : redirect()->route('album.index', $user)->withErrors('Unexpected error!');
+        return Album::create(array_merge($request->except(['_token']), $resource)) ? response()->json(['message' => 'Your album created!']) : response()->json(['message' => 'Error!!']);
     }
 
     /**

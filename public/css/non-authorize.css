@@ -2,6 +2,9 @@
   margin: 0;
   padding: 0;
 }
+body {
+  font-family: verdana;
+}
 .header-non-authorize {
   position: absolute;
   top: 0;
@@ -188,4 +191,12 @@
 .btn-main:hover, .btn-main:active {
   background: #81d4fa;
   box-shadow: 2px 3px 8px rgba(0, 0, 0, 0.25);
+}
+.large-header {
+  position: relative;
+  width: 100%;
+  background: #333;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center center;
 }

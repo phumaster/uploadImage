@@ -68,7 +68,7 @@ class ImageController extends Controller
         }
 
         $id = Auth::user()->id;
-        $auth = Auth::user()->email;
+        $auth = substr(md5(Auth::user()->name), 0, 10);
         $resource = $request->except(['_token', 'image']);
 
         //dd($request->file('image'));
@@ -106,11 +106,11 @@ class ImageController extends Controller
           ];
 
           if($file->move($destination, $imageName) && Image::create(array_merge($resource, $image))) {
-            return redirect()->route('photo.index', $user)->with(['message' => 'Your image has been upload!']);
+            return response()->json(['message' => 'Your photo has been upload!']);
           }
 
         }
-        return redirect()->route('photo.create', $user)->withErrors('Unexpected error!');
+        return response()->json(['message' => 'Unexpected errors']);
     }
 
     /**
@@ -164,7 +164,7 @@ class ImageController extends Controller
       $a = Auth::user();
       $data = Image::find($id);
       $user_id = $a->id;
-      $auth = $a->email;
+      $auth = substr(md5($a->name), 0, 10);
       $resource = $request->except(['_token', 'image', '_method']);
 
       if($request->hasFile('image')) {

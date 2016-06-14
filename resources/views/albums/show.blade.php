@@ -13,19 +13,6 @@
           <div class="album-show">
             @if(count($images) > 0)
               <h4>{!! $album->album_name !!}</h4>
-                <div class="album-option" style="position: absolute; top: 0; right: 0; z-index: 98">
-                  <div class="dropdown-menu-option">
-                    <span class="glyphicon glyphicon-menu-down"></span>
-                    <div class="album-menu-option" tabindex="-1">
-                      <div class="">
-                        <a href="{!! route('album.edit', [$album['user_id'], $album['id']]) !!}" class="option-list">Edit</a>
-                      </div>
-                      {!! Form::open(['route' => ['album.destroy', $album['user_id'], $album['id']], 'method' => 'DELETE']) !!}
-                        {!! Form::button('Delete', ['class' => 'option-list', 'type' => 'submit', 'onclick' => 'return confirm("Are you sure delete this album?")']) !!}
-                      {!! Form::close() !!}
-                    </div>
-                  </div><!-- End dropdown-menu-option -->
-              </div>
               <hr/>
               <div class="list-image">
                 @foreach($images as $image)
@@ -49,6 +36,17 @@
         </div><!-- End col-md-8 -->
         <div class="col-md-4 album-comment-bg fix-margin-col">
           <h4>Comment</h4>
+          <div class="show-option">
+            <a class="show-option-link"><span class="glyphicon glyphicon-option-horizontal"></span></a>
+            <ul>
+              <li>
+                {!! Form::open(['route' => ['album.destroy',$album['user_id'], $album['id']], 'method' => 'DELETE']) !!}
+                  {!! Form::button('Xóa album', ['class' => 'btn-block option-item', 'type' => 'submit', 'onclick' => 'return confirm("Are you sure delete this album?")']) !!}
+                {!! Form::close() !!}
+              </li>
+              <li><a href="{!! route('album.edit', [$album['user_id'], $album['id']]) !!}" class="option-item">Chỉnh sửa</a></li>
+            </ul>
+          </div><!-- end .show-option -->
           <hr/>
           @if(count($errors) > 0)
             @foreach($errors->all() as $error)

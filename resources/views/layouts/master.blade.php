@@ -27,12 +27,6 @@
     </div><!-- end #content -->
     <footer id="footer">
       @include('includes.footer')
-      <div id="overlay-loading">
-        <div class="spinner">
-          <div class="circle-spin"></div>
-          <p>loading...</p>
-        </div>
-      </div>
     </footer>
     <script type="text/javascript">
       $(function(){

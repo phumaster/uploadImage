@@ -17,13 +17,21 @@
                 </div><!-- End image-show -->
               </div><!-- End col-md-8 -->
               <div class="col-md-4 image-comment-bg">
+                <div class="show-option">
+                  <a class="show-option-link"><span class="glyphicon glyphicon-option-horizontal"></span></a>
+                  <ul>
+                    <li>
+                      {!! Form::open(['route' => ['photo.destroy',$image->user_id, $image->id], 'method' => 'DELETE']) !!}
+                        {!! Form::button('Xóa ảnh', ['class' => 'btn-block option-item', 'type' => 'submit']) !!}
+                      {!! Form::close() !!}
+                    </li>
+                    <li><a href="" class="option-item">Chỉnh sửa</a></li>
+                  </ul>
+                </div><!-- end .show-option -->
                 <div class="info-image-show">
                   <div class="image-author">
-                    <h4><a href="{!! url('/') !!}">{!! $image->user->name !!}</a></h4>
+                    <h4><a href="{!! route('user.profile', $image->user->id) !!}">{!! $image->user->name !!}</a></h4>
                   </div>
-                  {!! Form::open(['route' => ['photo.destroy',$image->user_id, $image->id], 'method' => 'DELETE']) !!}
-                    {!! Form::button('xóa ảnh', ['class' => 'btn-link text-info', 'type' => 'submit']) !!}
-                  {!! Form::close() !!}
                   <div class="image-caption">
                     <p>{!! $image->image_caption !!}</p>
                   </div>
@@ -50,7 +58,7 @@
                     @foreach($image->comments as $comment)
                       <div class="comment">
                         <p>
-                          <span class="comment-author"><a href="{!! url('/') !!}">{!! $comment->user->name !!}</a></span>
+                          <span class="comment-author"><a href="{!! route('user.profile', $comment->user->id) !!}">{!! $comment->user->name !!}</a></span>
                           <span class="comment-content">{{ $comment->comment_content }}</span>
                         </p>
                       </div>
