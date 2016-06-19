@@ -55,6 +55,21 @@ $(document).ready(function() {
     $('#content').toggleClass('translate');
     $('.vertical-column').toggleClass('animate-column');
   });
+  /* tab notify */
+  $('.notify[data-target-tab]').click(function() {
+    $('.nav-content').addClass('nav-content-active').find('div').removeClass('tab-active');
+    $($(this).attr('data-target-tab')).toggleClass('tab-active');
+  });
+  $('.nav-content .close-tab').click(function(){
+    $(this).parent().parent().removeClass('nav-content-active');
+  });
+
+  $(document).on('click', function(event) {
+    console.log(event.target.className);
+    if(event.target.className != 'close-tab' && event.target.className != 'notify') {
+      $('.nav-content').removeClass('nav-content-active');
+    }
+  });
 });
 
 /*jQuery masterial design click effect */

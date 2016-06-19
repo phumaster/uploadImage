@@ -25,10 +25,10 @@
                   </div>
                   @endif
                   <div class="navigator-item">
-                    <a href="#" class="notify" data-toggle="tooltip" data-placement="bottom" title="Notification"><span class="glyphicon glyphicon-globe"></span></a>
+                    <a data-target-tab="#tab-notification" class="notify" data-toggle="tooltip" data-placement="bottom" title="Notification"><span class="glyphicon glyphicon-globe"></span></a>
                   </div>
                   <div class="navigator-item">
-                    <a href="#" class="notify" id="show-friends-request" data-toggle="tooltip" data-placement="bottom" title="Friend requests"><span class="glyphicon glyphicon-user"></span><span class="badge badge-friends"></span></a>
+                    <a data-target-tab="#tab-friend-request" class="notify" id="show-friends-request" data-toggle="tooltip" data-placement="bottom" title="Friend requests"><span class="glyphicon glyphicon-user"></span><span class="badge badge-friends"></span></a>
                   </div>
                   <div class="navigator-item">
                     <a class="notify notify-message" onclick="return document.getElementById('menu-link-message').click()" data-toggle="tooltip" data-placement="bottom" title="Messages"><span class="glyphicon glyphicon-comment"></span><span class="badge badge-message"></span></a>
@@ -37,9 +37,6 @@
                     <a href="{{ route('logout') }}" onclick="return confirm('Do you really want to logout?');" data-toggle="tooltip" data-placement="bottom" title="Logout"><span class="glyphicon glyphicon-off"></span></a>
                   </div>
                 </nav>
-                <div class="nav-content">
-
-                </div>
               @endif
             </div><!-- pull right -->
           </div><!-- Enc col-md-4 -->
@@ -47,4 +44,48 @@
       </div><!-- End container -->
     </div><!-- End container-fuild -->
   </div><!-- End #header -->
+  <div class="nav-content">
+    <div class="pull-right">
+      <div class="close-tab" data-toggle="tooltip" data-placement="left" title="Close"><a>&times;</a></div>
+    </div>
+    <div class="clear-fix"></div>
+    <div id="tab-notification">
+      <div class="text-center">
+        <span class="glyphicon glyphicon-bell"></span>
+        Nothing new
+      </div>
+    </div><!-- end #tab-notification -->
+    <div id="tab-friend-request">
+      @if(count($friendRequest) > 0)
+        @foreach($friendRequest as $request)
+          <div class="card-friend-request">
+            <div class="author-request">
+              <a href="{{ route('user.profile', $request->getUserSend->id) }}">
+                <img class="logo-user" src="{{ $request->getUserSend->getProfilePictureUrl() }}" alt="{{ $request->getUserSend->name }}">
+                <b>{{ $request->getUserSend->name }}</b>
+              </a>
+            </div>
+            <div class="pull-right">
+              <a href="{{ route('accept-request', [$request->getUserSend->id, 'accept' => 'yes']) }}">
+                <span class="glyphicon glyphicon-ok"></span> Accept
+              </a>
+              .
+              <a href="{{ route('accept-request', [$request->getUserSend->id, 'accept' => 'no']) }}">
+                Ignore
+              </a>
+            </div>
+            <div class="clear-fix"></div>
+          </div>
+        @endforeach
+      @else
+        <div class="text-center">
+          <span class="glyphicon glyphicon-bell"></span>
+          Nothing done, nothing show
+        </div>
+      @endif
+    </div><!-- end #tab-friend-request -->
+    <div id="tab-messages">
+      @yield('history-messages')
+    </div><!-- end #tab-messages -->
+  </div>
 </header>

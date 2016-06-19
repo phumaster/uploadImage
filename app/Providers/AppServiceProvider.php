@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Contracts\Auth\Guard;
+use App\FriendShip;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -11,9 +13,12 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(Guard $auth)
     {
-
+        view()->composer('*', function($view) use ($auth){
+            $friendRequest = FriendShip::where('to', '=', $auth->user()->id)->orderBy('id', 'DESC')->get();
+            $view->with('friendRequest', $friendRequest);
+        });
     }
 
     /**

@@ -19,7 +19,7 @@ Route::get('/', [
 ]);
 
 Route::get('/founder', function() {
-  return "A";
+  return route('user.profile', [1, 'adc' => 'yes', 'p' => '2', 'render' => 'routing_laravel']);
 });
 
 /*
@@ -92,6 +92,11 @@ Route::group(['prefix' => '/{user}'], function() {
   Route::post('/add-friend', [
     'as' => 'add-friend',
     'uses' => 'FriendController@add'
+  ]);
+
+  Route::get('/accept_request', [
+    'as' => 'accept-request',
+    'uses' => 'FriendController@accept'
   ]);
 
   Route::post('/add-info', [

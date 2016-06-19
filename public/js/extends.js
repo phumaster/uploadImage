@@ -85,7 +85,6 @@
         a.setAttribute('data-target-xhr', xhr);
         a.style.color = "#fff";
         a.style.textDecoration = "none";
-        a.style.fontWeight = "bold";
         a.innerHTML = name;
         close.innerHTML = "&times;";
         close.style.color = "#fff";

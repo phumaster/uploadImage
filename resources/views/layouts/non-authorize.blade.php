@@ -34,15 +34,6 @@
         <p>loading...</p>
       </div>
     </div>
-    <script type="text/javascript">
-    document.getElementById('content').style.display = 'none';
-
-    $(document).ready(function() {
-      $('#overlay-loading').fadeOut(1000, 'swing', function() {
-        $('#content').fadeIn(1000);
-      });
-    });
-    </script>
     @yield('footer.js')
     @yield('js')
   </body>

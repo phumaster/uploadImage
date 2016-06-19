@@ -68,7 +68,7 @@ class ImageController extends Controller
         }
 
         $id = Auth::user()->id;
-        $auth = substr(md5(Auth::user()->name), 0, 10);
+        $auth = substr(md5(Auth::user()->id.Auth::user()->email), 0, 10);
         $resource = $request->except(['_token', 'image']);
 
         //dd($request->file('image'));
@@ -164,7 +164,7 @@ class ImageController extends Controller
       $a = Auth::user();
       $data = Image::find($id);
       $user_id = $a->id;
-      $auth = substr(md5($a->name), 0, 10);
+      $auth = substr(md5($a->id.$a->email), 0, 10);
       $resource = $request->except(['_token', 'image', '_method']);
 
       if($request->hasFile('image')) {

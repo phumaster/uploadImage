@@ -11,9 +11,11 @@ function pullRequest() {
     url: 'pull?random_key='+Math.floor(Math.random()*10),
     data: {'_token':$('meta[name=csrf-token]').attr('content')},
     success: function(response) {
-      if(response != null) {
-        $('.badge-message').text(response.length);
-        $.each(response, function(i, val) {
+      // console.log(response);
+      /* handle response message */
+      if(response.messages !== null) {
+        $('.badge-message').text(response.messages.length);
+        $.each(response.messages, function(i, val) {
           $(document).createChatBox(val.xhr, val.user.id, val.user.name);
           $('#uid'+val.user.id).find('.message-body')
             .append('<div><div class="r pull-right right"><div class="message-content">'+val.content+'</div><div class="clear-fix"></div></div></div>');
@@ -39,7 +41,15 @@ function pullRequest() {
           }
         });
       }else{
-        $('.notify-message').css({'color':'#CCCCCC'});
+        $('.notify-message').css({'color':'#fff'});
+      }
+
+      /* handle respose friend request */
+      if(response.friendRequest !== null) {
+        $('.badge-friends').text(response.friendRequest.length);
+        $.each(response.friendRequest, function(i, val) {
+
+        });
       }
       /* pull request */
       // pullRequest();
@@ -51,6 +61,6 @@ function pullRequest() {
 } /* end function pullRequest */
 
 $(function() {
-  // pullRequest();
+  pullRequest();
   // setTimeout('pullRequest()', 5000);
 });

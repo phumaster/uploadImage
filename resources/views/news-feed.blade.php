@@ -19,7 +19,7 @@
                 @if(\Auth::user()->isSentRequest($singleFriend->id))
                 <?php $text = '<span class="glyphicon glyphicon-check"></span> '."friend request sent"; $btn = "btn-success";?>
                 @else
-                <?php $text = '<span class="glyphicon glyphicon-plus"></span>'." add friend"; $btn = "btn-default";?>
+                <?php $text = '<span class="glyphicon glyphicon-plus"></span>'." add"; $btn = "btn-default";?>
                 @endif
                 <div class="suggest-friend-body">
                   <a class="btn btn-sm {!! $btn !!} display-block btn-add-friend" data-target-xhr="{!! route('add-friend', $singleFriend) !!}">{!! $text !!}</a>
@@ -170,5 +170,7 @@
     $('.form-post-comment').commentThisPhoto();
 
     $('.like-this-post').likeThisPhoto();
+
+    $('[data-toggle="tooltip"]').tooltip();
   });
 </script>

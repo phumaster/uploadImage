@@ -12,7 +12,11 @@ class FriendShip extends Model
 
     public $timestamps = false;
 
-    public function user() {
-      return $this->belongsTo('App\User', 'to');
+    public function getUserSend() {
+      return $this->belongsTo('App\User', 'from');
+    }
+
+    public function getUserRecieve() {
+    	return $this->belongsTo('App\User', 'to');
     }
 }

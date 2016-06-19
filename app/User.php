@@ -10,19 +10,13 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Auth;
 
 class User extends Model implements AuthenticatableContract,
                                     AuthorizableContract,
                                     CanResetPasswordContract
 {
-    use Authenticatable, Authorizable, CanResetPassword, SoftDeletes;
-
-    /**
-    * use SoftDeletes
-    **/
-    protected $dates = ['deleted_at'];
+    use Authenticatable, Authorizable, CanResetPassword;
 
     /**
      * The database table used by the model.
@@ -126,7 +120,7 @@ class User extends Model implements AuthenticatableContract,
     }
 
     public function hasFriendRequest() {
-      return $this->hasMany('App\FriendShip', 'from');
+      return $this->hasMany('App\FriendShip', 'to');
     }
 
     public function isSentRequest($user) {

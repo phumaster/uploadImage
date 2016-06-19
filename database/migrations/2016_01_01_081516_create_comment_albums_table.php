@@ -20,7 +20,6 @@ class CreateCommentAlbumsTable extends Migration
             $table->integer('user_id');
             $table->integer('album_id');
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 

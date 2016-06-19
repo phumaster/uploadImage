@@ -37,6 +37,10 @@ class FriendController extends Controller
     }
   }
 
+  public function accept(Request $request, $user) {
+    return $request->all();
+  }
+
   private function isAddYourself() {
     return Auth::user()->id == $this->user;
   }
