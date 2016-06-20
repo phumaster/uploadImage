@@ -65,8 +65,8 @@ $(document).ready(function() {
   });
 
   $(document).on('click', function(event) {
-    console.log(event.target.className);
-    if(event.target.className != 'close-tab' && event.target.className != 'notify') {
+    var className = event.target.className;
+    if(className != 'close-tab' && className != 'notify' && className != 'response-request-friend') {
       $('.nav-content').removeClass('nav-content-active');
     }
   });

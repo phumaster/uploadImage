@@ -123,16 +123,28 @@ class User extends Model implements AuthenticatableContract,
       return $this->hasMany('App\FriendShip', 'to');
     }
 
+    public function requestSent() {
+      return $this->hasMany('App\FriendShip', 'from');
+    }
+
     public function isSentRequest($user) {
       $allFriendRequest = $this->hasFriendRequest()->get();
-      if($allFriendRequest->count() == 0) {
+      $requestSent = $this->requestSent()->get();
+
+      if($allFriendRequest->count() == 0 && $requestSent->count() == 0) {
+        return false;
+      }else{
+        foreach($allFriendRequest as $k) {
+          if($k['from'] == $user && $k['accepted'] == 0) {
+            return true;
+          }
+        }
+        foreach($requestSent as $k) {
+          if($user == $k['to'] && $k['accepted'] == 0) {
+            return true;
+          }
+        }
         return false;
       }
-      foreach($allFriendRequest as $k) {
-        if($user == $k['to'] && $k['accepted'] == 0) {
-          return true;
-        }
-      }
-      return false;
     }
 }

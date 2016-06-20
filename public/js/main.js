@@ -148,6 +148,7 @@ function notification() {
     div.style.position = 'fixed';
     div.style.bottom = '35px';
     div.style.left = '10px';
+    div.style.zIndex = '1000';
     document.body.appendChild(div);
     this.name = _('notification');
   }
@@ -195,11 +196,14 @@ function message(url, content) {
       data: {'_token':$('meta[name=csrf-token]').attr('content'), 'content':this.content},
       success: function(response) {
         var data = JSON.parse(response);
+        var high = responseTo.find('.message-body').find('div').height() * responseTo.find('.message-body').find('div').length + 1;
         responseTo.find('.message-body')
-          .append('<div><div class="r left"><div class="message-content">'+data.message+'</div><div class="clear-fix"></div></div></div>');
+          .append('<div><div class="r left"><div class="message-content">'+data.message+'</div><div class="clear-fix"></div></div></div>')
+          .scrollTop(high);
           if($('.uid'+data.reciever) != null) {
             $('.uid'+data.reciever).find('.row-message')
-            .append('<div><div class="r left"><div class="author"><a href="#"><img src="'+data.avatar_url+'" class="logo-user"/></a></div><div class="message-content">'+data.message+'</div><div class="clear-fix"></div></div></div>');
+            .append('<div><div class="r left"><div class="author"><a href="#"><img src="'+data.avatar_url+'" class="logo-user"/></a></div><div class="message-content">'+data.message+'</div><div class="clear-fix"></div></div></div>')
+            .parent().scrollTop($('.uid'+data.reciever).find('.row-message').height());
           }
       }
     });

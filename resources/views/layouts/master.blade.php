@@ -17,7 +17,7 @@
     <script src="{!! asset('js/extends.js') !!}"></script>
     @yield('header.js')
   </head>
-  <body class="@yield('body.class')">
+  <body class="this-site-create-by-Phu-Master">
     @if(\Auth::check())
       @include('includes.vertical-menu')
     @endif

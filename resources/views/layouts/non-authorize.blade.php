@@ -24,15 +24,6 @@
       <section>
         @yield('body.content')
       </section>
-      <footer id="footer">
-        @yield('footer')
-      </footer>
-    </div>
-    <div id="overlay-loading">
-      <div class="spinner">
-        <div class="circle-spin"></div>
-        <p>loading...</p>
-      </div>
     </div>
     @yield('footer.js')
     @yield('js')

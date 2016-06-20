@@ -66,11 +66,11 @@
               </a>
             </div>
             <div class="pull-right">
-              <a href="{{ route('accept-request', [$request->getUserSend->id, 'accept' => 'yes']) }}">
+              <a class="response-request-friend" data-target-xhr="{{ route('accept-request', [$request->getUserSend->id, 'accept' => 'yes']) }}">
                 <span class="glyphicon glyphicon-ok"></span> Accept
               </a>
               .
-              <a href="{{ route('accept-request', [$request->getUserSend->id, 'accept' => 'no']) }}">
+              <a class="response-request-friend" data-target-xhr="{{ route('accept-request', [$request->getUserSend->id, 'accept' => 'no']) }}">
                 Ignore
               </a>
             </div>

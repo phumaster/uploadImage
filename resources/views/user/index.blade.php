@@ -31,7 +31,7 @@
               @if(\Auth::user()->isFriend($user->id))
               <?php $text = '<i class="fa fa-fw fa-check"></i>'." See relationship"; $btn = "btn-success"; ?>
               @elseif(\Auth::user()->isSentRequest($user->id))
-              <?php $text = '<i class="fa fa-fw fa-check"></i> '."Friend request sent"; $btn = "btn-success";?>
+              <?php $text = '<i class="fa fa-fw fa-check"></i> '."pending"; $btn = "btn-success";?>
               @else
               <?php $text = '<i class="fa fa-fw fa-plus"></i>'." Add friend"; $btn = "btn-default";?>
               @endif

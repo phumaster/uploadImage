@@ -146,7 +146,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\ImageHelperProvider::class,
-
+        App\Providers\TimeHelperProvider::class,
     ],
 
     /*
@@ -197,7 +197,7 @@ return [
         'View'      => Illuminate\Support\Facades\View::class,
         'Html' => Illuminate\Html\HtmlFacade::class,
         'Form' => Illuminate\Html\FormFacade::class,
-
+        'TimeHelper' => App\Helpers\TimeHelper::class,
     ],
 
 ];

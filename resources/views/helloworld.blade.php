@@ -70,11 +70,6 @@ Welcome
                   </div>
                 </div>
               </div><!-- .modal-body -->
-              <div class="modal-footer" style="text-align: justify">
-                <p>
-                  Chào mừng đến với project thử nghiệm của <font color="blue">@Phú Master</font> | Xem thêm thông tin project tại <a href="{!! url('/founder') !!}" target="_blank">đây</a>
-                </p>
-              </div>
             </div><!-- end .modal-content -->
           </div>
         </div>
@@ -85,6 +80,40 @@ Welcome
 @endsection
 
 @section('body.content')
+<article class="container founder">
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="sec">Author</div>
+      <p>
+        - Name: Pham Ngoc Phu<br/>
+        - Alias: Phu Master<br/>
+        - Email: phumaster.dev@gmail.com
+      </p>
+      <div class="sec">Why do I create it?</div>
+      <p>
+        - Learn Laravel Framework<br/>
+        - Upgrade my skills<br/>
+        - Create a social network same Instagram<br/>
+        - Relax
+      </p>
+      <div class="sec">Something not good</div>
+      <p>
+        - Notifications, friends request, messages not really realtime<br/>
+        - Not construct infinite loading for news feed<br/>
+        - feeling not good, everything need repair
+      </p>
+      <div class="sec">Technologies</div>
+      <p>
+        - PHP Laravel Framework 5.1<br/>
+        - Font awesome<br/>
+        - Bootstrap<br/>
+        - Jquery<br/>
+        - Ajax<br/>
+        - Code on: Sublime text, Atom
+      </p>
+    </div>
+  </div>
+</article>
 <div class="container-fuild body-content large-header" id="large-header">
   <ul class="slide">
     <div class="slide-content">
@@ -101,11 +130,19 @@ Welcome
 @endsection
 
 @section('footer')
-<div>f</div>
 @endsection
 
 @section('js')
 <script type="text/javascript">
+$(document).ready(function() {
+    $('.sec').click(function() {
+      if($(this).next().is(':hidden')) {
+        $('.sec ~ p').slideUp(300);
+        $(this).next().slideDown(300);
+      }
+    });
+  });
+
   $(document).ready(function() {
     $('.slide-content').height(window.innerHeight);
     $('.body-content').css({'min-height':window.innerHeight});
@@ -188,196 +225,6 @@ Welcome
       $('#email').focus()
     });
 
-    setTimeout(function() {
-      $('.join-now').click();
-    }, 1000);
   });
-</script>
-<script type="text/javascript">
-(function() {
-
-  var width, height, largeHeader, canvas, ctx, points, target, animateHeader = true;
-
-  // Main
-  initHeader();
-  initAnimation();
-  addListeners();
-
-  function initHeader() {
-      width = window.innerWidth;
-      height = window.innerHeight;
-      target = {x: width/2, y: height/2};
-
-      largeHeader = document.getElementById('large-header');
-      largeHeader.style.height = height+'px';
-
-      canvas = document.getElementById('demo-canvas');
-      canvas.width = width;
-      canvas.height = height;
-      ctx = canvas.getContext('2d');
-
-      // create points
-      points = [];
-      for(var x = 0; x < width; x = x + width/20) {
-          for(var y = 0; y < height; y = y + height/20) {
-              var px = x + Math.random()*width/20;
-              var py = y + Math.random()*height/20;
-              var p = {x: px, originX: px, y: py, originY: py };
-              points.push(p);
-          }
-      }
-
-      // for each point find the 5 closest points
-      for(var i = 0; i < points.length; i++) {
-          var closest = [];
-          var p1 = points[i];
-          for(var j = 0; j < points.length; j++) {
-              var p2 = points[j]
-              if(!(p1 == p2)) {
-                  var placed = false;
-                  for(var k = 0; k < 5; k++) {
-                      if(!placed) {
-                          if(closest[k] == undefined) {
-                              closest[k] = p2;
-                              placed = true;
-                          }
-                      }
-                  }
-
-                  for(var k = 0; k < 5; k++) {
-                      if(!placed) {
-                          if(getDistance(p1, p2) < getDistance(p1, closest[k])) {
-                              closest[k] = p2;
-                              placed = true;
-                          }
-                      }
-                  }
-              }
-          }
-          p1.closest = closest;
-      }
-
-      // assign a circle to each point
-      for(var i in points) {
-          var c = new Circle(points[i], 2+Math.random()*2, 'rgba(255,255,255,0.3)');
-          points[i].circle = c;
-      }
-  }
-
-  // Event handling
-  function addListeners() {
-      if(!('ontouchstart' in window)) {
-          window.addEventListener('mousemove', mouseMove);
-      }
-      window.addEventListener('scroll', scrollCheck);
-      window.addEventListener('resize', resize);
-  }
-
-  function mouseMove(e) {
-      var posx = posy = 0;
-      if (e.pageX || e.pageY) {
-          posx = e.pageX;
-          posy = e.pageY;
-      }
-      else if (e.clientX || e.clientY)    {
-          posx = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
-          posy = e.clientY + document.body.scrollTop + document.documentElement.scrollTop;
-      }
-      target.x = posx;
-      target.y = posy;
-  }
-
-  function scrollCheck() {
-      if(document.body.scrollTop > height) animateHeader = false;
-      else animateHeader = true;
-  }
-
-  function resize() {
-      width = window.innerWidth;
-      height = window.innerHeight;
-      largeHeader.style.height = height+'px';
-      canvas.width = width;
-      canvas.height = height;
-  }
-
-  // animation
-  function initAnimation() {
-      animate();
-      for(var i in points) {
-          shiftPoint(points[i]);
-      }
-  }
-
-  function animate() {
-      if(animateHeader) {
-          ctx.clearRect(0,0,width,height);
-          for(var i in points) {
-              // detect points in range
-              if(Math.abs(getDistance(target, points[i])) < 4000) {
-                  points[i].active = 0.3;
-                  points[i].circle.active = 0.6;
-              } else if(Math.abs(getDistance(target, points[i])) < 20000) {
-                  points[i].active = 0.1;
-                  points[i].circle.active = 0.3;
-              } else if(Math.abs(getDistance(target, points[i])) < 40000) {
-                  points[i].active = 0.02;
-                  points[i].circle.active = 0.1;
-              } else {
-                  points[i].active = 0;
-                  points[i].circle.active = 0;
-              }
-
-              drawLines(points[i]);
-              points[i].circle.draw();
-          }
-      }
-      requestAnimationFrame(animate);
-  }
-
-  function shiftPoint(p) {
-      TweenLite.to(p, 1+1*Math.random(), {x:p.originX-50+Math.random()*100,
-          y: p.originY-50+Math.random()*100, ease:Circ.easeInOut,
-          onComplete: function() {
-              shiftPoint(p);
-          }});
-  }
-
-  // Canvas manipulation
-  function drawLines(p) {
-      if(!p.active) return;
-      for(var i in p.closest) {
-          ctx.beginPath();
-          ctx.moveTo(p.x, p.y);
-          ctx.lineTo(p.closest[i].x, p.closest[i].y);
-          ctx.strokeStyle = 'rgba(156,217,249,'+ p.active+')';
-          ctx.stroke();
-      }
-  }
-
-  function Circle(pos,rad,color) {
-      var _this = this;
-
-      // constructor
-      (function() {
-          _this.pos = pos || null;
-          _this.radius = rad || null;
-          _this.color = color || null;
-      })();
-
-      this.draw = function() {
-          if(!_this.active) return;
-          ctx.beginPath();
-          ctx.arc(_this.pos.x, _this.pos.y, _this.radius, 0, 2 * Math.PI, false);
-          ctx.fillStyle = 'rgba(156,217,249,'+ _this.active+')';
-          ctx.fill();
-      };
-  }
-
-  // Util
-  function getDistance(p1, p2) {
-      return Math.pow(p1.x - p2.x, 2) + Math.pow(p1.y - p2.y, 2);
-  }
-
-})();
 </script>
 @endsection

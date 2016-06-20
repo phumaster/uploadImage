@@ -1,10 +1,9 @@
 * {
   margin: 0;
   padding: 0;
+  font-size: 24px !important;
 }
-body {
-  font-family: verdana;
-}
+
 .header-non-authorize {
   position: absolute;
   top: 0;
@@ -23,6 +22,9 @@ body {
   font-weight: 700;
   text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.15);
   color: #fff;
+  position: relative;
+  z-index: 99;
+  outline: none !important;
 }
 .join-now:hover, .join-now:active, .join-now:focus {
   color: #03a9f4;
@@ -57,6 +59,7 @@ body {
   -moz-background-size: cover !important;
   -webkit-background-size: cover !important;
   background-position: center center;
+  filter: blur(15px);
 }
 .bg-item-slide-content0 {
   background: url(../images/slider/slide_1.jpg) no-repeat;
@@ -132,3 +135,54 @@ body {
   background-size: cover;
   background-position: center center;
 }
+@font-face {
+        font-family: myFont;
+        src: url(/fonts/RBNo2Light.otf);
+      }
+      .founder {
+        padding: 100px;
+        position: absolute;
+      }
+      .bg {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background: url(/images/bg2.jpg) no-repeat;
+      background-size: cover;
+      -moz-background-size: cover;
+      -webkit-background-size: cover;
+      filter: blur(10px);
+      }
+      
+      body {
+        background: #222;
+        font-family: myFont;
+        text-shadow: 1px 1px 3px rgba(0,0,0,0.15);
+        font-size: 18px;
+      }
+
+      .sec {
+        font-size: 36px !important;
+        cursor: pointer;
+        padding: 10px 20px;
+        margin-bottom: 1px;
+        background: rgba(255,255,255,0.2);
+        transition: all 0.2s ease;
+        -webkit-transition: all 0.2s ease;
+        width: 100%;
+        color: #fff;
+      }
+
+      .sec:hover, .sec:hover ~ p {
+      background: rgba(255,255,255,0.3);
+      }
+
+      .sec ~ p {
+        display: none;
+        font-size: 24px;
+        padding: 10px;
+        background: rgba(255,255,255,0.2); margin-top: -1px;
+        color: #fff;
+      }

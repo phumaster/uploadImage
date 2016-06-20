@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Contracts\Auth\Guard;
 use App\FriendShip;
+use Route;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -16,8 +17,10 @@ class AppServiceProvider extends ServiceProvider
     public function boot(Guard $auth)
     {
         view()->composer('*', function($view) use ($auth){
-            $friendRequest = FriendShip::where('to', '=', $auth->user()->id)->orderBy('id', 'DESC')->get();
-            $view->with('friendRequest', $friendRequest);
+            if($auth->check()) {
+                $friendRequest = FriendShip::where(['to' => $auth->user()->id, 'accepted' => 0])->orderBy('id', 'DESC')->get();
+                $view->with('friendRequest', $friendRequest);
+            }
         });
     }
 

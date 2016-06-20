@@ -9,6 +9,10 @@
       <li><a href="#" class="vertical-menu-a target"><span class="glyphicon glyphicon-wrench"></span> Setting</a></li>
       <li><a href="#" class="vertical-menu-a target"><span class="glyphicon glyphicon-tasks"></span> Preferences</a></li>
       <li><a href="#" class="vertical-menu-a target"><span class="glyphicon glyphicon-stats"></span> Activity log</a></li>
+      <li><a href="/founder" class="vertical-menu-a target"><span class="glyphicon glyphicon-ok"></span> About project
+      <br/>
+      <small>Xem thêm thông tin project tại đây</small>
+      </a></li>
     </ul>
   </nav>
   <!-- end nav.vertical-menu -->

@@ -38,7 +38,29 @@ class FriendController extends Controller
   }
 
   public function accept(Request $request, $user) {
-    return $request->all();
+      $friendShip = FriendShip::where(['from' => $user, 'accepted' => 0])->first();
+      if(count($friendShip) == 0) {
+        return response()->json(['error' => 1, 'message' => 'Unexpected Error!']);
+      }
+      if($request->get('accept') == "yes") {
+        $auth = User::find(Auth::user()->id);
+        $userRequest = User::find($user);
+        // handle add friend
+        $keyFriend = array_merge(array_keys(json_decode($auth->friends, true)), [$user]);
+        $valueFriend = array_merge(array_values(json_decode($auth->friends, true)), [0]);
+
+        $keyFriend2 = array_merge(array_keys(json_decode($userRequest->friends, true)), [$auth->id]);
+        $valueFriend2 = array_merge(array_values(json_decode($userRequest->friends, true)), [0]);
+        //
+        $auth->friends = json_encode(array_combine($keyFriend, $valueFriend));
+        $auth->save();
+        $userRequest->friends = json_encode(array_combine($keyFriend2, $valueFriend2));
+        $userRequest->save();
+        $friendShip->update(['accepted' => 1]);
+        return response()->json(['error' => 0, 'message' => 'You and '.$userRequest->name.' have been friend ']);
+    }
+    $friendShip->delete();
+    return response()->json(['error' => 0, 'message' => 'Request cancel!']);
   }
 
   private function isAddYourself() {

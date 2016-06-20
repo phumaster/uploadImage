@@ -21,4 +21,5 @@ class Test extends Controller
       // ImageHelper::load($info)->resize(50, 50)->save(public_path().'/abc.jpg');
       echo 'ok';
     }
+
 }

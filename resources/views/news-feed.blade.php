@@ -17,7 +17,7 @@
                   </a>
                 </div>
                 @if(\Auth::user()->isSentRequest($singleFriend->id))
-                <?php $text = '<span class="glyphicon glyphicon-check"></span> '."friend request sent"; $btn = "btn-success";?>
+                <?php $text = '<span class="glyphicon glyphicon-check"></span> '."pending"; $btn = "btn-success";?>
                 @else
                 <?php $text = '<span class="glyphicon glyphicon-plus"></span>'." add"; $btn = "btn-default";?>
                 @endif
@@ -52,7 +52,7 @@
               </div>
             </div><!-- end .post-body -->
             <div class="post-footer">
-              <div><i class="post-time">{!! $post->created_at !!}</i></div>
+              <div><i class="post-time">{!! TimeHelper::convert(time() - strtotime($post->created_at)) !!}</i></div>
               <div class="text-center">
                 <div class="nav-this-post">
                   <a data-target-xhr="{!! route('photo.like', [$post->user_id, $post->id]) !!}" class="like-this-post {!! in_array(\Auth::user()->id, json_decode(is_null($post->likes) ? '[]' : $post->likes, true)) ? 'like' : '' !!}"><span class="glyphicon glyphicon-heart-empty"></span> {!! count(json_decode($post->likes, true)) > 0 ? count($post->likes) : "" !!} like</a> |
@@ -98,7 +98,7 @@
         </div><!-- end list-friends -->
         <hr/>
         <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+          <i>Smile, breathe, and go slowly. - <b>Thich Nhat Hanh</b></i>
         </p>
       </div>
     </div><!-- end col-sm-3-->
