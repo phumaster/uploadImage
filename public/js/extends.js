@@ -82,7 +82,7 @@
         messageHeader.setAttribute('class', 'message-header');
         messageBody.setAttribute('class', 'message-body');
         messageFooter.setAttribute('class', 'message-footer');
-        a.setAttribute('data-target-xhr', xhr);
+        a.setAttribute('href', '/'+id);
         a.style.color = "#fff";
         a.style.textDecoration = "none";
         a.innerHTML = name;

@@ -6,6 +6,10 @@
           <a class="btn btn-main" data-toggle="modal" data-target="#show-upload-modal"><span class="glyphicon glyphicon-cloud-upload"></span> Upload new photo</a>
           <a class="btn btn-main" data-toggle="modal" data-target="#show-create-album-modal"><span class="glyphicon glyphicon-plus"></span> New album</a>
         </div>
+        <!-- troll -->
+        <div class="post text-center">
+          <p><var>/* Trang web này tạo ra nhằm mục đích học và nâng cao kỹ năng PHP, Laravel. Không đi vào hoạt động và không có thu nhập trên 50 triệu, cảm ơn! */</var></p>
+        </div>
         @if(count($suggest) > 0)
           <div class="card suggest-friend text-center">
             <p><h4>People you may know</h4></p>

@@ -50,11 +50,30 @@ function pullRequest() {
       if(response.friendRequest !== null) {
         $('.badge-friends').text(response.friendRequest.length);
         $.each(response.friendRequest, function(i, val) {
-
+          $('#tab-friend-request').prepend(
+            '<div class="card-friend-request">'+
+            '<div class="author-request">'+
+            '<a href="/'+val.user.id+'">'+
+            '<img class="logo-user" src="'+val.avatar_url+'" alt="'+val.user.name+'">'+
+            '<b>'+val.user.name+'</b>'+
+            '</a>'+
+            '</div>'+
+            '<div class="pull-right">'+
+            '<a class="response-request-friend" data-target-xhr="'+val.xhr+'?accept=yes">'+
+            '<span class="glyphicon glyphicon-ok"></span> Accept'+
+            '</a>'+
+            ' . '+
+            '<a class="response-request-friend" data-target-xhr="'+val.xhr+'?accept=no">'+
+            'Ignore'+
+            '</a>'+
+            '</div>'+
+            '<div class="clear-fix"></div>'+
+            '</div>'
+          );
         });
       }
       /* pull request */
-      // pullRequest();
+      pullRequest();
     },
   }); /* end ajax */
   $(document).on('click', 'a[href]', function() {
@@ -64,5 +83,4 @@ function pullRequest() {
 
 $(function() {
   // pullRequest();
-  // setTimeout('pullRequest()', 5000);
 });

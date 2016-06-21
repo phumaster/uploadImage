@@ -19,6 +19,7 @@ class CreateMessagesTable extends Migration
             $table->text('content');
             $table->text('attachment_url')->nullable();
             $table->integer('read')->default(0);
+            $table->integer('conversation_id');
             $table->timestamps();
         });
     }

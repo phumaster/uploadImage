@@ -54,7 +54,7 @@ class PullRequestController extends Controller
         foreach($requests as $request) {
           $request->update(['seen' => 1]);
           $user = $request->getUserSend()->first();
-          $data[] = array_merge($request->toArray(), ['user' => $user->toArray(), 'xhr' => route('accept-request', [$user->id, 'r' => 'yes']), 'avatar_url' => $user->getProfilePictureUrl()]);
+          $data[] = array_merge($request->toArray(), ['user' => $user->toArray(), 'xhr' => route('accept-request', $user->id), 'avatar_url' => $user->getProfilePictureUrl()]);
         }
         $this->friendRequest = $data;
         return true;

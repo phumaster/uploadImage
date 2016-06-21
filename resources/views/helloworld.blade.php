@@ -100,7 +100,9 @@ Welcome
       <p>
         - Notifications, friends request, messages not really realtime<br/>
         - Not construct infinite loading for news feed<br/>
-        - feeling not good, everything need repair
+        - Not construct admin control panel<br/>
+        - News feed algorithm not good<br/>
+        - Feeling not good, everything need repair
       </p>
       <div class="sec">Technologies</div>
       <p>

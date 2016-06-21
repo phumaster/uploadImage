@@ -18,7 +18,7 @@
   <!-- end nav.vertical-menu -->
   <hr/>
   <div class="text-center">
-    &copy; {!! date("Y") !!} Phu Master
+    &copy; {!! date("Y") !!} Phu Master | hoạt động thử nghiệm
     <br/>
   </div>
 </div>

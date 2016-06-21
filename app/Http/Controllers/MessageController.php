@@ -14,11 +14,13 @@ use App\Conversation;
 class MessageController extends Controller
 {
     public function handle(Request $request, $id) {
-
-      if($request->get('content') != "" && Message::create(['from' => Auth::user()->id, 'to' => $id, 'content' => htmlentities($request->get('content'))])) {
-        if(Conversation::where(['from' => Auth::user()->id, 'to' => $id])->orWhere(['to' => Auth::user()->id, 'from' => $id])->get()->count() == 0) {
-          Conversation::create(['from' => Auth::user()->id, 'to' => $id]);
-        }
+      $conversation = Conversation::where(['from' => Auth::user()->id, 'to' => $id])->orWhere(['to' => Auth::user()->id, 'from' => $id])->first();
+      if(count($conversation) == 0) {
+        $conversation = Conversation::create(['from' => Auth::user()->id, 'to' => $id]);
+      }
+      if($request->get('content') != "" && Message::create(['from' => Auth::user()->id, 'to' => $id, 'content' => htmlentities($request->get('content')), 'conversation_id' => $conversation->id])) {
+        $conversation->updated_at = date("Y-m-d H:i:s");
+        $conversation->save();
         return json_encode(['error' => 0, 'message' => htmlentities($request->get('content')), 'reciever' => $id, 'avatar_url' => Auth::user()->getProfilePictureUrl(), 'type' => 0]);
       }
       return json_encode(['error' => 1, 'message' => 'Can not send message!', 'type' => -1]);

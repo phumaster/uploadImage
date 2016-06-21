@@ -17,4 +17,12 @@ class Conversation extends Model
     public function sendToUser() {
       return $this->belongsTo('App\User', 'to');
     }
+
+    public function messages() {
+    	return $this->hasMany('App\Message', 'conversation_id');
+    }
+
+    public function getLastMessage() {
+    	return $this->hasMany('App\Message', 'conversation_id')->orderBy('id', 'DESC');
+    }
 }
