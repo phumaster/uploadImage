@@ -23,6 +23,6 @@ class Conversation extends Model
     }
 
     public function getLastMessage() {
-    	return $this->hasMany('App\Message', 'conversation_id')->orderBy('id', 'DESC');
+    	return $this->hasMany('App\Message', 'conversation_id')->orderBy('id', 'DESC' );
     }
 }
