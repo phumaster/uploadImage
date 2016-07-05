@@ -30,7 +30,6 @@ class UploadImageRequest extends Request
     {
         return [
             'image' => 'required|image',
-            'album_id' => 'exists:albums,id'
         ];
     }
 }

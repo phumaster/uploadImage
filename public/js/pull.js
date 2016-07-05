@@ -82,5 +82,5 @@ function pullRequest() {
 } /* end function pullRequest */
 
 $(function() {
-  // pullRequest();
+  pullRequest();
 });
